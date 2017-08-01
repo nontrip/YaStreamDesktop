@@ -1,0 +1,273 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Play', sans-serif;
+    -webkit-user-select: none;
+}
+
+.loading {
+    width: 659px;
+    height: 675px;
+    -webkit-app-region: drag;
+    background-color: #29292c;
+}
+
+.container {
+    width: 659px;
+    min-height: 675px;
+    -webkit-app-region: drag;
+    background-color: #29292c;
+}
+
+input {
+    -webkit-app-region: no-drag;
+}
+
+.header {
+    height: 44px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+.header p {
+    display: inline-block;
+    font-size: 13px;
+    color: #979797;
+    margin-left: 20px;
+}
+
+.header p:last-child {
+    color: #f3c647;
+    margin-right: 20px;
+}
+
+.header h1 {
+    display: inline-block;
+    color: #f3c647;
+    font-size: 24px;
+}
+
+.hr-ns {
+    height: 3px;
+    background-color: #f3c647;
+    border: none;  
+}
+
+.upLayer h1 {
+    margin-left: 28px;
+    margin-top: 17px;
+    font-size: 21px;
+    color: #858585;
+}
+
+.ul-left {
+    float: left;
+    display: inline-block;
+    width: 247px;
+    list-style: none;
+    margin-left: 28px;
+}
+
+.ul-left li {
+    margin-top: 24px;
+}
+
+.ul-left li:first-child {
+    margin-top: 12px;
+}
+
+.ul-left input{
+    background: none;
+    border: none;
+    border-bottom: 3px solid #979797;
+    color: #979797;
+    font-size: 16px;
+    width: 247px;
+}
+
+input:focus {
+    outline-width: 0;
+}
+
+.getQR {
+    width: 247px;
+    height: 35px;
+    border-radius: 8px;
+    background-color: #f3c647;
+    margin-top: 30px;
+    text-align: center;
+    line-height: 35px;
+    font-size: 16px;
+}
+
+.ul-right {
+    float: right;
+    display: inline-flex;
+    justify-content: space-between;
+    width: 250px;
+    height: 116px;
+    margin-right: 28px;
+    margin-top: 13px;
+    list-style: none;
+}
+
+.ul-right li {
+    display: inline-block;
+}
+
+.bottomLayer {
+    margin-top: 220px;
+    margin-left: 28px;
+}
+
+.bottomLayer h1 {
+    color: #858585;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.bottomLayer h1:first-child{
+    margin-top: 0;
+    font-size: 21px;
+}
+
+.bottomLayer p {
+    color: #979797;
+    font-size: 21px;
+}
+
+.range {
+    margin-top: 10px;
+}
+
+.left-p {
+    display: inline-block;
+    float: left;
+}
+ 
+.right-p {
+    display: inline-block;
+    float: right;
+    margin-right: 95px;
+}
+
+input[type="range"]{
+    margin-left: 10px;
+    -webkit-appearance: none;
+    height: 5px;
+    width: 410px;
+    cursor: pointer;
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        color-stop(0.5, #f3c647),
+        color-stop(0.5, #979797)
+    );
+}
+
+input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #f3c647;
+    border: 2px solid #979797;
+    height: 15px;
+    width: 15px;
+}
+
+.range2 {
+    margin-top: 10px;
+}
+
+h2 {
+    margin-top: 26px;
+    margin-left: -5px;
+    width: 286px;
+    display: inline-block;
+    color: #979797;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin-left: 65px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #979797;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .2s;
+}
+
+input:checked + .slider {
+  background-color: #f3c647;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #f3c647;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.start {
+    width: 175px;
+    height: 35px;
+    background-color: #f3c647;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 35px;
+    margin-top: 31px;
+}
+
+.start p {
+    color: black;
+}
+
+.checkbox2 {
+    margin-left: 7px;
+    float: left;
+}
+
+#goalAuto {
+    margin-top: 8px;
+}
+
+.goal_left {
+    margin-left: 8px;
+}

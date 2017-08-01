@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Play', sans-serif;
+    -webkit-user-select: none;
+}
+
+li {
+    -webkit-app-region: no-drag;
+    cursor: pointer;
+}
+
+.container {
+    width: 408px;
+    height: 257px;
+    -webkit-app-region: drag;
+    background-color: #29292c;
+}
+
+.loading {
+    width: 408px;
+    height: 257px;
+    background-color: #29292c;
+}
+
+.titleBar {
+    font-size: 16px;
+    width: 100%;
+    height: 22px;
+    text-align: center;
+    line-height: 22px;
+    color: #dbdbdb;
+}
+
+.text-house {
+    width: 376px;
+    height: 49px;
+    color: #979797;
+    margin-top: 20px;
+    margin-left: 8px;
+}
+
+.text-house h1{
+    display: inline-block;
+    font-size: 21px;
+}
+
+.sources {
+    position: absolute;
+    z-index: 2;
+    list-style: none;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.sources li {
+    display: inline-block;
+}
+
+.sources li:first-child {
+    margin-left: 31px;
+}
+
+.sources li img:hover {
+    border: 3px solid #f3c647; 
+}
+
+.img-house {
+    width: 67px;
+    height: 67px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sources li img {
+    width: 60px;
+    height: 60px;
+}
+
+.buttons {
+    color: #979797;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 115px;
+}
+
+.buttons li {
+    display: inline-block;
+}
+
+.buttons li:first-child {
+    margin-left: 80px;
+}
+
+.buttons li:last-child {
+    margin-right: 80px;
+}

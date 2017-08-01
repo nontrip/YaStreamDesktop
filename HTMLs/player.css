@@ -1,0 +1,224 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Play', sans-serif;
+    -webkit-user-select: none;
+}
+
+.loading {
+    width: 360px;
+    height: 435px;
+    -webkit-app-region: drag;
+    background-color: #29292c;
+}
+
+.container {
+    width: 360px;
+    min-height: 435px;
+    -webkit-app-region: drag;
+    background-color: #29292c;
+}
+
+.header {
+    position: fixed;
+    width: 100%;
+    background-color: #29292c;
+}
+
+.titleBar {
+    font-size: 16px;
+    width: 100%;
+    height: 22px;
+    text-align: center;
+    line-height: 22px;
+    color: #dbdbdb;
+}
+
+.header-main {
+    height: 74px;
+    width: 320px;
+    margin-left: 21px;
+}
+
+.header-left {
+    display: inline-block;
+    width: 264px;
+    height: 100%;
+    float: left;
+}
+
+.header-left h1 {
+    color: #f3c647;
+    font-size: 28px;
+    margin-top: 3px;
+}
+
+.header-left h2 {
+    color: #979797;
+    font-size: 17px;
+    margin-top: 9px;
+}
+
+.header hr {
+    border: 2px solid #f3c647;
+}
+
+.header-right {
+    display: inline-flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 56px;
+    height: 100%;
+    float: right;
+}
+
+.main {
+    padding-top: 100px;
+}
+
+.donat {
+    width: 100%;
+    min-height: 140px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.donat hr {
+    border: 1px solid #979797;
+}
+
+.donat-house {
+    margin-top: 5px;
+    width: 320px;
+    min-height: 111px;
+}
+
+.up-layer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.img-house {
+    display: inline-block;
+    float: left;
+}
+
+.text-house {
+    color: #858585;
+    display: inline-flex;
+    width: 280px;
+    justify-content: space-between;
+}
+
+.text-house p {
+    display: inline-block;
+    margin-top: 7px;
+}
+
+.message p {
+    width: 100%;
+    color: #858585;
+    font-size: 14px;
+    min-height: 55px;
+}
+
+.buttons {
+    margin-top: 5px;
+    float: right;
+}
+
+.buttons ul {
+    list-style: none;
+}
+
+.buttons ul li {
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.audio-img-house {
+    display: inline-block;
+    float: left;
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+.audio-text-house {
+    margin-left: 20px;
+    margin-top: 23px;
+    display: inline-block;
+    color: #858585;
+    font-size: 16px;
+}
+
+.audio-text-house p:last-child {
+    font-size: 12px;
+}
+
+.perDonat h1{
+    font-size: 18px;
+    color: #858585;
+    width: 250px;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.gold {
+    color: #efbc38;
+}
+
+.perDonat p {
+    margin: 0 auto;
+    margin-top: 10px;
+    width: 312px;
+    color: #858585;
+    font-size: 14px;
+}
+
+.perDonat textarea {
+    margin-top: 20px; 
+    margin-left: 24px;
+    font-size: 18px;
+    height: 106px;
+    color: #858585;
+    background: none;
+    border: none;
+    width: 312px;
+    border: 2px solid #efbc38;
+}
+
+.perDonat textarea:focus {
+    outline: none;
+}
+
+.buttonsPerDonat {
+    margin-top: 10px;
+}
+
+.buttonsPerDonat ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+}
+
+.buttonsPerDonat ul li {
+    display: inline-block;
+}
+
+.buttonsPerDonat ul li:first-child {
+    margin-left: 60px;
+    margin-top: 3.5px;
+}
+
+.buttonsPerDonat ul li:last-child {
+    margin-right: 60px;
+    margin-top: 3.5px;
+}
+
+.noDon {
+    text-align: center;
+    font-size: 24px;
+    color: #858585;
+}

@@ -1,0 +1,94 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Play', sans-serif;
+    -webkit-user-select: none;
+}
+
+li {
+    -webkit-app-region: no-drag;
+    cursor: pointer;
+}
+
+.loading {
+    width: 360px;
+    height: 480px;
+    background-color: #29292c;
+}
+
+.container {
+    width: 360px;
+    height: 480px;
+    background-color: #29292c;
+    -webkit-app-region: drag;
+}
+
+.draggable {
+    -webkit-app-region: drag;
+}
+
+.titleBar {
+    font-size: 16px;
+    width: 100%;
+    height: 22px;
+    text-align: center;
+    line-height: 22px;
+    color: #dbdbdb;
+}
+
+.img-house {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.img-house1 {
+    width: 106px;
+    height: 106px;
+    background: url('../images/ava.png') no-repeat center;
+    -webkit-background-size: cover;
+}
+
+.middle-field {
+    text-align: center;
+}
+
+.middle-field p {
+    font-size: 17px;
+    margin-top: 6px;
+    color: #979797;
+}
+
+.middle-field h1 {
+    margin-top: 3px;
+    margin-left: -30px;
+    font-size: 24px;
+    color: #f3c647;
+}
+
+.hr-div {
+    height: 4px;
+    width: 100%;
+    background-color: #f3c647;
+    margin-top: 7px;
+}
+
+.menu-bar {
+    font-size: 22px;
+    margin-left: 44px;
+    color: #979797;
+    overflow: visible;
+}
+
+.menu-bar ul {
+    list-style: none;
+}
+
+.menu-bar ul li {
+    margin-top: 24px;
+    display: inline-block;
+}
+
+.menu-bar ul li:hover {
+    color: #f3c647;
+}

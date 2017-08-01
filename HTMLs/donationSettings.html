@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="donationSettings.css" />
+    <link href="https://fonts.googleapis.com/css?family=Play&amp;subset=cyrillic,cyrillic-ext" rel="stylesheet">
+   
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+<!-- normal script imports etc  -->
+<script src="../scripts/jquery.js"></script>     
+
+<!-- Insert this line after script imports -->
+<script>if (window.module) module = window.module;</script>
+<script src='../scripts/spectrum.js'></script>
+<link rel='stylesheet' href='spectrum.css' />
+<script>
+        require('babel-register');
+        require('../scripts/donationSettings');
+    </script>
+<!-- width: 659,
+      height: 535, 
+-->
+</head>
+<body>
+    <div class="container">
+        <div class="loading">
+
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $('#color-picker').spectrum({
+                preferredFormat: "rgb",
+                showInput: true,
+                showAlpha: true
+            });
+        })
+         
+</script>
+</body>
+</html>

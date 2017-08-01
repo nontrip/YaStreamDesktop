@@ -1,0 +1,98 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Play', sans-serif;
+    -webkit-user-select: none;
+}
+
+.loading {
+    width: 533px;
+    height: 338px;
+    -webkit-app-region: drag;
+    background-color: #29292c;
+}
+
+.container {
+    width: 533px;
+    min-height: 338px;
+    height: 100%;
+    -webkit-app-region: drag;
+    background-color: #29292c;
+}
+
+.goal h2:hover {
+    color: #f3c647;
+    cursor: pointer;
+}
+
+.titleBar {
+    position: fixed;
+    font-size: 16px;
+    width: 100%;
+    height: 22px;
+    text-align: center;
+    line-height: 22px;
+    color: #dbdbdb;
+    background-color: black;
+}
+
+.header {
+    margin-left: 16px;
+    color: #979797;
+    font-size: 21px;
+    padding-top: 22px;
+}
+
+.goals {
+    margin-top: 17px;
+    margin-left: 18px;
+    width: 497px;
+    background-color: #29292c;
+}
+
+.goal {
+    margin-top: 19px;
+}
+
+.goal h2 {
+    width: 215px;
+    word-break: break-all;
+}
+
+.goal h2, p {
+    display: inline-block;
+    color: #979797;
+    font-size: 16px;
+}
+
+.goal p {
+    float: right;
+    margin-right: 10px;
+}
+
+.goal img {
+    margin-left: 10px;
+}
+
+.btns {
+    display: flex;
+    justify-content: center;
+    margin-top: 19px;
+}
+
+.btns h1 {
+    color: #979797;
+    font-size: 21px;
+    margin-bottom: 10px;
+}
+
+.noGoals {
+    display: flex;
+    justify-content: center;
+}
+
+.noGoals h1{
+    color: #979797;
+    font-size: 48px;
+    margin-top: 91px;
+}

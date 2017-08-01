@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Play', sans-serif;
+    -webkit-user-select: none;
+}
+
+.container {
+    width: 560px;
+    height: 150px;
+    -webkit-app-region: drag;
+}
+
+
+.sum {
+    position: fixed;
+    z-index: 2;
+    width: 100%;
+    text-align: center;
+    line-height: 50px;
+    height: 50px;
+    font-size: 16px;
+}
+
+.goal {
+    text-align: center;
+}
+
+.uplay {
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+    height: 50px;
+    background-color: #29292c;
+}
+
+.inlay {
+    width: 83.46%;
+    height: 50px;
+    background-color: #f3c647;
+}
+
+.inlay h1 {
+    font-size: 16px;
+    text-align: center;
+    line-height: 50px;
+}
+
+.numbers {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    font-size: 31px;
+}

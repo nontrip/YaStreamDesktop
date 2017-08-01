@@ -1,0 +1,290 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Play', sans-serif;
+    -webkit-user-select: none;
+}
+
+.loading {
+    width: 360px;
+    height: 640px;
+    -webkit-app-region: drag;
+    background-color: #29292c;
+}
+
+.container {
+    width: 360px;
+    min-height: 640px;
+    -webkit-app-region: drag;
+}
+
+.titleBar {
+    font-size: 16px;
+    width: 100%;
+    height: 22px;
+    text-align: center;
+    line-height: 22px;
+    color: #dbdbdb;
+}
+
+.ul-house {
+    height: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    box-shadow: 0px 1px #979797;
+}
+
+ul {
+    margin-bottom: 2px;
+}
+
+ul li{
+    display: inline-block;
+    width: 50%;
+    font-size: 13px;
+    color: #f3c647;
+    cursor: pointer;
+}
+
+ul li p {
+    margin-left: 22px;
+}
+
+.active {
+    box-shadow: 0px 3px #f3c647;
+}
+
+.header {
+    position: fixed;
+    width: 100%;
+    background-color: #29292c;
+}
+
+hr {
+    border: 1px solid #979797;
+}
+
+.donatsMenu {
+    padding-top: 53px;
+    width: 100%;
+    min-height: 588px;
+    background-color: #29292c;
+    overflow: hidden;
+}
+
+.donat {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.donat-house {
+    margin-top: 19px;
+    width: 320px;
+    min-height: 124px;
+    
+}
+
+.img-house {
+    display: inline-block;
+    float: left;
+    width: 32px;
+    height: 32px;
+}
+
+.name {
+    display: inline-block;
+    margin-left: 18px;
+    height: 32px;
+    line-height: 32px;
+    font-size: 16px;
+    color: #858585;
+}
+
+.hr-uns {
+    margin-top: 10px;
+}
+
+.info {
+    color: #858585;
+    font-size: 12px;
+    display: inline-block;
+    float: right;
+    height: 29px;
+    width: 82px;
+    margin-right: 20px;
+}
+
+.sum {
+    float: right;
+}
+
+.date {
+    float: right;
+}
+
+.text-unan {
+    margin-top: 15px;
+    width: 100%;
+    color: #858585;
+    font-size: 12px;
+}
+
+.btn-ans-house {
+    margin-top: 5px;
+    height: 30px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.text-uns {
+    float: left;
+    width: 267px;
+    margin-top: 20px;
+    color: #858585;
+    font-size: 12px;
+    display: inline-block;
+}
+
+.img-house-uns {
+    display: inline-block;
+    float: right;
+    height: 100%;
+    margin-top: 20px;
+}
+
+.img-house-uns img:hover {
+    cursor: pointer;
+}
+
+.rotate {
+    transform: rotate(90deg);
+}
+
+.text-house-na {
+    text-align: center;
+    color: #9E9E9E;
+    margin-top: 150px;
+}
+
+.img-house-na {
+    margin-top: -120px;
+    display: flex;
+    justify-content: center;
+}
+
+.streamMenu {
+    color: #979797;
+    padding-top: 53px;
+    width: 100%;
+    height: 588px;
+    background-color: #29292c;
+}
+
+.stream {
+    width: 100%;
+    height: 106px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stream-house {
+    width: 338px;
+    height: 67px;
+}
+
+.img-house-stream {
+    float: left;
+    display: inline-block;
+}
+
+.img-house-stream:hover {
+    outline: 3px solid #f3c647;
+}
+
+.text-house-stream {
+    display: inline-block;
+    width: 166px;
+    height: 100%;
+    margin-left: 14px;
+}
+
+.text-house-stream h1 {
+    font-size: 17px;
+}
+
+.text-house-stream p {
+    font-size: 12px;
+}
+
+.arrow-house-stream {
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 30px;
+}
+
+.hr-stream {
+    width: 100%;
+}
+
+.unscrollable {
+    overflow: hidden;
+}
+
+.answered {
+    min-height: 100px;
+    color: #858585;
+    background-color: #29292c;
+}
+
+textarea {
+    -webkit-appearance: none;
+    border: 3px solid #f3c647;
+    border-radius: 5px;
+    font-size: 14px; 
+    background: #29292c;
+    color: #858585;
+    width: 300px;
+    height: 80px;
+    margin-left: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+textarea:focus {
+    outline-width: 0;
+}
+
+.btns {
+    display: flex;
+    justify-content: space-around;
+}
+
+.submitAnswer {
+    display: inline-block; 
+    width: 100px;
+    height: 20px;
+    color: black;
+    border-radius: 8px;
+    background-color: #f3c647;
+    text-align: center;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.closeAnswer {
+    display: inline-block;
+    width: 100px;
+    height: 20px;
+    color:black;
+    border-radius: 8px;
+    background-color: #f3c647;
+    text-align: center;
+    margin-right: 10px;
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="alertSettings.css" />
+    <link href="https://fonts.googleapis.com/css?family=Play&amp;subset=cyrillic,cyrillic-ext" rel="stylesheet">
+    <link rel='stylesheet' href='spectrum.css' />
+     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+<!-- normal script imports etc  -->
+<script src="../scripts/jquery.js"></script>     
+
+<!-- Insert this line after script imports -->
+<script>if (window.module) module = window.module;</script>
+<script src='../scripts/spectrum.js'></script>
+    <script>
+        require('babel-register');
+        require('../scripts/alertSettings');
+    </script>
+<!-- width: 659,
+      height: 535, 
+-->
+</head>
+<body>
+    <div class="container">
+        <div class="loading">
+
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('#indi-color').spectrum({
+                color: "#f3c647",
+                preferredFormat: "rgb",
+                showInput: true,
+                showAlpha: true
+            });
+
+            $('#indiBack-color').spectrum({
+                color: "#29292c",
+                preferredFormat: "rgb",
+                showInput: true,
+                showAlpha: true
+            });
+
+            $('#font-color').spectrum({
+                color: "black",
+                preferredFormat: "rgb",
+                showInput: true,
+                showAlpha: true
+            });
+
+            $('#back-color').spectrum({
+                color: "rgba(0,0,0,0)",
+                preferredFormat: "rgb",
+                showInput: true,
+                showAlpha: true
+            });
+        })
+    </script>
+
+</body>
+</html>

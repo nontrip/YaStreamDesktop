@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Play', sans-serif;
+    -webkit-user-select: none;
+}
+
+li {
+    -webkit-app-region: no-drag;
+    cursor: pointer;
+}
+
+/* Don't forget to remove draggable from buttons and input */
+.container {
+    width: 360px;
+    height: 380px;
+    -webkit-app-region: drag;
+    background-color: #29292c;
+}
+
+.loading {
+    width: 360px;
+    height: 380px;
+    background-color: #29292c;
+}
+
+.titleBar {
+    font-size: 16px;
+    width: 100%;
+    height: 22px;
+    text-align: center;
+    line-height: 22px;
+    color: #dbdbdb;
+}
+
+.img-house {
+    display: flex;
+    justify-content: center;
+    margin-top: 33px;
+}
+
+.img-house1 {
+    width: 106px;
+    height: 106px;
+    background: url('../images/logo.png') no-repeat center;
+    -webkit-background-size: cover;
+}
+
+
+.text-house {
+    color: #f3c647;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-top: 14px;
+}
+
+.text-house h1 {
+    margin-left: auto;
+    margin-right: auto;
+    width: 210px;
+    font-size: 24px;
+}
+
+.hr-div {
+    height: 4px;
+    width: 100%;
+    background-color: #f3c647;
+    margin-top: 13px;
+}
+
+.menu-bar {
+    margin-left: 44px;
+    color: #979797;
+    overflow: visible;
+}
+
+.menu-bar ul {
+    list-style: none;
+}
+
+.menu-bar ul li {
+    margin-top: 25px;
+    display: inline-block;
+}
+
+.menu-bar ul li:hover {
+    color: #f3c647;
+    background-image: url("bullet.png");
+	background-repeat: no-repeat;
+	background-position: -20px;
+	background-size: 10px;
+}

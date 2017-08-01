@@ -1,0 +1,109 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Play', sans-serif;
+    -webkit-user-select: none;
+}
+
+.loading {
+    width: 360px;
+    height: 640px;
+    -webkit-app-region: drag;
+    background-color: #29292c;
+}
+
+.container {
+    width: 660px;
+    height: 375px;
+    -webkit-app-region: drag;
+    background-color: #29292c;
+}
+
+.header-text {
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-text p, h1 {
+    display: inline-block;
+}
+
+.header-text p {
+    float: left;
+    color: #979797;
+    margin-top: 10px;
+    margin-right: 30px;
+    font-size: 12px;
+}
+
+.header-text h1 {
+    color: #f3c647;
+    font-size: 24px;
+    margin-right: 230px;
+}
+
+.header hr {
+    border: 2px solid #f3c647;
+}
+
+.info {
+    margin-left: 25px;
+}
+
+.info h1, h2 {
+    color: #858585;
+    font-size: 24px;
+}
+
+.info h1 {
+    margin-top: 31px;
+}
+
+.info h2 {
+    margin-top: 18px;
+}
+
+.gold {
+    color: #f3c647;
+}
+
+.spec {
+    width: 480px;
+}
+
+.progressBar {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+p {
+    margin-top: 6px; 
+    display: inline-block;
+    color: #979797;
+    font-size: 21px;
+}
+
+p:first-child {
+    margin-left: 100px;
+}
+
+p:last-child {
+    margin-right: 80px;
+}
+
+.layout {
+    margin-top: 10px;
+    width: 300px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    outline: 3px solid #979797;
+}
+
+.layin {
+    width: 100px;
+    height: 23px;
+    background-color: #f3c647
+}
