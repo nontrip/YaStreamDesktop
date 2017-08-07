@@ -6,6 +6,10 @@
 npm install
 npm start
 ```
+build v1.1.0
+win 
+mac
 
-Test build:
-https://cloud.mail.ru/public/HE9J/pNC2EF8zC
+build v1.0.0:
+win https://cloud.mail.ru/public/HE9J/pNC2EF8zC
+
