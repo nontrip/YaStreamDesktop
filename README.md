@@ -7,7 +7,9 @@ npm install
 npm start
 ```
 build v1.1.0
-win 
+
+win https://cloud.mail.ru/public/3wGg/9cyBJu7VF
+
 mac
 
 build v1.0.0:
