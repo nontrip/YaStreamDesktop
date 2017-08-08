@@ -22,6 +22,21 @@ export default class BottomLayer extends React.Component {
         <select id="goal">
             <option>Без цели</option>
         </select>
+      
+        <div className="buttons">
+        <ul>
+        <li>
+            <div className="start">
+              <p>Поехали!!!</p>
+            </div>
+        </li>
+        <li>
+            <div className="update">
+              <p>Обновить</p>
+            </div>
+        </li>
+        </ul>
+        </div>
     </div>)
   }
 }

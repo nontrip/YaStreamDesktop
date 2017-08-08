@@ -262,7 +262,7 @@ input:checked + .slider:before {
     width: 100px;
     height: 25px;
     background-color: #f3c647;
-    border-radius: 8px;
+    border-radius: 4px;
     line-height: 25px;
     margin-top: 31px;
     margin-right: 5px;
@@ -271,6 +271,7 @@ input:checked + .slider:before {
 
 .start p {
     color: black;
+    font-size: 15px;
 }
 
 .checkbox2 {
@@ -284,4 +285,37 @@ input:checked + .slider:before {
 
 .goal_left {
     margin-left: 2px;
+}
+
+.buttons {
+    margin: 0 auto;
+}
+ul li {
+    margin: 0 auto;
+    display: inline-block;
+    text-align: center;
+}
+ul 
+{
+    text-align: center;
+}
+li {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.update {
+    cursor: pointer;
+    width: 100px;
+    height: 25px;
+    background-color: #f3c647;
+    border-radius: 4px;
+    line-height: 25px;
+    margin-top: 31px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+
+}
+.update p {
+    color: black;
+    font-size: 15px;
 }

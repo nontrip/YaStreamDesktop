@@ -184,6 +184,15 @@ ipcMain.on('show-newStream', () => {
       show: false    })
     newStreamWindow.loadURL('file://' + __dirname + '/HTMLs/newStream.html');
     newStreamWindow.on('closed', () => {
+      if (playerWindow){
+        playerWindow.close();
+      }
+      if (donationGoalWindow){
+        donationGoalWindow.close()
+      } 
+      if (alertWindow){
+        alertWindow.close()
+      }
       newStreamWindow = null
       mainWindow.show()
     })
@@ -283,17 +292,9 @@ ipcMain.on('start-stream', (event, arg) => {
     playerWindow.loadURL('file://' + __dirname + '/HTMLs/player.html');
     playerWindow.on('closed', () => {
       playerWindow = null;
-      mainWindow.show()
-      if (donationGoalWindow){
-        donationGoalWindow.close()
-      } 
-      if (alertWindow){
-        alertWindow.close()
-      }
     })
     playerWindow.once('ready-to-show', () => {
       playerWindow.show()
-      mainWindow.hide()
     })
     let goalToOpen = fs.readFileSync('goalToOpen.txt', 'utf8')
     if (goalToOpen.length > 0) {
@@ -400,6 +401,15 @@ ipcMain.on('show-newStreamFromMain', () => {
     })
     newStreamWindow.loadURL('file://' + __dirname + '/HTMLs/newStream.html');
     newStreamWindow.on('closed', () => {
+      if (playerWindow){
+        playerWindow.close();
+      }
+      if (donationGoalWindow){
+        donationGoalWindow.close()
+      } 
+      if (alertWindow){
+        alertWindow.close()
+      }
       newStreamWindow = null
       mainWindow.show()
     })
