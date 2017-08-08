@@ -145,9 +145,7 @@ input[type='range']::-webkit-slider-thumb {
 }
 
 .input-height {
-    width: 50px;
-    height: 20px;
-    margin-left: 20px;
+    margin-left: 15px;
 }
 
 .p-right {
@@ -219,6 +217,7 @@ a:link {
 }
 
 .button {
+    cursor: pointer;
     width: 200px;
     height: 35px;
     background-color: #f3c647;
@@ -228,4 +227,9 @@ a:link {
     text-align: center;
     line-height: 35px;
     display: inline-block;
+}
+
+.input-height {
+    display: inline-block;
+    color: #858585;
 }

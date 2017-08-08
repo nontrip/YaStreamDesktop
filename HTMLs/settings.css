@@ -46,4 +46,5 @@
 
 .settings ul li:hover {
     color: #efbc38;
+    cursor: pointer;
 }

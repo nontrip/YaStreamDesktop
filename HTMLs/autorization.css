@@ -10,7 +10,6 @@ li {
     cursor: pointer;
 }
 
-/* Don't forget to remove draggable from buttons and input */
 .container {
     width: 360px;
     height: 380px;
@@ -56,9 +55,7 @@ li {
 }
 
 .text-house h1 {
-    margin-left: auto;
-    margin-right: auto;
-    width: 210px;
+    text-align: center;
     font-size: 24px;
 }
 
@@ -86,8 +83,4 @@ li {
 
 .menu-bar ul li:hover {
     color: #f3c647;
-    background-image: url("bullet.png");
-	background-repeat: no-repeat;
-	background-position: -20px;
-	background-size: 10px;
 }

@@ -83,19 +83,10 @@ li {
 .buttons {
     color: #979797;
     list-style: none;
-    display: flex;
-    justify-content: space-between;
+    margin-left: 8px;
     margin-top: 115px;
 }
 
 .buttons li {
     display: inline-block;
-}
-
-.buttons li:first-child {
-    margin-left: 80px;
-}
-
-.buttons li:last-child {
-    margin-right: 80px;
 }

@@ -5,19 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="goalInfo.css" />
     <link href="https://fonts.googleapis.com/css?family=Play&amp;subset=cyrillic,cyrillic-ext" rel="stylesheet">
-     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-
-<!-- normal script imports etc  -->
-<script src="../scripts/jquery.js"></script>     
-<script src="../scripts/qrcode.js"></script>
-<!-- Insert this line after script imports -->
-<script>if (window.module) module = window.module;</script>
-   <script>
+    <title>QR Code</title>
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script src="../scripts/jquery.js"></script>     
+    <script src="../scripts/qrcode.js"></script>
+    <script>if (window.module) module = window.module;</script>
+    <script>
         require('babel-register');
     </script>
-<!-- height:  380px
-     width: 360px
--->
 </head>
 <style>
     #qrcode {
@@ -32,7 +27,6 @@
     <script>
         const fs = require('fs')
         let link = fs.readFileSync('qrcodelink.txt', "utf8")
-        console.log(link)
         new QRCode(document.getElementById("qrcode"), link);
         fs.writeFile('qrcodelink.txt', '')
     </script>

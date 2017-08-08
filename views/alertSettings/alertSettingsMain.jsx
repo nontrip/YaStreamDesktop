@@ -16,7 +16,7 @@ export default class alertSettingsMain extends React.Component {
                 <hr />
             </div>
             <IndicatorBar />
-            <div className="range"><p className="left-p">Высота индикатора: </p><input type="range" min="20" max="100" step="1" defaultValue="60" /><input id="input-height" className="input-height" type="text" readOnly/><p className="p-right"> px</p></div>
+            <div className="range"><p className="left-p">Высота индикатора: </p><input type="range" min="20" max="100" step="1" defaultValue="60" /><p id="input-height" className="input-height"></p><p className="p-right"> px</p></div>
             <div className="middle">
                 <h1>Параметры отображения элементов: </h1>
                 <hr />

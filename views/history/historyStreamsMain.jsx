@@ -8,7 +8,7 @@ import NoSmth from '../common/noSmth.jsx'
 
 export default class HistoryMain extends React.Component {
   render() {
-    let mainField = this.props.tranlations ? <StreamsMenu /> : <NoSmth obj="трансляций"/>
+    let mainField = this.props.tranlations ? <StreamsMenu streams={this.props.tranlations}/> : <NoSmth obj="трансляций"/>
 
     return (
         <div>

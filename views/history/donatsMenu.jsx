@@ -8,7 +8,7 @@ export default class DonatsMenu extends React.Component {
     let donats = this.props.donats
     let answered
     let donatsList = donats.map(function(donat, index){
-        return <Donat Answered={donat.answer} donatInfo={donat}/>
+        return <Donat key={index} Answered={donat.answer} donatInfo={donat}/>
     })
     return (
         <div className="donatsMenu">

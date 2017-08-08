@@ -8,7 +8,7 @@ export default class SettingsMain extends React.Component {
 
         let points = this.props.points
         let pointsList = points.map(function(point, index){
-            return <div><li key={index}>{point}</li></div>
+            return <div key={index}><li key={index}>{point}</li></div>
         })
 
     return (

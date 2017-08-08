@@ -11,7 +11,7 @@ const fs = require('fs');
 let goals
 
 $.ajax({
-    url: 'http://streambeta.azurewebsites.net/api/Goals?streamer_id=' + localStorage.ya_account +'&status=all',
+    url: 'https://yastream.win/api/Goals?streamer_id=' + localStorage.ya_account +'&status=all',
     type: 'GET',
     async: false,
     beforeSend: function (xhr) {

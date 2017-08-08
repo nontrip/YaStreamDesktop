@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom';
 import AlertSettingsMain from '../views/alertSettings/alertSettingsMain.jsx'
 
 const $ = require('./jquery.js')
+const remote = require('electron').remote
 
 window.onload = function(){
     ReactDOM.render(<AlertSettingsMain />, document.getElementsByClassName('container')[0]);
-    $('#input-height').val(50)
+    $('#input-height').text(50)
     $('input[type="range"]').on("change mousemove", function () {
     var val = ($(this).val() - $(this).attr('min')) / ($(this).attr('max') - $(this).attr('min'));
-    $('#input-height').val(Math.round(val*100))
+    $('#input-height').text(Math.round(val*100))
     $(this).css('background-image',
                 '-webkit-gradient(linear, left top, right top, '
                 + 'color-stop(' + val + ', #f3c647), '
@@ -39,11 +40,12 @@ window.onload = function(){
         } else {
             localStorage.setItem('goalsSettings_backColor', $('#back-color').val())
         }
-        localStorage.setItem('goalsSettings_indiHeight', $('#input-height').val())
+        localStorage.setItem('goalsSettings_indiHeight', $('#input-height').text())
         localStorage.setItem('goalsSettings_showHeading', $('#showHeading').val())
         localStorage.setItem('goalsSettings_showAmount', $('#showAmount').val())
         localStorage.setItem('goalsSettings_showLimits', $('#showLimits').val())
         localStorage.setItem('HasGoalSettings', 'True')
+        remote.getCurrentWindow().close()
     }
 
 }

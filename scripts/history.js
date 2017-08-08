@@ -13,7 +13,7 @@ let donats = true
 let streams = true
 
 $.ajax({
-    url: 'https://yastream.win/api/donations/GetAllDonations?type=streamse&id=' + localStorage.ya_account,
+    url: 'https://yastream.win/api/donations/GetAllDonations?type=streamer&id=' + localStorage.ya_account,
     type: 'GET',
     async: false,
     beforeSend: function (xhr) {
@@ -25,6 +25,7 @@ $.ajax({
         if (donats.length == 0) {
            donats = false
         }
+        console.log(donats)
     },
     error: function(error){
         console.log(error)

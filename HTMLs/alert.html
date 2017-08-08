@@ -9,18 +9,22 @@
         require('babel-register');
        
     </script>
-<!-- height:  380px
-     width: 360px
--->
+
     <style>
     #messages {
         width: 600px;
         height: 200px;
     }
+
+    body{
+        background-color: blue;
+        -webkit-app-region: drag;
+        overflow: hidden;
+    }
 </style>
 </head>
 <body>
-     <div id='messages'></div>
+     <div id='messages'><p>hello</p></div>
     <script type="text/javascript">
 const remote = require('electron').remote
 //Не успел доделать до конца. Мало времени получилось :(
@@ -43,11 +47,14 @@ const remote = require('electron').remote
     }, localStorage.alertingTime)
 
     socket.onmessage = function(event, msg) {
-        remote.getCurrentWindow.show()
+        remote.getCurrentWindow().show()
         var $el = document.createElement('p');
         $el.style.width = '500px'
         $el.innerHTML = 'Пользователь ' + event.data.sender + ' прислал пожертвование '+ event.data.amount +' руб. и сообщение: ' + event.data.text_data;
         $messages.appendChild($el);
+        setTimeout(function(){
+            remote.getCurrentWindow().hide()
+        }, 2000)
     };
 
     socket.onclose = function(event) {

@@ -11,9 +11,10 @@ let checker = false
 
 const $ = require('./jquery.js')
 const remote = require('electron').remote
+const {Tray} = require('electron').remote
 
 $.ajax({
-    url: 'https://yastream.win/api/donations/GetAllDonations?type=streamse&id=' + localStorage.ya_account,
+    url: 'https://yastream.win/api/donations/GetAllDonations?type=streamer&id=' + localStorage.ya_account + '&stream_id=' +  localStorage.liveStream_id,
     type: 'GET',
     async: false,
     beforeSend: function (xhr) {
@@ -33,9 +34,15 @@ $.ajax({
 })
 
 window.onload = function(){
-    console.log(localStorage.streamName)
     ReactDOM.render(<Header total={total} name={localStorage.streamName}/>, document.getElementsByClassName('header')[0])
     ReactDOM.render(<PlayerMain full={full} donats={donats}/>, document.getElementsByClassName('main')[0])
+
+    let tray = new Tray(__dirname + '/../images/turn-off.png')
+    tray.on('click', () => {
+        tray.destroy()
+        //post request to close online stream
+        remote.getCurrentWindow().close()
+    })
 
     document.getElementsByClassName('header-right')[0].childNodes[0].onclick = () => {
         if (full){
@@ -92,11 +99,10 @@ window.onload = function(){
     };
 
     socket.onclose = function(event) {
-        alert('124s');
+        console.log('ws is closed')
     };
 }
 
 remote.getCurrentWindow().on('closed', () => {
     localStorage.removeItem('streamName')
-    //POST ЗАПРОС НА УДАЛЕНИЕ СТРИМА ИЗ ОНЛАЙН СТРИМС
 })

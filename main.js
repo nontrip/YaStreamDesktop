@@ -1,11 +1,13 @@
-import { app, BrowserWindow } from 'electron';
+const electron = require('electron')
+const app = electron.app
+const BrowserWindow = electron.BrowserWindow
 
 const {ipcMain} = require('electron')
 const fs = require('fs')
 
 let alertWindow = null
 let alertSettingsWindow = null
-let autorizationWindow = null //
+let autorizationWindow = null
 let chooseAuthWindow = null
 let chooseSrcWindow = null 
 let donationGoalWindow = null
@@ -13,12 +15,11 @@ let donationGoalsWindow = null
 let donationSettingsWindow = null
 let goalInfoWindow = null
 let historyWindow = null
-let mainWindow = null //
+let mainWindow = null
 let newGoalWindow = null
 let newStreamWindow = null
 let playerWindow = null
 let settingsWindow = null
-
 
 app.on('window-all-closed', () => {
   if (process.platform != 'darwin') {
@@ -35,8 +36,8 @@ app.on('ready', () => {
       resizable: false,
       titleBarStyle: 'hidden',
       fullscreenable: false,
-      show: false
-    });
+      show: false,
+      frame: false   });
     mainWindow.loadURL('file://' + __dirname + '/HTMLs/main.html');
     mainWindow.once('ready-to-show', () => {
       mainWindow.show()
@@ -93,8 +94,8 @@ ipcMain.on('show-settings', (event) => {
     settingsWindow = new BrowserWindow({
       width: 500,
       height: 220, 
-      titleBarStyle: 'hidden', 
       resizable: false,
+      titleBarStyle: 'hidden', 
       fullscreenable: false,
       show: false
     });
@@ -159,7 +160,8 @@ ipcMain.on('show-chooseSrc', () => {
       titleBarStyle: 'hidden', 
       resizable: false,
       fullscreenable: false,
-      show: false
+      show: false,
+      frame: false
     })
     chooseSrcWindow.loadURL('file://' + __dirname + '/HTMLs/chooseSrc.html');
     chooseSrcWindow.on('closed', () => {
@@ -179,8 +181,7 @@ ipcMain.on('show-newStream', () => {
       titleBarStyle: 'hidden', 
       resizable: false,
       fullscreenable: false,
-      show: false
-    })
+      show: false    })
     newStreamWindow.loadURL('file://' + __dirname + '/HTMLs/newStream.html');
     newStreamWindow.on('closed', () => {
       newStreamWindow = null
@@ -215,7 +216,7 @@ ipcMain.on('show-alertSettings', () => {
   settingsWindow.hide()
   alertSettingsWindow = new BrowserWindow({
       width: 659,
-      height: 675, 
+      height: 580, 
       titleBarStyle: 'hidden', 
       resizable: false,
       fullscreenable: false,
@@ -234,8 +235,8 @@ ipcMain.on('show-alertSettings', () => {
 ipcMain.on('show-newGoal', () => {
   donationGoalsWindow.hide()
   newGoalWindow = new BrowserWindow({
-      width: 659,
-      height: 675, 
+      width: 408,
+      height: 313,  
       titleBarStyle: 'hidden', 
       resizable: false,
       fullscreenable: false,
@@ -264,17 +265,20 @@ ipcMain.on('donationSettings-closed', () => {
   donationSettingsWindow.close()
 })
 
-ipcMain.on('start-stream', () => {
-  chooseSrcWindow.close()
-  newStreamWindow.close()
+ipcMain.on('start-stream', (event, arg) => {
   mainWindow.hide()
+  if (chooseAuthWindow){
+    chooseSrcWindow.close()
+  }
+  //newStreamWindow.close()
   playerWindow = new BrowserWindow({
       width: 360,
       height: 435, 
       titleBarStyle: 'hidden', 
       resizable: false,
       fullscreenable: false,
-      show: false
+      show: false,
+      frame: false
     })
     playerWindow.loadURL('file://' + __dirname + '/HTMLs/player.html');
     playerWindow.on('closed', () => {
@@ -289,7 +293,7 @@ ipcMain.on('start-stream', () => {
     })
     playerWindow.once('ready-to-show', () => {
       playerWindow.show()
-      //mainWindow.hide()
+      mainWindow.hide()
     })
     let goalToOpen = fs.readFileSync('goalToOpen.txt', 'utf8')
     if (goalToOpen.length > 0) {
@@ -383,3 +387,23 @@ let openMain = () => {
       mainWindow.show()
     })
 }
+
+ipcMain.on('show-newStreamFromMain', () => {
+  mainWindow.hide()
+  newStreamWindow = new BrowserWindow({
+      width: 659,
+      height: 675, 
+      titleBarStyle: 'hidden', 
+      resizable: false,
+      fullscreenable: false,
+      show: false
+    })
+    newStreamWindow.loadURL('file://' + __dirname + '/HTMLs/newStream.html');
+    newStreamWindow.on('closed', () => {
+      newStreamWindow = null
+      mainWindow.show()
+    })
+    newStreamWindow.once('ready-to-show', () => {
+      newStreamWindow.show()
+    })
+})

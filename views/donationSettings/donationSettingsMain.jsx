@@ -18,14 +18,14 @@ export default class DonationSettingsMain extends React.Component {
                     <input id="color-picker" readOnly type="text"/>
                 </div>
             </div>
-            <div className="range"><p className="left-p">Продолжительность оповещения: </p><input type="range" min="0" max="60" step="1" defaultValue="30" /><input id="inputHeight" className="input-height" type="text" readOnly/><p className="p-right"> сек.</p></div>
+            <div className="range"><p className="left-p">Продолжительность оповещения: </p><input type="range" min="0" max="60" step="1" defaultValue="30" /><p id="inputHeight" className="input-height">30</p><p className="p-right"> сек.</p></div>
             <div className="image">
                 <h1>Изображение: </h1>
                 <input type="file"/>
             </div>
             <div className="text">
                 <h1>Шаблон заголовка: </h1>
-                <input type="text"/>
+                <input type="text" placeholder="Спасибо, |username|, за |amount|"/>
                 <p>Доступные теги: |username|, |amount|, |message|</p>
             </div>
             <div className="sound">

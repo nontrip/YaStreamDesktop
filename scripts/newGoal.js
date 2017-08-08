@@ -21,7 +21,7 @@ window.onload = function(){
             "status": "started"
         }
             $.ajax({
-            url: 'http://streambeta.azurewebsites.net/api/Goals',
+            url: 'https://yastream.win/api/Goals',
             type: 'POST',
             data: JSON.stringify(body1),
             beforeSend: function (xhr){

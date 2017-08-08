@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import ChooseSrcMain from '../views/chooseSrc/chooseSrcMain.jsx';
 
 const {ipcRenderer} = require('electron')
-//const remote = require('electron').remote
+const remote = require('electron').remote
 
 window.onload = function(){
     ReactDOM.render(<ChooseSrcMain />, document.getElementsByClassName('container')[0]);
@@ -14,7 +14,10 @@ window.onload = function(){
         source.onclick = function(){
             localStorage.setItem('source', this.className)
             ipcRenderer.send('show-newStream')
-            //remote.getCurrentWindow().hide()
         }
+    }
+
+    document.getElementsByClassName('return')[0].onclick = () => {
+        remote.getCurrentWindow().close()
     }
 }

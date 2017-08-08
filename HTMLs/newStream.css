@@ -19,8 +19,13 @@
     background-color: #29292c;
 }
 
-input {
+input, .range, .range2, .getQR {
     -webkit-app-region: no-drag;
+    cursor: pointer;
+}
+
+.valid:focus {
+    cursor: text;
 }
 
 .header {
@@ -29,6 +34,7 @@ input {
     align-items: flex-end;
     justify-content: space-between;
 }
+
 .header p {
     display: inline-block;
     font-size: 13px;
@@ -36,9 +42,8 @@ input {
     margin-left: 20px;
 }
 
-.header p:last-child {
-    color: #f3c647;
-    margin-right: 20px;
+.return {
+    cursor: pointer;
 }
 
 .header h1 {
@@ -151,6 +156,12 @@ input:focus {
     margin-right: 95px;
 }
 
+.right-p1 {
+    display: inline-block;
+    float: right;
+    margin-right: 120px;
+}
+
 input[type="range"]{
     margin-left: 10px;
     -webkit-appearance: none;
@@ -181,14 +192,14 @@ input[type='range']::-webkit-slider-thumb {
 }
 
 h2 {
+    font-size: 18px;
     margin-top: 26px;
-    margin-left: -5px;
+    margin-left: -10px;
     width: 286px;
     display: inline-block;
     color: #979797;
 }
 
-/* The switch - the box around the slider */
 .switch {
   position: relative;
   display: inline-block;
@@ -197,8 +208,9 @@ h2 {
   margin-left: 65px;
 }
 
-/* Hide default HTML checkbox */
-.switch input {display:none;}
+.switch input {
+    display: none;
+}
 
 .slider.round {
   border-radius: 34px;
@@ -246,13 +258,15 @@ input:checked + .slider:before {
 }
 
 .start {
-    width: 175px;
-    height: 35px;
+    cursor: pointer;
+    width: 100px;
+    height: 25px;
     background-color: #f3c647;
     border-radius: 8px;
-    text-align: center;
-    line-height: 35px;
+    line-height: 25px;
     margin-top: 31px;
+    margin-right: 5px;
+    margin-bottom: 5px;
 }
 
 .start p {
@@ -269,5 +283,5 @@ input:checked + .slider:before {
 }
 
 .goal_left {
-    margin-left: 8px;
+    margin-left: 2px;
 }

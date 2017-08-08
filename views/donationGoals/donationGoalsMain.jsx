@@ -10,7 +10,7 @@ export default class DonationGoalsMain extends React.Component {
     let main = this.props.goals ? <GoalsMenu goals={this.props.goals} /> : <NoGoals />
     return (
         <div className="donationGoals">
-            <TitleBar windowName="Новый стрим" />
+            <TitleBar windowName="Яндекс.Стрим" />
             {main}
         </div>
     )

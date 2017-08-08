@@ -12,7 +12,6 @@ window.onload = function(){
     let color = 'rgba(0, 0, 0, 0)'
     $('#color-picker').on('change', function(){
         color = $(this).val()
-        console.log(color)
     })
      var val = ($('input[type="range"]').val() - $('input[type="range"]').attr('min')) / ($('input[type="range"]').attr('max') - $('input[type="range"]').attr('min'));
         $('#inputHeight').val(60*val)
@@ -26,11 +25,7 @@ window.onload = function(){
                 + 'color-stop(' + val + ', #979797)'
                 + ')'
                 );
-    })
-
-    $('input[type="range"]').on('change', function(){
-        var val = ($(this).val() - $(this).attr('min')) / ($(this).attr('max') - $(this).attr('min'));
-        $('#inputHeight').val(60*val)
+            $('#inputHeight').text(60*val)
     })
 
     $('input[type="checkbox"]').on('click', function(){

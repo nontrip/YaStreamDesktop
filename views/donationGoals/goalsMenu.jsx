@@ -7,7 +7,7 @@ export default class GoalsMenu extends React.Component {
   render() {
         let goals = this.props.goals
         let goalsList = goals.map(function(goal, index){
-            return <Goal goalInfo={goal} />
+            return <Goal key={index} goalInfo={goal} />
         })
     return (
         <div>
