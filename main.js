@@ -286,8 +286,7 @@ ipcMain.on('start-stream', (event, arg) => {
       titleBarStyle: 'hidden', 
       resizable: false,
       fullscreenable: false,
-      show: false,
-      frame: false
+      show: false
     })
     playerWindow.loadURL('file://' + __dirname + '/HTMLs/player.html');
     playerWindow.on('closed', () => {

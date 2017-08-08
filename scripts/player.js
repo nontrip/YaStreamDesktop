@@ -27,6 +27,9 @@ $.ajax({
            donats = false
         }
         console.log(donats)
+        donats.forEach(function(item) {
+            total+=item.amount/100
+        });
     },
     error: function(error){
         console.log(error)
@@ -83,14 +86,15 @@ window.onload = function(){
     };
 
     socket.onmessage = function(event, msg) {
-        console.log(event.data)
         if (!checker){
             checker = true
         } else {
+            var donation = JSON.parse(event.data)
             console.log(event.data)
-            donats.push(event.data)
-            total += event.data.amount*100
+            donats.push(donation)
+            total += donation.amount/100
             ReactDOM.render(<Header total={total} name={localStorage.streamName}/>, document.getElementsByClassName('header')[0])
+            console.log(donats)
             ReactDOM.render(<PlayerMain full={full} donats={donats}/>, document.getElementsByClassName('main')[0])
         }
        if (!donats) {
