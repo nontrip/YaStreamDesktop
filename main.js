@@ -52,7 +52,8 @@ app.on('ready', () => {
         titleBarStyle: 'hidden', 
         resizable: false,
         fullscreenable: false,
-        show: false
+        show: false,
+        frame: false
       })
       autorizationWindow.loadURL('file://' + __dirname + '/HTMLs/autorization.html');
       autorizationWindow.on('closed', () => {
@@ -73,7 +74,8 @@ ipcMain.on('show-auto-from-settings', () => {
         titleBarStyle: 'hidden', 
         resizable: false,
         fullscreenable: false,
-        show: false
+        show: false,
+        frame: false
       })
       autorizationWindow.loadURL('file://' + __dirname + '/HTMLs/autorization.html');
       autorizationWindow.on('closed', () => {
@@ -377,7 +379,8 @@ let openMain = () => {
       titleBarStyle: 'hidden', 
       resizable: false,
       fullscreenable: false,
-      show: false
+      show: false,
+      frame: false
     });
     mainWindow.loadURL('file://' + __dirname + '/HTMLs/main.html');
     mainWindow.on('closed', () => {

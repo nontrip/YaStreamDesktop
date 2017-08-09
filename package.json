@@ -1,20 +1,19 @@
 {
   "name": "YaStream",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "main": "main.js",
   "license": "MIT",
   "repository": "b52/electron-es6-react",
   "scripts": {
     "start": "electron -r babel-register .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder",
-    "dmg": "electron-builder -mwl" 
+    "dist": "electron-builder"
   },
   "build": {
     "appId": "yastream.win",
     "win": {
       "target": "nsis",
-      "icon": "build/icon.ico"
+      "icon": "images/icon.ico"
     },
     "dmg": {
       "contents": [
@@ -33,12 +32,16 @@
     "files": [
       "!goal.txt",
       "!goalToOpen.txt",
-      "!log.txt"
+      "!log.txt",
+      "!autoAlert.txt",
+      "!qrcodelink.txt"
     ],
     "extraFiles": [
       "goal.txt",
       "goalToOpen.txt",
-      "log.txt"
+      "log.txt",
+      "autoAlert.txt",
+      "qrcodelink.txt"
     ]
   },
 
