@@ -4,12 +4,14 @@ import NewGoalMain from '../views/newGoal/newGoalMain.jsx';
 
 const {ipcRenderer} = require('electron')
 const $ = require('./jquery.js')
-
+const remote = require('electron').remote
 
 
 window.onload = function(){
     ReactDOM.render(<NewGoalMain />, document.getElementsByClassName('container')[0]);
-
+    document.getElementsByClassName('return')[0].onclick = () => {
+        remote.getCurrentWindow().close()
+    }
     document.getElementsByClassName('btn').item(0).onclick = () => {
         let date = new Date()
         let body1 = {

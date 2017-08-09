@@ -5,6 +5,7 @@
     -webkit-user-select: none;
 }
 
+
 .loading {
     width: 360px;
     height: 640px;
@@ -25,11 +26,15 @@
     justify-content: space-between;
 }
 
-.header-text p, h1 {
+.header-text p,
+h1 {
     display: inline-block;
 }
-
+p.return {
+    -webkit-app-region: no-drag;
+}
 .header-text p {
+    cursor: pointer;
     float: left;
     color: #979797;
     margin-top: 10px;
@@ -53,6 +58,7 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    -webkit-app-region: no-drag;
 }
 
 .inputs input {
@@ -64,7 +70,8 @@
     width: 288px;
 }
 
-input:focus, input:hover {
+input:focus,
+input:hover {
     outline: none;
     border-bottom: 3px solid #f3c647;
 }
@@ -84,4 +91,6 @@ input:focus, input:hover {
     margin-top: 41px;
     color: #1f1f21;
     line-height: 35px;
+    -webkit-app-region: no-drag;
+    cursor: pointer;
 }

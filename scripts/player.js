@@ -12,6 +12,7 @@ let checker = false
 const $ = require('./jquery.js')
 const remote = require('electron').remote
 const {Tray} = require('electron').remote
+const { ipcRenderer } = require('electron')
 
 $.ajax({
     url: 'https://yastream.win/api/donations/GetAllDonations?type=streamer&id=' + localStorage.ya_account + '&stream_id=' +  localStorage.liveStream_id,
@@ -96,6 +97,7 @@ window.onload = function(){
             ReactDOM.render(<Header total={total} name={localStorage.streamName}/>, document.getElementsByClassName('header')[0])
             console.log(donats)
             ReactDOM.render(<PlayerMain full={full} donats={donats}/>, document.getElementsByClassName('main')[0])
+            ipcRenderer.send('update-goal', donation.amount);
         }
        if (!donats) {
            donats = []

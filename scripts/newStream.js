@@ -51,6 +51,12 @@ window.onload = function() {
     for (let i = 0; i < goals.length; i++) {
         $('#goal').append(new Option(goals[i].name, goals[i].name))
     }
+
+    if (localStorage.liveStream_goal) {
+        fs.writeFileSync('goalToOpen.txt', localStorage.liveStream_goal)
+        $('#goal').val(localStorage.liveStream_goal)
+    }
+
     $('input[type="range"]').on("change mousemove", function() {
         var val = ($(this).val() - $(this).attr('min')) / ($(this).attr('max') - $(this).attr('min'));
 
@@ -79,10 +85,12 @@ window.onload = function() {
             fs.writeFileSync('qrcodelink.txt', $('#link').val())
             let qrWindow = new remote.BrowserWindow({
                 width: 270,
-                height: 285,
+                height: 265,
                 resizable: false,
                 fullscreenable: false,
-                show: false
+                show: false,
+                autoHideMenuBar: true,
+                useContentSize: true
             })
             qrWindow.loadURL('file://' + __dirname + '/../HTMLs/qrCode.html');
             qrWindow.on('closed', () => {
@@ -152,6 +160,9 @@ function startstream() {
     } else {
         fs.writeFileSync('autoAlert.txt', autoAlert)
         if ($('#goal').val() != 'Без цели') {
+            localStorage.setItem('liveStream_goal', $('#goal').val())
+            console.log('10')
+            console.log(localStorage.liveStream_goal)
             fs.writeFileSync('goalToOpen.txt', $('#goal').val())
         }
         let date = new Date()
@@ -174,7 +185,6 @@ function startstream() {
             start_date: push,
             channel: document.getElementById('channel').value
         }
-
         localStorage.setItem('liveStream_startdate', data.start_date)
         localStorage.setItem('liveStream_name', document.getElementById('name').value)
         localStorage.setItem('liveStream_url', data.url)

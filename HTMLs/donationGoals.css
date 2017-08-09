@@ -13,7 +13,7 @@
 }
 
 .container {
-    width: 533px;
+    width: 100%;
     min-height: 338px;
     height: 100%;
     -webkit-app-region: drag;
@@ -33,7 +33,7 @@
     text-align: center;
     line-height: 22px;
     color: #dbdbdb;
-    background-color: black;
+    background-color: #29292c;;
 }
 
 .header {
@@ -48,6 +48,7 @@
     margin-left: 18px;
     width: 497px;
     background-color: #29292c;
+    -webkit-app-region: no-drag;   
 }
 
 .goal {
@@ -76,14 +77,33 @@
 
 .btns {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     margin-top: 19px;
+    -webkit-app-region: no-drag; 
 }
 
+.btns p,
+h1 {
+    display: inline-block;
+}
 .btns h1 {
     color: #979797;
     font-size: 21px;
     margin-bottom: 10px;
+    margin-right: 213px;
+    cursor: pointer;
+    width: 110px;
+}
+.btns p {
+    cursor: pointer;
+    float: left;
+    color: #979797;
+    margin-top: 3px;
+    margin-left: 20px;
+    font-size: 12px;
+}
+p.return {
+
 }
 
 .noGoals {

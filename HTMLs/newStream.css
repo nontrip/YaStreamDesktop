@@ -5,6 +5,11 @@
     -webkit-user-select: none;
 }
 
+li {
+    -webkit-app-region: no-drag;
+    cursor: pointer;
+}
+
 .loading {
     width: 659px;
     height: 675px;
@@ -19,7 +24,10 @@
     background-color: #29292c;
 }
 
-input, .range, .range2, .getQR {
+input,
+.range,
+.range2,
+.getQR {
     -webkit-app-region: no-drag;
     cursor: pointer;
 }
@@ -55,7 +63,7 @@ input, .range, .range2, .getQR {
 .hr-ns {
     height: 3px;
     background-color: #f3c647;
-    border: none;  
+    border: none;
 }
 
 .upLayer h1 {
@@ -81,7 +89,7 @@ input, .range, .range2, .getQR {
     margin-top: 12px;
 }
 
-.ul-left input{
+.ul-left input {
     background: none;
     border: none;
     border-bottom: 3px solid #979797;
@@ -131,7 +139,7 @@ input:focus {
     margin-top: 20px;
 }
 
-.bottomLayer h1:first-child{
+.bottomLayer h1:first-child {
     margin-top: 0;
     font-size: 21px;
 }
@@ -149,7 +157,7 @@ input:focus {
     display: inline-block;
     float: left;
 }
- 
+
 .right-p {
     display: inline-block;
     float: right;
@@ -162,19 +170,17 @@ input:focus {
     margin-right: 120px;
 }
 
-input[type="range"]{
+input[type="range"] {
     margin-left: 10px;
     -webkit-appearance: none;
     height: 5px;
     width: 410px;
     cursor: pointer;
-    background-image: -webkit-gradient(
-        linear,
-        left top,
-        right top,
-        color-stop(0.5, #f3c647),
-        color-stop(0.5, #979797)
-    );
+    background-image: -webkit-gradient( linear,
+    left top,
+    right top,
+    color-stop(0.5, #f3c647),
+    color-stop(0.5, #979797));
 }
 
 input[type='range']::-webkit-slider-thumb {
@@ -201,11 +207,12 @@ h2 {
 }
 
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-  margin-left: 65px;
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-left: 65px;
+    -webkit-app-region: no-drag;
 }
 
 .switch input {
@@ -213,48 +220,48 @@ h2 {
 }
 
 .slider.round {
-  border-radius: 34px;
+    border-radius: 34px;
 }
 
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #979797;
-  -webkit-transition: .4s;
-  transition: .4s;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #979797;
+    -webkit-transition: .4s;
+    transition: .4s;
 }
 
 .slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .2s;
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .2s;
 }
 
-input:checked + .slider {
-  background-color: #f3c647;
+input:checked+.slider {
+    background-color: #f3c647;
 }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #f3c647;
+input:focus+.slider {
+    box-shadow: 0 0 1px #f3c647;
 }
 
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
 }
 
 .slider.round:before {
-  border-radius: 50%;
+    border-radius: 50%;
 }
 
 .start {
@@ -267,11 +274,18 @@ input:checked + .slider:before {
     margin-top: 31px;
     margin-right: 5px;
     margin-bottom: 5px;
+    margin-left: 0;
+    text-align: center;
+    -webkit-app-region: no-drag;
 }
 
 .start p {
     color: black;
     font-size: 15px;
+    margin-left: 0;
+}
+p.return {
+    -webkit-app-region: no-drag;
 }
 
 .checkbox2 {
@@ -280,7 +294,12 @@ input:checked + .slider:before {
 }
 
 #goalAuto {
+
     margin-top: 8px;
+}
+
+select {
+    -webkit-app-region: no-drag;
 }
 
 .goal_left {
@@ -290,19 +309,22 @@ input:checked + .slider:before {
 .buttons {
     margin: 0 auto;
 }
+
 ul li {
     margin: 0 auto;
     display: inline-block;
     text-align: center;
 }
-ul 
-{
+
+ul {
     text-align: center;
 }
+
 li {
     margin-left: 10px;
     margin-right: 10px;
 }
+
 .update {
     cursor: pointer;
     width: 100px;
@@ -313,8 +335,9 @@ li {
     margin-top: 31px;
     margin-right: 5px;
     margin-bottom: 5px;
-
+    -webkit-app-region: no-drag;
 }
+
 .update p {
     color: black;
     font-size: 15px;

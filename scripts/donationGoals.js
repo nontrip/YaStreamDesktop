@@ -39,7 +39,9 @@ window.onload = function(){
     document.getElementsByClassName('add').item(0).onclick = () => {
         ipcRenderer.send('show-newGoal')
     }
-
+    document.getElementsByClassName('return')[0].onclick = () => {
+        remote.getCurrentWindow().close()
+    }
     let goals_links = document.getElementsByClassName('goal')
     
 
@@ -53,7 +55,7 @@ window.onload = function(){
             let top = remote.getCurrentWindow()
             let str = status + ' ' + date + ' ' + '"' + naming + '"' + ' '  + amount
                 fs.writeFile('goal.txt', str )
-            let child = new BrowserWindow({parent: top, modal: true, show: false, height: 375, width: 660})
+            let child = new BrowserWindow({parent: top, modal: true, show: false, height: 375, width: 660, frame: false})
             child.loadURL('file://' + __dirname + '/../HTMLs/goalInfo.html')
             child.on('ready-to-show', () => {
                 child.show()

@@ -1,14 +1,16 @@
 * {
-    margin: 0;
     padding: 0;
+    margin: 0;
     font-family: 'Play', sans-serif;
     -webkit-user-select: none;
 }
-
+li {
+    -webkit-app-region: no-drag;
+    cursor: pointer;
+}
 .loading {
     width: 500px;
     height: 220px;
-    -webkit-app-region: drag;
     background-color: #29292c;
 }
 
@@ -17,6 +19,10 @@
     height: 220px;
     -webkit-app-region: drag;
     background-color: #29292c;
+}
+
+.draggable {
+    -webkit-app-region: drag;
 }
 
 .titleBar {
@@ -33,7 +39,7 @@
     justify-content: center;
 }
 
-.settings ul{
+.settings ul {
     text-align: center;
     list-style: none;
 }

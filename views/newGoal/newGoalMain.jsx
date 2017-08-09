@@ -8,7 +8,7 @@ export default class NewGoalMain extends React.Component {
         <div>
             <div className="header">
                 <div className="header-text">
-                    <p>Назад</p>
+                    <p className="return"><span><img src="../images/bitmap.png" width="12" height="10" /></span> Назад</p>
                     <h1>Новая цель</h1>
                 </div>
                 <hr />

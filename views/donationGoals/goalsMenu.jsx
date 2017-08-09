@@ -16,6 +16,7 @@ export default class GoalsMenu extends React.Component {
                 {goalsList}
             </div>
             <div className="btns">
+                <p className="return"><span><img src="../images/bitmap.png" width="12" height="10" /></span> Назад</p>
                 <h1 className="add">+ Добавить</h1>
             </div>
         </div>

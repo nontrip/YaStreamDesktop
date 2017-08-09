@@ -11,6 +11,9 @@
     -webkit-app-region: drag;
     background-color: #29292c;
 }
+p.return {
+    -webkit-app-region: no-drag;
+}
 
 .container {
     width: 660px;
@@ -40,7 +43,7 @@
 .header-text h1 {
     color: #f3c647;
     font-size: 24px;
-    margin-right: 230px;
+    margin-right: 48%;
 }
 
 .header hr {
@@ -86,7 +89,7 @@ p {
 }
 
 p:first-child {
-    margin-left: 100px;
+    margin-left: 20px;
 }
 
 p:last-child {
