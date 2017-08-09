@@ -97,7 +97,8 @@ window.onload = function(){
             ReactDOM.render(<Header total={total} name={localStorage.streamName}/>, document.getElementsByClassName('header')[0])
             console.log(donats)
             ReactDOM.render(<PlayerMain full={full} donats={donats}/>, document.getElementsByClassName('main')[0])
-            ipcRenderer.send('update-goal', donation.amount);
+            ipcRenderer.send('show-donation', donation)
+            ipcRenderer.send('update-goal', donation.amount)
         }
        if (!donats) {
            donats = []

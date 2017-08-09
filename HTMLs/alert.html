@@ -1,65 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="autorization.css" />
-    <link href="https://fonts.googleapis.com/css?family=Play&amp;subset=cyrillic,cyrillic-ext" rel="stylesheet">
-   <script>
-        require('babel-register');
-       
-    </script>
-
+     <link href="../fonts/9303.ttf" rel="stylesheet">
     <style>
-    #messages {
-        width: 600px;
-        height: 200px;
+    
+    @font-face {
+        font-family: 'minecraft-rus';
+        src: url('../fonts/9303.ttf') format('truetype');
     }
 
-    body{
-        background-color: blue;
+    #messages {
+        width: 400px;
+        height: 100px;
+        text-align: center;
+    }
+
+    body {
         -webkit-app-region: drag;
         overflow: hidden;
+        width: 400px;
+        height: 200px;
+        font-size: 20px;
+        color: #29292c;
+        margin: 0;
+        font-family: 'minecraft-rus';
     }
-</style>
-</head>
-<body>
-     <div id='messages'><p>hello</p></div>
-    <script type="text/javascript">
-const remote = require('electron').remote
-//Не успел доделать до конца. Мало времени получилось :(
-//          p.s но концепция рабочая :)
-    var socket,
-        $messages = document.getElementById('messages');
-    var st2 = "ws://yastream.win/DonationHandler.ashx";
-
-    if (typeof(WebSocket) !== 'undefined') {
-        socket = new WebSocket(st2);
-    } else {
-        socket = new MozWebSocket(st2);
+    a {
+        color: #f3c647;
     }
-    socket.onopen = function() {
-        socket.send('{ "account" : "'+ localStorage.ya_account +'", "token": "'+localStorage.Token+'"}');
-    };
 
-    setTimeout(function(){
-        remote.getCurrentWindow.hide()
-    }, localStorage.alertingTime)
-
-    socket.onmessage = function(event, msg) {
-        remote.getCurrentWindow().show()
-        var $el = document.createElement('p');
-        $el.style.width = '500px'
-        $el.innerHTML = 'Пользователь ' + event.data.sender + ' прислал пожертвование '+ event.data.amount +' руб. и сообщение: ' + event.data.text_data;
-        $messages.appendChild($el);
-        setTimeout(function(){
-            remote.getCurrentWindow().hide()
-        }, 2000)
-    };
-
-    socket.onclose = function(event) {
-       console.log('bye')
-    };
+    </style>
+    <script>
+    require('babel-register');
+    require('../scripts/alert');
     </script>
+</head>
+
+<body>
+ <img src="../images/ava.png" style="height: 50px; margin-left: 175px">
+    <div id='messages'>
+        <p>hello</p>
+    </div>
 </body>
+
 </html>

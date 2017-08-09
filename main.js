@@ -2,6 +2,7 @@ const electron = require('electron')
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 
+
 const { ipcMain } = require('electron')
 const fs = require('fs')
 
@@ -234,6 +235,7 @@ ipcMain.on('show-alertSettings', () => {
     alertSettingsWindow = new BrowserWindow({
         width: 659,
         height: 580,
+
         titleBarStyle: 'hidden',
         resizable: false,
         fullscreenable: false,
@@ -326,26 +328,40 @@ ipcMain.on('start-stream', (event, arg) => {
         })
     }
     let autoAlert = fs.readFileSync('autoAlert.txt', 'utf8')
-    if (autoAlert == 'yes') {
-        alertWindow = new BrowserWindow({
-            width: 560,
-            height: 150,
-            frame: false,
-            resizable: false,
-            fullscreenable: false,
-            transparent: true
-        })
-        alertWindow.loadURL('file://' + __dirname + '/HTMLs/alert.html');
-        alertWindow.on('closed', () => {
-            fs.writeFileSync('autoAlert.txt', 'no')
-            alertWindow = null;
-        })
+    const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize
 
+    alertWindow = new BrowserWindow({
+        width: 400,
+        height: 200,
+        x: Math.round(width / 2) - 200,
+        y: 100,
+        frame: false,
+        resizable: false,
+        fullscreenable: false,
+        transparent: true,
+        show: true,
+        alwaysOnTop: true
+    })
+
+    alertWindow.loadURL('file://' + __dirname + '/HTMLs/alert.html');
+
+    alertWindow.on('closed', () => {
+        fs.writeFileSync('autoAlert.txt', 'no')
+        alertWindow = null;
+    })
+})
+
+ipcMain.on('update-goal', (event, arg) => {
+    console.log(arg);
+    if (donationGoalWindow) {
+        donationGoalWindow.webContents.send('update-goal', arg);
     }
 })
-ipcMain.on('update-goal', (event, arg) =>{
-  console.log(arg);
-  donationGoalWindow.webContents.send('update-goal', arg);
+ipcMain.on('show-donation', (event, arg) => {
+    console.log(arg);
+    if (alertWindow) {
+        alertWindow.webContents.send('show-donation', arg);
+    }
 })
 /*
 
