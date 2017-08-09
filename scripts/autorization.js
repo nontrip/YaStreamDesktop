@@ -2,17 +2,37 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import MainAuto from '../views/autorization/mainAuto.jsx';
 
-const {ipcRenderer} = require('electron')
+const { ipcRenderer } = require('electron')
 const remote = require('electron').remote
 const BrowserWindow = remote.BrowserWindow
-const {shell} = require('electron')
+const { shell } = require('electron')
 const path = require('path')
 const url = require('url')
 const $ = require('./jquery.js')
 const fs = require('fs');
 
-window.onload = function(){
-    ReactDOM.render(<MainAuto />, document.getElementsByClassName('container')[0])
+window.onload = function() {
+    if (localStorage.ya_account != null && localStorage.Token != null && localStorage.access_token != null) {
+        $.ajax({
+            url: 'https://money.yandex.ru/api/account-info',
+            type: 'POST',
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('Authorization', 'Bearer ' + encodeURIComponent(localStorage.access_token));
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            },
+            success: function(response) {
+                localStorage.setItem('ya_account', response.account)
+                localStorage.setItem('balance', response.balance)
+                fs.writeFile('log.txt', 'yes')
+                ipcRenderer.send('show-main-from-auto')
+            },
+            error: function(error) {
+                console.log(JSON.parse(error.responseText));
+            }
+        });
+
+    }
+    ReactDOM.render( < MainAuto / > , document.getElementsByClassName('container')[0])
 
     let links = document.getElementsByTagName('li')
 
@@ -23,116 +43,116 @@ window.onload = function(){
     enter.onclick = () => {
         if (!localStorage.Token) {
             /* Yandex.oauth */
-        let authWindow
+            let authWindow
             var querystring = require('querystring');
-    var https = require("https");
-    var clientId = '880A4ADB0EEA4DABAA6B65ECCB91B71A47EBBFD54F129B7A47CC65D0322FD7B6';
-    var scope = ['account-info', 'operation-history', 'operation-details'];
-    var authUrl = 'https://money.yandex.ru/oauth';
-    var apiUrl = 'https://money.yandex.ru/api';
-    var redirect_url = 'https://bkjjipopfjknbeabnlelfhplklgjfcaf.chromiumapp.org';
-    var githubUrl = 'https://money.yandex.ru/oauth/authorize?';
-    var authUrl = githubUrl + 'client_id=' + clientId +
-        '&redirect_uri=' + redirect_url +
-        '&scope=' + scope.join(" ") +
-        '&response_type=' + 'code';
- 
-    authWindow = new BrowserWindow({
-        width: 730,
-        height: 750,
-        type: 'splash',
-        webPreferences: {
-            nodeIntegration: false
-        }
-    });
- 
-    authWindow.on('closed', function() {
-        authWindow = null;
-    });
-authWindow.webContents.on('will-navigate', function (event, url) {
-    console.log(url)
-  let code = url.split('=')[1]
+            var https = require("https");
+            var clientId = '880A4ADB0EEA4DABAA6B65ECCB91B71A47EBBFD54F129B7A47CC65D0322FD7B6';
+            var scope = ['account-info', 'operation-history', 'operation-details'];
+            var authUrl = 'https://money.yandex.ru/oauth';
+            var apiUrl = 'https://money.yandex.ru/api';
+            var redirect_url = 'https://bkjjipopfjknbeabnlelfhplklgjfcaf.chromiumapp.org';
+            var githubUrl = 'https://money.yandex.ru/oauth/authorize?';
+            var authUrl = githubUrl + 'client_id=' + clientId +
+                '&redirect_uri=' + redirect_url +
+                '&scope=' + scope.join(" ") +
+                '&response_type=' + 'code';
 
-    $.post("https://yastream.win/api/oauth",
-    {
-  "code": code,
-  "client_id": clientId,
-  "grant_type": "authorization_code",
-  "redirect_uri": "https://bkjjipopfjknbeabnlelfhplklgjfcaf.chromiumapp.org",
-  "type": "yandex_money",
-  "streamer" : "yes"
-},
-    function(data){
-        localStorage.setItem('Token', data.pass)
-        $.ajax({
-            url: 'https://money.yandex.ru/api/account-info',
-            type: 'POST',
-            beforeSend: function (xhr){
-                xhr.setRequestHeader('Authorization', 'Bearer ' + encodeURIComponent(data.access_token));
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            },
-    success: function (response) {
-        authWindow.destroy()
-        localStorage.setItem('ya_account', response.account)
-        localStorage.setItem('balance', response.balance)
-        fs.writeFile('log.txt', 'yes')
-        ipcRenderer.send('show-main-from-auto')
-    },
-    error: function (error){
-        console.log(JSON.parse(error.responseText));
-    }
-});
+            authWindow = new BrowserWindow({
+                width: 730,
+                height: 750,
+                type: 'splash',
+                webPreferences: {
+                    nodeIntegration: false
+                }
+            });
 
-    });
+            authWindow.on('closed', function() {
+                authWindow = null;
+            });
+            authWindow.webContents.on('will-navigate', function(event, url) {
+                console.log(url)
+                let code = url.split('=')[1]
 
-    });
- 
-authWindow.webContents.on('did-get-redirect-request', function (event, oldUrl, newUrl) {
-  let code = newUrl.split('=')[1]
-    console.log(code)
-    $.post("https://yastream.win/api/oauth",
-    {
-  "code": code,
-  "client_id": clientId,
-  "grant_type": "authorization_code",
-  "redirect_uri": "https://bkjjipopfjknbeabnlelfhplklgjfcaf.chromiumapp.org",
-  "type": "yandex_money",
-  "streamer" : "yes"
-},
-    function(data){
-        localStorage.setItem('Token', data.pass)
-        $.ajax({
-            url: 'https://money.yandex.ru/api/account-info',
-            type: 'POST',
-            beforeSend: function (xhr){
-                xhr.setRequestHeader('Authorization', 'Bearer ' + encodeURIComponent(data.access_token));
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            },
-    success: function (response) {
-        authWindow.destroy()
-        localStorage.setItem('ya_account', response.account)
-        localStorage.setItem('balance', response.balance)
-        fs.writeFile('log.txt', 'yes')
-        ipcRenderer.send('show-main-from-auto')
-    },
-    error: function (error){
-        console.log(JSON.parse(error.responseText));
-    }
-});
+                $.post("https://yastream.win/api/oauth", {
+                        "code": code,
+                        "client_id": clientId,
+                        "grant_type": "authorization_code",
+                        "redirect_uri": "https://bkjjipopfjknbeabnlelfhplklgjfcaf.chromiumapp.org",
+                        "type": "yandex_money",
+                        "streamer": "yes"
+                    },
+                    function(data) {
+                        localStorage.setItem('Token', data.pass)
+                        localStorage.setItem('access_token', data.access_token)
+                        $.ajax({
+                            url: 'https://money.yandex.ru/api/account-info',
+                            type: 'POST',
+                            beforeSend: function(xhr) {
+                                xhr.setRequestHeader('Authorization', 'Bearer ' + encodeURIComponent(data.access_token));
+                                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            },
+                            success: function(response) {
+                                authWindow.destroy()
+                                localStorage.setItem('ya_account', response.account)
+                                localStorage.setItem('balance', response.balance)
+                                fs.writeFile('log.txt', 'yes')
+                                ipcRenderer.send('show-main-from-auto')
+                            },
+                            error: function(error) {
+                                console.log(JSON.parse(error.responseText));
+                            }
+                        });
 
-    });
-});
- 
-    authWindow.loadURL(authUrl);
-        
+                    });
 
-} else {
+            });
+
+            authWindow.webContents.on('did-get-redirect-request', function(event, oldUrl, newUrl) {
+                let code = newUrl.split('=')[1]
+                console.log(code)
+                $.post("https://yastream.win/api/oauth", {
+                        "code": code,
+                        "client_id": clientId,
+                        "grant_type": "authorization_code",
+                        "redirect_uri": "https://bkjjipopfjknbeabnlelfhplklgjfcaf.chromiumapp.org",
+                        "type": "yandex_money",
+                        "streamer": "yes"
+                    },
+                    function(data) {
+                        localStorage.setItem('Token', data.pass)
+                        localStorage.setItem('access_token', data.access_token)
+                        $.ajax({
+                            url: 'https://money.yandex.ru/api/account-info',
+                            type: 'POST',
+                            beforeSend: function(xhr) {
+                                xhr.setRequestHeader('Authorization', 'Bearer ' + encodeURIComponent(data.access_token));
+                                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            },
+                            success: function(response) {
+                                authWindow.destroy()
+                                localStorage.setItem('ya_account', response.account)
+                                localStorage.setItem('balance', response.balance)
+                                fs.writeFile('log.txt', 'yes')
+                                ipcRenderer.send('show-main-from-auto')
+                            },
+                            error: function(error) {
+                                console.log(JSON.parse(error.responseText));
+                            }
+                        });
+
+                    });
+            });
+
+            authWindow.loadURL(authUrl);
+
+
+        } else {
             ipcRenderer.send('show-main-from-auto')
         }
 
 
         /* Twitch.oauth */
- /*
+        /*
   let authWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -197,7 +217,7 @@ authWindow.webContents.on('did-get-redirect-request', function (event, oldUrl, n
   }
  
 */
-/* */
+        /* */
     }
 
     registration.onclick = () => {

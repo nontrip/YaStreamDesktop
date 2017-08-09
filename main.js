@@ -29,6 +29,7 @@ app.on('window-all-closed', () => {
 
 app.on('ready', () => {
   let log = fs.readFileSync('log.txt')
+  
   if (log == 'yes') {
     mainWindow = new BrowserWindow({
       width: 360,
@@ -94,9 +95,8 @@ ipcMain.on('show-main-from-auto', () => {
 ipcMain.on('show-settings', (event) => {
     event.returnValue = false
     settingsWindow = new BrowserWindow({
-      width: 500,
-      height: 220, 
-      resizable: false,
+      width: 513,
+      height: 277, 
       titleBarStyle: 'hidden', 
       fullscreenable: false,
       show: false

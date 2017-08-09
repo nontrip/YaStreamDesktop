@@ -6,7 +6,7 @@ import PlayerMain from '../views/player/playerMain.jsx'
 let full = true
 let donats
 let current = 0
-let total = 0
+let total = 0.0
 let checker = false
 
 const $ = require('./jquery.js')
@@ -28,7 +28,7 @@ $.ajax({
         }
         console.log(donats)
         donats.forEach(function(item) {
-            total+=item.amount/100
+            total = Math.round(item.amount + total*100)/Math.pow(10,2);
         });
     },
     error: function(error){
@@ -92,7 +92,7 @@ window.onload = function(){
             var donation = JSON.parse(event.data)
             console.log(event.data)
             donats.push(donation)
-            total += donation.amount/100
+            total = Math.round(donation.amount + total*100)/Math.pow(10,2);
             ReactDOM.render(<Header total={total} name={localStorage.streamName}/>, document.getElementsByClassName('header')[0])
             console.log(donats)
             ReactDOM.render(<PlayerMain full={full} donats={donats}/>, document.getElementsByClassName('main')[0])
