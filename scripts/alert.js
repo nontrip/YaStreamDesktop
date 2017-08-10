@@ -10,9 +10,9 @@ require('electron').ipcRenderer.on('show-donation', (event, donate) => {
     audio.play();
     remote.getCurrentWindow().show()
     var $el = document.createElement('p');
-    $el.style.width = '500px'
+    $el.style.width = '400px'
 
-    $el.innerHTML = '<a>' + donate.sender + '</a> прислал донат на сумму: ' + donate.amount / 100 + ' руб.<br>' + donate.text_data;
+    $el.innerHTML = '<a>' + donate.sender + '</a> прислал донат <br>на сумму: ' + donate.amount / 100 + ' руб.<br>' + donate.text_data;
     messages.innerHTML = '';
     messages.appendChild($el);
     setTimeout(
