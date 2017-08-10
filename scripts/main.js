@@ -8,8 +8,23 @@ const fs = require('fs')
 const $ = require('./jquery.js')
 
 window.onload = function() {
-        ReactDOM.render( < MainMain balance = { localStorage.balance } number = { localStorage.ya_account }
-            />, document.getElementsByClassName('container')[0])
+        $.ajax({
+            url: 'https://money.yandex.ru/api/account-info',
+            type: 'POST',
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('Authorization', 'Bearer ' + encodeURIComponent(localStorage.access_token));
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            },
+            success: function(response) {
+                localStorage.setItem('ya_account', response.account)
+                localStorage.setItem('balance', response.balance)
+              
+            },
+            error: function(error) {
+                console.log(JSON.parse(error.responseText));
+            }
+        });
+        ReactDOM.render( < MainMain balance = { localStorage.balance } number = { localStorage.ya_account }/>, document.getElementsByClassName('container')[0])
 
             let active = true
 

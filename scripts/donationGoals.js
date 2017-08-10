@@ -33,12 +33,10 @@ $.ajax({
 window.onload = function() {
 
         ipcRenderer.on('new-goal', () => {
-                    ReactDOM.render( < DonationGoalsMain goals = { goals }
-                        />, document.getElementsByClassName('container')[0])
+                    ReactDOM.render( < DonationGoalsMain goals = { goals }/>, document.getElementsByClassName('container')[0])
                     })
 
-                    ReactDOM.render( < DonationGoalsMain goals = { goals }
-                    />, document.getElementsByClassName('container')[0])
+                    ReactDOM.render( < DonationGoalsMain goals = { goals }/>, document.getElementsByClassName('container')[0])
                     document.getElementsByClassName('add').item(0).onclick = () => {
                         ipcRenderer.send('show-newGoal')
                     }

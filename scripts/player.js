@@ -12,118 +12,157 @@ let sett = false
 
 const $ = require('./jquery.js')
 const remote = require('electron').remote
-const {Tray} = require('electron').remote
+const { Tray } = require('electron').remote
 const { ipcRenderer } = require('electron')
 
 $.ajax({
-    url: 'https://yastream.win/api/donations/GetAllDonations?type=streamer&id=' + localStorage.ya_account + '&stream_id=' +  localStorage.liveStream_id,
+    url: 'https://yastream.win/api/donations/GetAllDonations?type=streamer&id=' + localStorage.ya_account + '&stream_id=' + localStorage.liveStream_id,
     type: 'GET',
     async: false,
-    beforeSend: function (xhr) {
+    beforeSend: function(xhr) {
         xhr.setRequestHeader('Content-Type', 'application/json')
         xhr.setRequestHeader('Token', localStorage.Token)
     },
-    success: function(data){
+    success: function(data) {
         donats = data
         if (donats.length == 0) {
-           donats = false
+            donats = false
         }
         console.log(donats)
         donats.forEach(function(item) {
-            total = Math.round(item.amount + total*100)/Math.pow(10,2);
+            total = Math.round(item.amount + total * 100) / Math.pow(10, 2);
         });
     },
-    error: function(error){
+    error: function(error) {
         console.log(error)
     }
 })
 
-window.onload = function(){
-    ReactDOM.render(<Header total={total} name={localStorage.streamName}/>, document.getElementsByClassName('header')[0])
-    ReactDOM.render(<PlayerMain full={full} donats={donats}/>, document.getElementsByClassName('main')[0])
+window.onload = function() {
+        ReactDOM.render( < Header total = { total } name = { localStorage.streamName }
+                />, document.getElementsByClassName('header')[0])
+                ReactDOM.render( < PlayerMain full = { full } donats = { donats }
+                    />, document.getElementsByClassName('main')[0])
 
-    let tray = new Tray(__dirname + '/../images/turn-off.png')
-    tray.on('click', () => {
-        tray.destroy()
-        //post request to close online stream
-        remote.getCurrentWindow().close()
-    })
+                    let tray = new Tray(__dirname + '/../images/turn-off.png')
+                    tray.on('click', () => {
+                        tray.destroy()
+                        //post request to close online stream
+                        remote.getCurrentWindow().close()
+                    })
 
-    document.getElementsByClassName('header-right')[0].childNodes[0].onclick = () => {
-        if (full){
-            document.getElementsByClassName('header-right')[0].childNodes[0].src = '../images/hamb.png'
-            full = false
-            ReactDOM.render(<PlayerMain full={full} donat={donats[current]}/>, document.getElementsByClassName('main')[0])
-        } else {    
-            document.getElementsByClassName('header-right')[0].childNodes[0].src = '../images/hambActive.png'
-            full = true
-            ReactDOM.render(<PlayerMain full={full} donats={donats}/>, document.getElementsByClassName('main')[0])
-        }
-    }
+                    document.getElementsByClassName('header-right')[0].childNodes[0].onclick = () => {
+                        if (full) {
+                            document.getElementsByClassName('header-right')[0].childNodes[0].src = '../images/hamb.png'
+                            full = false
+                            ReactDOM.render( < PlayerMain full = { full } donat = { donats[current] }
+                                />, document.getElementsByClassName('main')[0])
+                            }
+                            else {
+                                document.getElementsByClassName('header-right')[0].childNodes[0].src = '../images/hambActive.png'
+                                full = true
+                                ReactDOM.render( < PlayerMain full = { full } donats = { donats }
+                                    />, document.getElementsByClassName('main')[0])
+                                }
+                            }
 
-     document.getElementsByClassName('settings')[0].childNodes[0].onclick = () => {
-        if (sett){
-            sett= false
-            ipcRenderer.send('settings-window', sett)
-            document.getElementsByClassName('settings')[0].childNodes[0].src = '../images/settingsdark.png'
-        } else { 
-            sett = true
-            ipcRenderer.send('settings-window', sett)
-            document.getElementsByClassName('settings')[0].childNodes[0].src = '../images/settings.png'
-        }
-        ipcRenderer.send('show')
-    }
-    $(document).on('click', '.next', function(){
-        current++
-        if (current == donats.length){
-            current = 0
-        }
-        ReactDOM.render(<PlayerMain full={full} donat={donats[current]}/>, document.getElementsByClassName('main')[0])
-    })
-    $(document).on('reply', '.next', function(){
-        current++
-        if (current == donats.length){
-            current = 0
-        }
-        ReactDOM.render(<PlayerMain full={full} donat={donats[current]}/>, document.getElementsByClassName('main')[0])
-    })
+                            document.getElementsByClassName('settings')[0].childNodes[0].onclick = () => {
+                                if (sett) {
+                                    sett = false
+                                    ipcRenderer.send('settings-window', sett)
+                                    document.getElementsByClassName('settings')[0].childNodes[0].src = '../images/settingsdark.png'
+                                } else {
+                                    sett = true
+                                    ipcRenderer.send('settings-window', sett)
+                                    document.getElementsByClassName('settings')[0].childNodes[0].src = '../images/settings.png'
+                                }
+                                ipcRenderer.send('show')
+                            }
+                            $(document).on('click', '.next', function() {
+                                        current++
+                                        if (current == donats.length) {
+                                            current = 0
+                                        }
+                                        ReactDOM.render( < PlayerMain full = { full } donat = { donats[current] }/>, document.getElementsByClassName('main')[0])
+                                        }) 
+                                        $(document).on('reply', '.next', function() {
+                                            current++
+                                            if (current == donats.length) {
+                                                current = 0
+                                            }
+                                            ReactDOM.render( < PlayerMain full = { full } donat = { donats[current] }
+                                                />, document.getElementsByClassName('main')[0])
+                                            })
 
-    var socket
-    var st2 = "ws://yastream.win/DonationHandler.ashx";
+                                        var socket
+                                        var st2 = "ws://yastream.win/DonationHandler.ashx";
 
-    if (typeof(WebSocket) !== 'undefined') {
-        socket = new WebSocket(st2);
-    } else {
-        socket = new MozWebSocket(st2);
-    }
-    socket.onopen = function() {
-        socket.send('{ "account" : "'+ localStorage.ya_account +'", "token": "'+localStorage.Token+'"}');
-    };
+                                        if (typeof(WebSocket) !== 'undefined') {
+                                            socket = new WebSocket(st2);
+                                        } else {
+                                            socket = new MozWebSocket(st2);
+                                        }
+                                        socket.onopen = function() {
+                                            socket.send('{ "account" : "' + localStorage.ya_account + '", "token": "' + localStorage.Token + '"}');
+                                        };
 
-    socket.onmessage = function(event, msg) {
-        if (!checker){
-            checker = true
-        } else {
-            var donation = JSON.parse(event.data)
-            console.log(event.data)
-            donats.push(donation)
-            total = Math.round(donation.amount + total*100)/Math.pow(10,2);
-            ReactDOM.render(<Header total={total} name={localStorage.streamName}/>, document.getElementsByClassName('header')[0])
-            console.log(donats)
-            ReactDOM.render(<PlayerMain full={full} donats={donats}/>, document.getElementsByClassName('main')[0])
-            ipcRenderer.send('show-donation', donation)
-            ipcRenderer.send('update-goal', donation.amount)
-        }
-       if (!donats) {
-           donats = []
-       }
-    };
-    ipcRenderer.send('settings-window', sett)
-    socket.onclose = function(event) {
-        console.log('ws is closed')
-    };
-}
+                                        socket.onmessage = function(event, msg) {
+                                            if (!checker) {
+                                                checker = true
+                                            } else {
+                                                var donation = JSON.parse(event.data)
+                                                console.log(event.data)
+                                                donats.push(donation)
+                                                total = Math.round(donation.amount + total * 100) / Math.pow(10, 2);
+                                                ReactDOM.render( < Header total = { total } name = { localStorage.streamName }/>, document.getElementsByClassName('header')[0])
+                                                console.log(donats) 
+                                                donation.answer ="Спасибо"
+                                                    donation.status = "showed"
+                                                    let date = new Date()
+                                                    let day = date.getDate()
+                                                    if (day < 10) {
+                                                        day = '0' + day
+                                                    }
+                                                            let month = date.getMonth()
+                                                            month++
+                                                            if (month < 10) {
+                                                                month = '0' + month
+                                                            }
+                                                    let year = date.getFullYear()
+                                                    let time = String(date).split(' ')[4]
+                                                    let push = day + '.' + month + '.' + year + ' ' + time
+                                                    donation.date = push
+                                                    ReactDOM.render( < PlayerMain full = { full } donats = { donats }/>, document.getElementsByClassName('main')[0])
+                                                    ipcRenderer.send('show-donation', donation) 
+                                                    ipcRenderer.send('update-goal', donation.amount) 
+                                                    console.log(donation)
+                                                    $.ajax({
+                                                            url: 'https://yastream.win/api/donations',
+                                                            type: 'PUT',
+                                                            async: true,
+                                                            data: JSON.stringify(donation),
+                                                            beforeSend: function(xhr) {
+                                                                xhr.setRequestHeader('Content-Type', 'application/json')
+                                                                xhr.setRequestHeader('Token', localStorage.Token)
+                                                            },
+                                                            success: function(data) {
+                                                                console.log(data)
+                                                            },
+                                                            error: function(error) {
+                                                                console.log(error)
+                                                            }
+                                                        })
+                                                    }
+                                                    if (!donats) {
+                                                        donats = []
+                                                    }
+                                                };
+                                                ipcRenderer.send('settings-window', sett)
+                                                socket.onclose = function(event) {
+                                                    console.log('ws is closed')
+                                                };
+                                            }
 
-remote.getCurrentWindow().on('closed', () => {
-    localStorage.removeItem('streamName')
-})
+                                            remote.getCurrentWindow().on('closed', () => {
+                                                localStorage.removeItem('streamName')
+                                            })

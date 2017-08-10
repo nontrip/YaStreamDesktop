@@ -15,26 +15,11 @@ const storage = require('electron-json-storage');
 
 window.onload = function() {
     if (localStorage.ya_account != null && localStorage.Token != null && localStorage.access_token != null) {
-        $.ajax({
-            url: 'https://money.yandex.ru/api/account-info',
-            type: 'POST',
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader('Authorization', 'Bearer ' + encodeURIComponent(localStorage.access_token));
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            },
-            success: function(response) {
-                localStorage.setItem('ya_account', response.account)
-                localStorage.setItem('balance', response.balance)
-                storage.set('auth', true, function(error) {
-                    if (error) console.log(error);
-                });
-                ipcRenderer.send('show-main-from-auto')
-
-            },
-            error: function(error) {
-                console.log(JSON.parse(error.responseText));
-            }
+        storage.set('auth', true, function(error) {
+            if (error) console.log(error);
         });
+        ipcRenderer.send('show-main-from-auto')
+
     }
 
     ReactDOM.render( < MainAuto / > , document.getElementsByClassName('container')[0])
