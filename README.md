@@ -8,7 +8,9 @@ npm start
 ```
 build v1.3.1
 
-https://cloud.mail.ru/public/4MQ1/J8Kz49uPW
+win:  https://cloud.mail.ru/public/4MQ1/J8Kz49uPW
+
+mac:  https://yadi.sk/d/-hbW638-3LtAcb
 
 build v1.3.0
 
