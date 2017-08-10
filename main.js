@@ -343,9 +343,9 @@ ipcMain.on('start-stream', (event, arg) => {
 
     alertWindow = new BrowserWindow({
         width: 400,
-        height: 200,
+        height: 130,
         x: Math.round(width / 2) - 200,
-        y: 100,
+        y: 10,
         frame: false,
         resizable: false,
         fullscreenable: false,

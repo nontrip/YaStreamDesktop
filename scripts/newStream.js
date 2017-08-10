@@ -55,8 +55,8 @@ window.onload = function() {
 
     if (localStorage.liveStream_goal) {
         storage.set('goalToOpen', localStorage.liveStream_goal, function(error) {
-            if (error) throw error;
-        });
+                if (error) console.log(error);
+            });
         $('#goal').val(localStorage.liveStream_goal)
     }
 

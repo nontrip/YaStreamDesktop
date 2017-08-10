@@ -55,9 +55,6 @@ require('electron').ipcRenderer.on('update-goal', (event, donate) => {
 })
 
 window.onload = function() {
-    storage.remove('goalToOpen', function(error) {
-        if (error) throw error;
-    });
     document.getElementsByClassName('goal')[0].innerHTML = goal.name
     document.getElementsByClassName('p-right')[0].innerHTML = goal.amount / 100
     let percents = Math.round(goal.progress / goal.amount * 10000) / 100

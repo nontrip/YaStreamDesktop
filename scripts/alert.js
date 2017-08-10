@@ -28,5 +28,5 @@ window.onload = function() {
         function() {
             remote.getCurrentWindow().hide()
         },
-        10000)
+        8000)
 }
