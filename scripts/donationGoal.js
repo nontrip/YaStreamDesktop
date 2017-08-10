@@ -1,8 +1,9 @@
-const fs = require('fs')
 const $ = require('./jquery.js')
+const storage = require('electron-json-storage');
 let goal
+let checker
 
-let checker = fs.readFileSync('goalToOpen.txt', 'utf8')
+
 const { ipcRenderer } = require('electron')
 
 $.ajax({
@@ -16,7 +17,7 @@ $.ajax({
     success: function(data) {
         console.log(data)
         for (let i = 0; i < data.length; i++) {
-            if (data[i].name == checker) {
+            if (data[i].name == localStorage.liveStream_goal) {
                 goal = data[i]
                 console.log(goal)
             }
@@ -35,7 +36,7 @@ require('electron').ipcRenderer.on('update-goal', (event, donate) => {
     document.getElementsByClassName('sum_h1')[0].innerHTML = str
     document.getElementsByClassName('inlay')[0].style.width = percents + '%'
     $.ajax({
-        url: 'https://yastream.win/api/Goals' ,
+        url: 'https://yastream.win/api/Goals',
         type: 'PUT',
         async: true,
         data: JSON.stringify(goal),
@@ -54,7 +55,9 @@ require('electron').ipcRenderer.on('update-goal', (event, donate) => {
 })
 
 window.onload = function() {
-    fs.writeFileSync('goalToOpen.txt', '')
+    storage.remove('goalToOpen', function(error) {
+        if (error) throw error;
+    });
     document.getElementsByClassName('goal')[0].innerHTML = goal.name
     document.getElementsByClassName('p-right')[0].innerHTML = goal.amount / 100
     let percents = Math.round(goal.progress / goal.amount * 10000) / 100

@@ -35,15 +35,14 @@
 }
 
 .header-main {
-    height: 74px;
+    height: 65px;
     width: 320px;
     margin-left: 21px;
 }
 
 .header-left {
     display: inline-block;
-    width: 264px;
-    height: 100%;
+    width: 210px;
     float: left;
 }
 
@@ -61,15 +60,31 @@
 
 .header hr {
     border: 2px solid #f3c647;
+            overflow: overlay;
+    width: 100%;
 }
 
 .header-right {
-    display: inline-flex;
-    justify-content: flex-end;
+    display: inline-block;
+    align-items: center;
+    width: 36px;
+    height: 40px;
+    float: right;    
+    margin-top: 17px
+}
+
+.settings{
+   display: inline-block;
     align-items: center;
     width: 56px;
-    height: 100%;
-    float: right;
+    height: 40px;
+    margin-left: 18px;
+    margin-top: 15px
+}
+.settings img {
+    height: 30px;
+    width: 30px;
+    -webkit-app-region: no-drag;
 }
 
 .main {

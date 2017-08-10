@@ -5,7 +5,8 @@ import NewStreamMain from '../views/newStream/newStreamMain.jsx'
 const $ = require('./jquery.js')
 const { ipcRenderer } = require('electron')
 const remote = require('electron').remote
-const fs = require('fs')
+const storage = require('electron-json-storage');
+
 
 let autoAlert = 'no'
 let goals
@@ -53,7 +54,9 @@ window.onload = function() {
     }
 
     if (localStorage.liveStream_goal) {
-        fs.writeFileSync('goalToOpen.txt', localStorage.liveStream_goal)
+        storage.set('goalToOpen', localStorage.liveStream_goal, function(error) {
+            if (error) throw error;
+        });
         $('#goal').val(localStorage.liveStream_goal)
     }
 
@@ -82,7 +85,9 @@ window.onload = function() {
     document.getElementsByClassName('getQR')[0].onclick = () => {
 
         if ($('#link').val().length > 0) {
-            fs.writeFileSync('qrcodelink.txt', $('#link').val())
+            storage.set('qrcodelink', $('#link').val(), function(error) {
+                if (error) throw error;
+            });
             let qrWindow = new remote.BrowserWindow({
                 width: 270,
                 height: 265,
@@ -158,12 +163,15 @@ function startstream() {
             changeColor(notValid[i].id)
         }
     } else {
-        fs.writeFileSync('autoAlert.txt', autoAlert)
+        storage.set('autoAlert', autoAlert, function(error) {
+            if (error) throw error;
+        });
+
         if ($('#goal').val() != 'Без цели') {
             localStorage.setItem('liveStream_goal', $('#goal').val())
-            console.log('10')
-            console.log(localStorage.liveStream_goal)
-            fs.writeFileSync('goalToOpen.txt', $('#goal').val())
+            storage.set('goalToOpen', localStorage.liveStream_goal, function(error) {
+                if (error) throw error;
+            });
         }
         let date = new Date()
         let day = date.getDate()
@@ -203,7 +211,6 @@ function startstream() {
             },
             success: function(response) {
                 console.log(response)
-                ipcRenderer.send('start-stream', 'to-stream')
                 localStorage.setItem('liveStream_id', response)
                 $("div.start").html("<p>Завершить</p>")
                 document.getElementsByClassName('start')[0].onclick = endstream
@@ -229,10 +236,12 @@ function startstream() {
                     async: false,
                     data: JSON.stringify(settings),
                     beforeSend: function(xhr) {
+
                         xhr.setRequestHeader('Token', localStorage.Token);
                         xhr.setRequestHeader('Content-Type', 'application/json');
                     },
                     success: function(response) {
+                        ipcRenderer.send('start-stream', 'to-stream')
                         console.log(response)
                     },
                     error: function(error) {
@@ -283,6 +292,10 @@ function endstream() {
         },
         success: function() {
             localStorage.setItem('liveStream', false)
+            storage.remove('goalToOpen', function(error) {
+                if (error) throw error;
+            });
+
             remote.getCurrentWindow().close()
         },
         error: function(error) {

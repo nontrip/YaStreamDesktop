@@ -1,6 +1,6 @@
 {
   "name": "YaStream",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "main": "main.js",
   "license": "MIT",
   "repository": "b52/electron-es6-react",
@@ -29,25 +29,12 @@
         }
       ]
     },
-    "files": [
-      "!goal.txt",
-      "!goalToOpen.txt",
-      "!log.txt",
-      "!autoAlert.txt",
-      "!qrcodelink.txt"
-    ],
-    "extraFiles": [
-      "goal.txt",
-      "goalToOpen.txt",
-      "log.txt",
-      "autoAlert.txt",
-      "qrcodelink.txt"
-    ]
   },
   "dependencies": {
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babel-register": "^6.3.13",
+    "electron-json-storage": "^3.0.7",
     "react": "^15.3.2",
     "react-dom": "^15.3.2"
   },

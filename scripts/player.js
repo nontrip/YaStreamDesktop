@@ -8,6 +8,7 @@ let donats
 let current = 0
 let total = 0.0
 let checker = false
+let sett = false
 
 const $ = require('./jquery.js')
 const remote = require('electron').remote
@@ -59,6 +60,19 @@ window.onload = function(){
             ReactDOM.render(<PlayerMain full={full} donats={donats}/>, document.getElementsByClassName('main')[0])
         }
     }
+
+     document.getElementsByClassName('settings')[0].childNodes[0].onclick = () => {
+        if (sett){
+            sett= false
+            ipcRenderer.send('settings-window', sett)
+            document.getElementsByClassName('settings')[0].childNodes[0].src = '../images/settingsdark.png'
+        } else { 
+            sett = true
+            ipcRenderer.send('settings-window', sett)
+            document.getElementsByClassName('settings')[0].childNodes[0].src = '../images/settings.png'
+        }
+        ipcRenderer.send('show')
+    }
     $(document).on('click', '.next', function(){
         current++
         if (current == donats.length){
@@ -104,7 +118,7 @@ window.onload = function(){
            donats = []
        }
     };
-
+    ipcRenderer.send('settings-window', sett)
     socket.onclose = function(event) {
         console.log('ws is closed')
     };

@@ -4,7 +4,7 @@ const BrowserWindow = electron.BrowserWindow
 
 
 const { ipcMain } = require('electron')
-const fs = require('fs')
+const storage = require('electron-json-storage');
 
 let alertWindow = null
 let alertSettingsWindow = null
@@ -29,43 +29,45 @@ app.on('window-all-closed', () => {
 });
 
 app.on('ready', () => {
-    let log = fs.readFileSync('log.txt')
 
-    if (log == 'yes') {
-        mainWindow = new BrowserWindow({
-            width: 360,
-            height: 480,
-            resizable: false,
-            titleBarStyle: 'hidden',
-            fullscreenable: false,
-            show: false,
-            frame: false
-        });
-        mainWindow.loadURL('file://' + __dirname + '/HTMLs/main.html');
-        mainWindow.once('ready-to-show', () => {
-            mainWindow.show()
-        })
-        mainWindow.on('closed', () => {
-            mainWindow = null;
-        })
-    } else {
-        autorizationWindow = new BrowserWindow({
-            width: 360,
-            height: 380,
-            titleBarStyle: 'hidden',
-            resizable: false,
-            fullscreenable: false,
-            show: false,
-            frame: false
-        })
-        autorizationWindow.loadURL('file://' + __dirname + '/HTMLs/autorization.html');
-        autorizationWindow.on('closed', () => {
-            autorizationWindow = null;
-        })
-        autorizationWindow.once('ready-to-show', () => {
-            autorizationWindow.show()
-        })
-    }
+    storage.has('auth', function(error, hasKey) {
+        if (error) throw console.log(error);
+        if (hasKey) {
+            mainWindow = new BrowserWindow({
+                width: 360,
+                height: 480,
+                resizable: false,
+                titleBarStyle: 'hidden',
+                fullscreenable: false,
+                show: false,
+                frame: false
+            });
+            mainWindow.loadURL('file://' + __dirname + '/HTMLs/main.html');
+            mainWindow.once('ready-to-show', () => {
+                mainWindow.show()
+            })
+            mainWindow.on('closed', () => {
+                mainWindow = null;
+            })
+        } else {
+            autorizationWindow = new BrowserWindow({
+                width: 360,
+                height: 380,
+                titleBarStyle: 'hidden',
+                resizable: false,
+                fullscreenable: false,
+                show: false,
+                frame: false
+            })
+            autorizationWindow.loadURL('file://' + __dirname + '/HTMLs/autorization.html');
+            autorizationWindow.on('closed', () => {
+                autorizationWindow = null;
+            })
+            autorizationWindow.once('ready-to-show', () => {
+                autorizationWindow.show()
+            })
+        }
+    });
 });
 
 ipcMain.on('show-auto-from-settings', () => {
@@ -192,7 +194,9 @@ ipcMain.on('show-newStream', () => {
         frame: false
     })
     newStreamWindow.loadURL('file://' + __dirname + '/HTMLs/newStream.html');
+
     newStreamWindow.on('closed', () => {
+        newStreamWindow = null
         if (playerWindow) {
             playerWindow.close();
         }
@@ -202,7 +206,6 @@ ipcMain.on('show-newStream', () => {
         if (alertWindow) {
             alertWindow.close()
         }
-        newStreamWindow = null
         mainWindow.show()
     })
     newStreamWindow.once('ready-to-show', () => {
@@ -286,11 +289,13 @@ ipcMain.on('donationSettings-closed', () => {
 })
 
 ipcMain.on('start-stream', (event, arg) => {
-    mainWindow.hide()
+
     if (chooseAuthWindow) {
         chooseSrcWindow.close()
     }
-    //newStreamWindow.close()
+    if (alertWindow) {
+        alertWindow.close()
+    }
     playerWindow = new BrowserWindow({
         width: 360,
         height: 435,
@@ -303,31 +308,37 @@ ipcMain.on('start-stream', (event, arg) => {
     })
     playerWindow.loadURL('file://' + __dirname + '/HTMLs/player.html');
     playerWindow.on('closed', () => {
+        if (newStreamWindow) {
+            newStreamWindow.show()
+        }
         playerWindow = null;
     })
     playerWindow.once('ready-to-show', () => {
         playerWindow.show()
     })
-    let goalToOpen = fs.readFileSync('goalToOpen.txt', 'utf8')
-    if (goalToOpen.length > 0) {
-        donationGoalWindow = new BrowserWindow({
-            width: 560,
-            height: 150,
-            frame: false,
-            resizable: false,
-            fullscreenable: false,
-            transparent: true,
-            show: false
-        })
-        donationGoalWindow.loadURL('file://' + __dirname + '/HTMLs/donationGoal.html');
-        donationGoalWindow.on('closed', () => {
-            donationGoalWindow = null;
-        })
-        donationGoalWindow.once('ready-to-show', () => {
-            donationGoalWindow.show()
-        })
-    }
-    let autoAlert = fs.readFileSync('autoAlert.txt', 'utf8')
+    storage.has('goalToOpen', function(error, hasKey) {
+        if (error) throw error;
+
+        if (hasKey) {
+            donationGoalWindow = new BrowserWindow({
+                width: 560,
+                height: 150,
+                frame: false,
+                resizable: false,
+                fullscreenable: false,
+                transparent: true,
+                show: false
+            })
+            donationGoalWindow.loadURL('file://' + __dirname + '/HTMLs/donationGoal.html');
+            donationGoalWindow.on('closed', () => {
+                donationGoalWindow = null;
+            })
+            donationGoalWindow.once('ready-to-show', () => {
+                donationGoalWindow.show()
+            })
+        }
+    });
+
     const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize
 
     alertWindow = new BrowserWindow({
@@ -346,21 +357,28 @@ ipcMain.on('start-stream', (event, arg) => {
     alertWindow.loadURL('file://' + __dirname + '/HTMLs/alert.html');
 
     alertWindow.on('closed', () => {
-        fs.writeFileSync('autoAlert.txt', 'no')
         alertWindow = null;
+    })
+    alertWindow.once('ready-to-show', () => {
+        alertWindow.show()
     })
 })
 
 ipcMain.on('update-goal', (event, arg) => {
-    console.log(arg);
     if (donationGoalWindow) {
         donationGoalWindow.webContents.send('update-goal', arg);
     }
 })
 ipcMain.on('show-donation', (event, arg) => {
-    console.log(arg);
     if (alertWindow) {
         alertWindow.webContents.send('show-donation', arg);
+    }
+})
+ipcMain.on('settings-window', (event, arg) => {
+    if (arg) {
+        newStreamWindow.show()
+    } else {
+        newStreamWindow.hide()
     }
 })
 /*
@@ -433,6 +451,7 @@ ipcMain.on('show-newStreamFromMain', () => {
     })
     newStreamWindow.loadURL('file://' + __dirname + '/HTMLs/newStream.html');
     newStreamWindow.on('closed', () => {
+        newStreamWindow = null
         if (playerWindow) {
             playerWindow.close();
         }
@@ -442,7 +461,6 @@ ipcMain.on('show-newStreamFromMain', () => {
         if (alertWindow) {
             alertWindow.close()
         }
-        newStreamWindow = null
         mainWindow.show()
     })
     newStreamWindow.once('ready-to-show', () => {

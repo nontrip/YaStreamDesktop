@@ -1,38 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="goalInfo.css" />
     <link href="https://fonts.googleapis.com/css?family=Play&amp;subset=cyrillic,cyrillic-ext" rel="stylesheet">
     <title>QR Code</title>
-    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-    <script src="../scripts/jquery.js"></script>     
-    <script src="../scripts/qrcode.js"></script>
-    <script>if (window.module) module = window.module;</script>
     <script>
-        require('babel-register');
+    if (typeof module === 'object') { window.module = module;
+        module = undefined; }
+    </script>
+    <script src="../scripts/jquery.js"></script>
+    <script src="../scripts/qrcode.js"></script>
+    <script>
+    if (window.module) module = window.module;
+    </script>
+    <script>
+    require('babel-register');
     </script>
 </head>
 <style>
-    #qrcode {
-        margin-left: 7px;
-        margin-top: 2px;
-    }
-    body {
-        height: 260px;
-        width: 270px;
-    }
+#qrcode {
+    margin-left: 7px;
+    margin-top: 2px;
+}
+
+body {
+    height: 260px;
+    width: 270px;
+}
 </style>
+
 <body>
     <div id="qrcode">
-
     </div>
     <script>
-        const fs = require('fs')
-        let link = fs.readFileSync('qrcodelink.txt', "utf8")
-        new QRCode(document.getElementById("qrcode"), link);
-        fs.writeFile('qrcodelink.txt', '')
+    const storage = require('electron-json-storage');
+    let link
+
+    storage.get('qrcodelink', function(error, data) {
+        if (error) throw error;
+        new QRCode(document.getElementById("qrcode"), data);
+    });
+
     </script>
 </body>
+
 </html>
