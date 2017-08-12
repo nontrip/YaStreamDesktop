@@ -48,6 +48,10 @@ window.onload = function() {
         if (localStorage.liveStream == 'true') {
             $("div.update").show();
         }
+        if ($('#link').val().indexOf("https://www.twitch.tv/") !== -1) {
+            getTwitchData($('#link').val().replace('https://www.twitch.tv/', ''))
+        }
+
     })
     for (let i = 0; i < goals.length; i++) {
         $('#goal').append(new Option(goals[i].name, goals[i].name))
@@ -55,8 +59,8 @@ window.onload = function() {
 
     if (localStorage.liveStream_goal) {
         storage.set('goalToOpen', localStorage.liveStream_goal, function(error) {
-                if (error) console.log(error);
-            });
+            if (error) console.log(error);
+        });
         $('#goal').val(localStorage.liveStream_goal)
     }
 
@@ -363,6 +367,29 @@ function update() {
         success: function(response) {
             console.log(response)
             $("div.update").hide()
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    })
+}
+
+function getTwitchData(link) {
+    $.ajax({
+        url: 'https://api.twitch.tv/kraken/streams?channel=' + link + '&limit=1&stream_type=live',
+        type: 'GET',
+        async: true,
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('Client-ID', 'kfst7tyjg0jf3qx8hvc1y29ccf89kp');
+        },
+        success: function(response) {
+            console.log(response.streams[0].preview.medium)
+            if (response.streams.length != 0 && response.channel.url == $('#link').val()) {
+                $('#channel').val(response.channel.display_name)
+                $('#name').val(response.channel.status)
+                document.getElementsByClassName('ul-right')[0].childNodes[0].childNodes[0].src = response.streams[0].channel.logo
+                document.getElementsByClassName('ul-right')[0].childNodes[1].childNodes[0].src = response.streams[0].channel.video_banner
+            }
         },
         error: function(error) {
             console.log(error);

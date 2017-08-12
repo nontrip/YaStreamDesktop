@@ -13,6 +13,11 @@ window.onload = function(){
     for (var i=0, source; source=sources[i]; i++) {
         source.onclick = function(){
             localStorage.setItem('source', this.className)
+            if (i = 0) {
+                if (!localStorage.twitch_token) {
+                    
+                }
+            }
             ipcRenderer.send('show-newStream')
         }
     }
