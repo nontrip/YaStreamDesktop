@@ -5,7 +5,7 @@ import NewGoalMain from '../views/newGoal/newGoalMain.jsx';
 const { ipcRenderer } = require('electron')
 const $ = require('./jquery.js')
 const remote = require('electron').remote
-
+const moment = require('moment')
 
 window.onload = function() {
     ReactDOM.render( < NewGoalMain / > , document.getElementsByClassName('container')[0]);
@@ -13,23 +13,11 @@ window.onload = function() {
         remote.getCurrentWindow().close()
     }
     document.getElementsByClassName('btn').item(0).onclick = () => {
-        let date = new Date()
-        let day = date.getDate()
-        if (day < 10) {
-            day = '0' + day
-        }
-        let month = date.getMonth()
-        month++
-        if (month < 10) {
-            month = '0' + month
-        }
-        let year = date.getFullYear()
-        let time = String(date).split(' ')[4]
-        let push = day + '.' + month + '.' + year + ' ' + time
+        
         let body1 = {
             "streamer_id": localStorage.ya_account,
             "name": document.getElementsByTagName('input')[0].value,
-            "start_date": push,
+            "start_date": moment().format('YYYY-MM-DD HH:mm:ss'),
             "amount": document.getElementsByTagName('input')[1].value * 100,
             "progress": 0,
             "status": "started"

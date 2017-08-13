@@ -6,6 +6,7 @@ const $ = require('./jquery.js')
 const { ipcRenderer } = require('electron')
 const remote = require('electron').remote
 const storage = require('electron-json-storage');
+const moment = require('moment')
 
 
 let autoAlert = 'no'
@@ -177,24 +178,12 @@ function startstream() {
                 if (error) throw error;
             });
         }
-        let date = new Date()
-        let day = date.getDate()
-        if (day < 10) {
-            day = '0' + day
-        }
-        let month = date.getMonth()
-        month++
-        if (month < 10) {
-            month = '0' + month
-        }
-        let year = date.getFullYear()
-        let time = String(date).split(' ')[4]
-        let push = day + '.' + month + '.' + year + ' ' + time
+       
         let data = {
             streamer_id: localStorage.ya_account,
             name: document.getElementById('name').value,
             url: document.getElementById('link').value,
-            start_date: push,
+            start_date: moment().format('YYYY-MM-DD HH:mm:ss'),
             channel: document.getElementById('channel').value
         }
         localStorage.setItem('liveStream_startdate', data.start_date)
@@ -262,26 +251,12 @@ function startstream() {
 
 
 function endstream() {
-    let date = new Date()
-    let day = date.getDate()
-    if (day < 10) {
-        day = '0' + day
-    }
-    let month = date.getMonth()
-    month++
-    if (month < 10) {
-        month = '0' + month
-    }
-    let year = date.getFullYear()
-    let time = String(date).split(' ')[4]
-    let push = day + '.' + month + '.' + year + ' ' + time
-    console.log(localStorage.liveStream_startdate)
     let data = {
         streamer_id: localStorage.ya_account,
         name: document.getElementById('name').value,
         url: document.getElementById('link').value,
         start_date: localStorage.liveStream_startdate,
-        end_date: push,
+        end_date: moment().format('YYYY-MM-DD HH:mm:ss'),
         channel: document.getElementById('channel').value
     }
     console.log(JSON.stringify(data))

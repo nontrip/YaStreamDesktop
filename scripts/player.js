@@ -14,6 +14,7 @@ const $ = require('./jquery.js')
 const remote = require('electron').remote
 const { Tray } = require('electron').remote
 const { ipcRenderer } = require('electron')
+const moment = require('moment')
 
 $.ajax({
     url: 'https://yastream.win/api/donations/GetAllDonations?type=streamer&id=' + localStorage.ya_account + '&stream_id=' + localStorage.liveStream_id,
@@ -118,20 +119,7 @@ window.onload = function() {
                                                 console.log(donats) 
                                                 donation.answer ="Спасибо"
                                                     donation.status = "showed"
-                                                    let date = new Date()
-                                                    let day = date.getDate()
-                                                    if (day < 10) {
-                                                        day = '0' + day
-                                                    }
-                                                            let month = date.getMonth()
-                                                            month++
-                                                            if (month < 10) {
-                                                                month = '0' + month
-                                                            }
-                                                    let year = date.getFullYear()
-                                                    let time = String(date).split(' ')[4]
-                                                    let push = day + '.' + month + '.' + year + ' ' + time
-                                                    donation.date = push
+                                                    donation.date = moment().format('YYYY-MM-DD HH:mm:ss')
                                                     ReactDOM.render( < PlayerMain full = { full } donats = { donats }/>, document.getElementsByClassName('main')[0])
                                                     ipcRenderer.send('show-donation', donation) 
                                                     ipcRenderer.send('update-goal', donation.amount) 

@@ -47,6 +47,7 @@ window.onload = function() {
                             xhr.setRequestHeader('Token', localStorage.Token)
                         },
                         success: function(data) {
+                            data.start_date=data.start_date.replace('T', ' ')
                             localStorage.setItem('liveStream_name', data.name)
                             localStorage.setItem('liveStream_url', data.url)
                             localStorage.setItem('liveStream_channel', data.channel)
