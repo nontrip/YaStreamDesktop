@@ -3,6 +3,7 @@
     padding: 0;
     font-family: 'Play', sans-serif;
     -webkit-user-select: none;
+    cursor: default;
 }
 
 .loading {
@@ -79,6 +80,7 @@ p.return {
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
+    margin-left: 5px;
 }
 
 p {
@@ -94,6 +96,10 @@ p:first-child {
 
 p:last-child {
     margin-right: 80px;
+}
+
+.return {
+    cursor: pointer;
 }
 
 .layout {

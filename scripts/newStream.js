@@ -6,7 +6,7 @@ const $ = require('./jquery.js')
 const { ipcRenderer } = require('electron')
 const remote = require('electron').remote
 const storage = require('electron-json-storage');
-const moment = require('moment')
+const moment = require('moment');
 
 
 let autoAlert = 'no'
@@ -28,18 +28,21 @@ $.ajax({
     }
 })
 
+require('electron').ipcRenderer.on('end-stream', (event) => {
+    console.log('close')
+    endstream();
+})
+
 window.onload = function() {
     ReactDOM.render( < NewStreamMain / > , document.getElementsByClassName('container')[0])
     $("div.update").on('click', update)
     $("div.update").hide();
-    $('#name').val(localStorage.liveStream_name)
+    setDefaultData();
     $('#name').on('change', function() {
         if (localStorage.liveStream == 'true') {
             $("div.update").show();
         }
     })
-    $('#channel').val(localStorage.liveStream_channel)
-    $('#link').val(localStorage.liveStream_url)
     $('#channel').on('change', function() {
         if (localStorage.liveStream == 'true') {
             $("div.update").show();
@@ -52,7 +55,6 @@ window.onload = function() {
         if ($('#link').val().indexOf("https://www.twitch.tv/") !== -1) {
             getTwitchData($('#link').val().replace('https://www.twitch.tv/', ''))
         }
-
     })
     for (let i = 0; i < goals.length; i++) {
         $('#goal').append(new Option(goals[i].name, goals[i].name))
@@ -65,7 +67,7 @@ window.onload = function() {
         $('#goal').val(localStorage.liveStream_goal)
     }
 
-    $('input[type="range"]').on("change mousemove", function() {
+    $('input[type="range"]').on("change mousemove input", function() {
         var val = ($(this).val() - $(this).attr('min')) / ($(this).attr('max') - $(this).attr('min'));
 
         $(this).css('background-image',
@@ -178,7 +180,6 @@ function startstream() {
                 if (error) throw error;
             });
         }
-       
         let data = {
             streamer_id: localStorage.ya_account,
             name: document.getElementById('name').value,
@@ -347,6 +348,24 @@ function update() {
             console.log(error);
         }
     })
+}
+
+function setDefaultData() {
+    if (localStorage.source == 'twitch') {
+        storage.get('liveStream_data', function(error, data) {
+            if (error) throw error;
+            console.log(data)
+            $('#channel').val(data.channel)
+            $('#name').val(data.name)
+            $('#link').val(data.link)
+            document.getElementsByClassName('ul-right')[0].childNodes[0].childNodes[0].src = data.logo
+            document.getElementsByClassName('ul-right')[0].childNodes[1].childNodes[0].src = data.preview
+        });
+    } else {
+        $('#name').val(localStorage.liveStream_name)
+        $('#channel').val(localStorage.liveStream_channel)
+        $('#link').val(localStorage.liveStream_url)
+    }
 }
 
 function getTwitchData(link) {

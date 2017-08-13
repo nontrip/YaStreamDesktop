@@ -50,6 +50,7 @@ li {
 }
 
 .middle-field {
+    cursor: default;
     text-align: center;
 }
 

@@ -23,9 +23,7 @@ let playerWindow = null
 let settingsWindow = null
 
 app.on('window-all-closed', () => {
-    if (process.platform != 'darwin') {
-        app.quit();
-    }
+    app.quit();
 });
 
 app.on('ready', () => {
@@ -113,6 +111,7 @@ ipcMain.on('show-settings', (event) => {
         if (mainWindow) {
             event.sender.send('settings-closed', true)
             mainWindow.show()
+            mainWindow.focus()
         }
     });
     settingsWindow.once('ready-to-show', () => {
@@ -134,6 +133,7 @@ ipcMain.on('show-history', () => {
     historyWindow.on('closed', () => {
         historyWindow = null;
         mainWindow.show()
+        mainWindow.focus()
     })
     historyWindow.once('ready-to-show', () => {
         historyWindow.show()
@@ -155,6 +155,7 @@ ipcMain.on('show-goals', () => {
     donationGoalsWindow.on('closed', () => {
         donationGoalsWindow = null;
         mainWindow.show()
+        mainWindow.focus()
     })
     donationGoalsWindow.once('ready-to-show', () => {
         donationGoalsWindow.show()
@@ -175,7 +176,10 @@ ipcMain.on('show-chooseSrc', () => {
     chooseSrcWindow.loadURL('file://' + __dirname + '/HTMLs/chooseSrc.html');
     chooseSrcWindow.on('closed', () => {
         chooseSrcWindow = null;
-        mainWindow.show()
+        if (!newStreamWindow) {
+            mainWindow.show()
+            mainWindow.focus()
+        }
     })
     chooseSrcWindow.once('ready-to-show', () => {
         chooseSrcWindow.show()
@@ -183,7 +187,6 @@ ipcMain.on('show-chooseSrc', () => {
 })
 
 ipcMain.on('show-newStream', () => {
-    chooseSrcWindow.hide()
     newStreamWindow = new BrowserWindow({
         width: 659,
         height: 675,
@@ -193,6 +196,7 @@ ipcMain.on('show-newStream', () => {
         show: false,
         frame: false
     })
+    chooseSrcWindow.close()
     newStreamWindow.loadURL('file://' + __dirname + '/HTMLs/newStream.html');
 
     newStreamWindow.on('closed', () => {
@@ -207,6 +211,7 @@ ipcMain.on('show-newStream', () => {
             alertWindow.close()
         }
         mainWindow.show()
+        mainWindow.focus()
     })
     newStreamWindow.once('ready-to-show', () => {
         newStreamWindow.show()
@@ -379,6 +384,12 @@ ipcMain.on('settings-window', (event, arg) => {
         newStreamWindow.show()
     } else {
         newStreamWindow.hide()
+    }
+})
+
+ipcMain.on('end-stream', (event) => {
+    if (newStreamWindow) {
+        newStreamWindow.send('end-stream');
     }
 })
 /*

@@ -9,7 +9,7 @@ export default class ProgressBar extends React.Component {
             <p>{this.props.progress} </p>
            <div className="layout">
                <div className="layin">
-
+                   
                </div>
            </div>
            <p>{this.props.amount} руб.</p>

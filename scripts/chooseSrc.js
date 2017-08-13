@@ -15,13 +15,18 @@ window.onload = function() {
         source.onclick = function() {
             localStorage.setItem('source', this.className)
             if (this.className == "twitch") {
-                if (!localStorage.twitch_token) {
-                    twitch.getToken(twitch.getChannelInfo)
+                if (!localStorage.twitch_access_token) {
+                    twitch.getToken(function() {
+                        twitch.getChannelInfo();
+                        ipcRenderer.send('show-newStream');
+                    })
                 } else {
-                    twitch.getChannelInfo()
+                    twitch.getChannelInfo();
+                    ipcRenderer.send('show-newStream');
                 }
+            } else {
+                ipcRenderer.send('show-newStream')
             }
-            ipcRenderer.send('show-newStream')
         }
     }
 

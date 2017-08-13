@@ -7,13 +7,13 @@ const $ = require('./jquery.js')
 const remote = require('electron').remote
 const moment = require('moment')
 
+
 window.onload = function() {
-    ReactDOM.render( < NewGoalMain / > , document.getElementsByClassName('container')[0]);
+    ReactDOM.render( <NewGoalMain /> , document.getElementsByClassName('container')[0]);
     document.getElementsByClassName('return')[0].onclick = () => {
         remote.getCurrentWindow().close()
     }
     document.getElementsByClassName('btn').item(0).onclick = () => {
-        
         let body1 = {
             "streamer_id": localStorage.ya_account,
             "name": document.getElementsByTagName('input')[0].value,

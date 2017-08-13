@@ -33,6 +33,7 @@ li {
 }
 
 .text-house {
+    cursor: default;
     width: 376px;
     height: 49px;
     color: #979797;
@@ -89,4 +90,8 @@ li {
 
 .buttons li {
     display: inline-block;
+}
+
+.buttons li:hover {
+    color: #f3c647;
 }

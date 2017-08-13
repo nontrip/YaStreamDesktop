@@ -30,9 +30,11 @@
 h1 {
     display: inline-block;
 }
+
 p.return {
     -webkit-app-region: no-drag;
 }
+
 .header-text p {
     cursor: pointer;
     float: left;

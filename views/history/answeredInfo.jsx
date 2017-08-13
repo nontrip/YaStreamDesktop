@@ -7,7 +7,7 @@ export default class AnsweredInfo extends React.Component {
     return (
         <div>
             <h1>Ваш ответ: </h1>
-            <textarea readOnly defaultValue="{this.props.answer}"></textarea>
+            <textarea readOnly defaultValue={this.props.text}></textarea>
             <hr />
     </div>)
   }
