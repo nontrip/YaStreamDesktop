@@ -7,6 +7,7 @@
         var redirect_url = 'https://bkjjipopfjknbeabnlelfhplklgjfcaf.chromiumapp.org';
 
         let alertWindow = null
+        
         const { ipcRenderer } = require('electron')
         const remote = require('electron').remote
         const BrowserWindow = remote.BrowserWindow
@@ -64,7 +65,6 @@
 
 
         api.apiRequests.prototype.getChannelInfo = function() {
-            console.log('1')
             var xhr = new XMLHttpRequest();
             xhr.open('GET', 'https://api.twitch.tv/kraken/channel', false)
             xhr.setRequestHeader('Client-ID', clientId);
@@ -90,8 +90,20 @@
                 }
             }
             xhr.send()
-
         };
+
+        api.apiRequests.prototype.revokeToken = function() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://api.twitch.tv/kraken/oauth2/revoke?client_id=' + clientId + '&token=' + localStorage.twitch_access_token, false)
+            xhr.onload = function() {
+                if (this.status === 200) {
+                    console.log('revoke success')
+                } else {
+                    console.log('code exchange status:', this.status);
+                }
+            }
+            xhr.send()
+        }
 
         return api;
 

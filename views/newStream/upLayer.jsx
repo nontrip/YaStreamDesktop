@@ -12,7 +12,20 @@ export default class UpLayer extends React.Component {
                 <li><input className="valid" id="name" type="text" placeholder="Название трансляции"/></li>
                 <li><input className="valid" id="channel" type="text" placeholder="Ваш никнейм"/></li>
                 <li><input className="valid" id="link" type="text" placeholder="Ссылка на трансляцию"/></li>
-                <li className="getQR">Получить QR код</li>
+                <li>
+                    <ul className="mainButtons">
+                        <li>
+                            <div className="getQR">
+                                <p>Геймкод</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div className="getLink">
+                                <p>Форма</p>
+                            </div>
+                        </li>
+                    </ul>   
+                </li>
             </ul>
             <ul className="ul-right">
                 <li><img draggable='false' src="../images//addLogo.png" width="116" height="116"/></li>

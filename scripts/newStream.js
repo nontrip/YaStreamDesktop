@@ -7,7 +7,7 @@ const { ipcRenderer } = require('electron')
 const remote = require('electron').remote
 const storage = require('electron-json-storage');
 const moment = require('moment');
-
+const {clipboard} = require('electron')
 
 let autoAlert = 'no'
 let goals
@@ -111,6 +111,14 @@ window.onload = function() {
             qrWindow.once('ready-to-show', () => {
                 qrWindow.show()
             })
+        }
+    }
+
+    document.getElementsByClassName('getLink')[0].onclick = () => {
+
+        if ($('#link').val().length > 0) {
+           clipboard.writeText("https://yastream.win/home/donation?url=" + $('#link').val())
+           alert('Ссылка скопирована в буфер обмена')
         }
     }
 
@@ -220,7 +228,7 @@ function startstream() {
                     stream_id: parseInt(localStorage.liveStream_id),
                     text_l: parseInt(map[0]),
                     voice_l: parseInt(map[1]),
-                    min_sum: parseInt(map[2])
+                    min_sum: parseInt(map[2])*100
                 }
                 localStorage.setItem('liveStream_settings', settings);
                 console.log(settings);
