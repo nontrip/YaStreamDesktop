@@ -12,13 +12,13 @@ require('electron').ipcRenderer.on('show-donation', (event, donate) => {
     const tts = new ya.speechkit.Tts({
         apikey: 'feb73e3f-2b08-4425-9de0-e21af1a03d1f',
         emotion: 'good',
-        speed: 1.2
+        speed: 0.9
     })
     if (localStorage.synthesis) {}
     remote.getCurrentWindow().show()
     var $el = document.createElement('p');
     $el.style.width = '400px'
-    tts.speak(donate.text_data, { speaker: 'zahar' })
+    tts.speak(donate.sender + ' прислал донат на сумму: ' + Math.round(donate.amount / 100) + ' руб. ' + donate.text_data, { speaker: 'zahar' })
 
     $el.innerHTML = '<a>' + donate.sender + '</a> прислал донат <br>на сумму: ' + donate.amount / 100 + ' руб.<br>' + donate.text_data;
     messages.innerHTML = '';
