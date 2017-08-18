@@ -1,8 +1,6 @@
-Latest Build v1.4.0
+Latest build v1.5.0
 
-win:  https://cloud.mail.ru/public/6KdM/LSwtVJrtM
-
-mac:  https://yadi.sk/d/FEDsg-yW3LxUK6
+win: https://cloud.mail.ru/public/4Ae2/rLQ3GRzsG
 
 Приложение YaStream для стримера. В процессе активной доработки.
 Для самостоятельной компиляции и отладки необходимо установить node.js поледней версии,
@@ -11,6 +9,11 @@ mac:  https://yadi.sk/d/FEDsg-yW3LxUK6
 npm install
 npm start
 ```
+build v1.4.0
+
+win:  https://cloud.mail.ru/public/6KdM/LSwtVJrtM
+
+mac:  https://yadi.sk/d/FEDsg-yW3LxUK6
 
 build v1.3.1
 
