@@ -45,6 +45,7 @@ $.ajax({
         if (streams.length == 0) {
             streams = false
         }
+        console.log(streams)
     },
     error: function(error){
         console.log(error)
@@ -59,88 +60,75 @@ window.onload = function(){
     let donatsBtn = listItems.item(0)
     let streamsBtn = listItems.item(1)
 
-    let imgs = document.getElementsByTagName('img')
-    
-    for (var i=0, button; button=imgs.item(i); i++) {
-        button.onclick = function() {
-            let parent = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
-            let note = null
-            if (this.classList.contains('rotate')) {
-                this.classList.remove("rotate");
-                for (var i = 0; i < parent.childNodes.length; i++) {
-                if (parent.childNodes[i].className == "answered") {
-                    note = parent.childNodes[i];
-                    note.classList.remove("answered");
-                    note.className = "to-answer"
-                    break;
-                }        
+    let init = () => {
+        let canAnswer = document.getElementsByClassName('canAnswer')
+        let arrows = document.getElementsByClassName('arrow')
+
+        for (var i=0, button; button = canAnswer.item(i); i++) {
+            button.onclick = function() {
+                let parent = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
+                ReactDOM.render(<ToAnswer />, parent.childNodes[2])
             }
-            ReactDOM.render(<Empty />, note)
-            } else if (this.classList.contains('to-rotate')){
-            this.className += " rotate";
-            for (var i = 0; i < parent.childNodes.length; i++) {
-                if (parent.childNodes[i].className == "to-answer") {
-                    note = parent.childNodes[i];
-                    note.className = "answered";
-                    break;
-                }        
-            }
-            ReactDOM.render(<AnsweredInfo />, note)
         }
-    }
-    }
 
-    let closeAnswer = []
+        $(document).on('click', '.closeAnswer', function() {
+            ReactDOM.render(<Empty />, this.parentElement.parentElement.parentElement)
+        })
 
-    let canAnswer = document.getElementsByClassName('canAnswer')
-    for (var i=0, btn; btn=canAnswer[i]; i++) {
-        btn.onclick = function(){
-            console.log(1)
-            let parent = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
-            let note = null
-            let id = this.parentElement.classList[0]
-            for (var i = 0; i < parent.childNodes.length; i++) {
-                if (parent.childNodes[i].className == "to-answer") {
-                    note = parent.childNodes[i];
-                    note.className = "answered";
-                    break;
-                }        
-            }
-           /* $.ajax({
-                url: 'http://streambeta.azurewebsites.net/api/donations?id=' + id,
-                type: 'GET',
-                async: false,
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('Content-Type', 'application/json')
-                    xhr.setRequestHeader('Token', localStorage.Token)
-                },
-                success: function(data){
-                    
-                },
-                error: function(error){
-                    console.log(error)
+        $(document).on('click', '.submitAnswer', function(){
+            let parent = this.parentElement.parentElement.parentElement.parentElement.childNodes[0].childNodes[0].childNodes[1].childNodes[0].childNodes[1].childNodes[0]
+            const id = parent.classList[0]
+            let inputText = this.parentElement.previousSibling.value
+            donats.forEach((item) => {
+                if (item.operation_id == id){
+                    item.answer = inputText
+                    $.ajax({
+                        url: 'https://yastream.win/api/donations',
+                        type: 'PUT',
+                        beforeSend: function(xhr) {
+                                xhr.setRequestHeader('Content-Type', 'application/json')
+                                xhr.setRequestHeader('Token', localStorage.Token)
+                            },
+                        data: JSON.stringify(item),
+                        success: function(response) {
+                            console.log(response)
+                        }
+                    }) 
                 }
-            })*/
-            ReactDOM.render(<ToAnswer />, note)
-            let btnClose = parent.childNodes[2].childNodes[0].childNodes[2].childNodes[1]
-            let parentDiv = btnClose.parentElement.parentElement.parentElement
-            btnClose.onclick = function() {
-               parentDiv.className = "to-answer"
-               ReactDOM.render(<Empty />, note)
-            }
-            //parent.childNodes[2].childNodes[0].childNodes[2].childNodes[1].onclick = function(){
+            })
+            ReactDOM.render(<Empty />, this.parentElement.parentElement.parentElement)
+            ReactDOM.render(<HistoryMain donats={donats} donats_list={donats}/>, document.getElementsByClassName('main')[0])
+            init()
+        })
 
-            //}
+        for (var i=0, button; button = arrows.item(i); i++) {
+            button.onclick = function() {
+                let parent = this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
+                if ((!this.classList.contains('rotated'))) {
+                    const id = this.parentElement.classList[0]
+                    let text
+                    donats.forEach((item) => {
+                        if (item.operation_id == id){
+                            text = item.answer
+                        }
+                    })
+                    this.classList.add('rotated')
+                    ReactDOM.render(<AnsweredInfo text={text}/>, parent.childNodes[2])
+                } else {
+                    this.classList.remove('rotated')
+                    ReactDOM.render(<Empty />, parent.childNodes[2])
+                }
+            }
         }
-        
     }
 
-
+    init()
 
     donatsBtn.onclick = () => {
         ReactDOM.render(<HistoryMain donats={donats} donats_list={donats}/>, document.getElementsByClassName('main')[0])
         streamsBtn.classList.remove('active')
         donatsBtn.classList.add('active')
+        init()
     }
 
     streamsBtn.onclick = () => {

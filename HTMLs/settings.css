@@ -1,13 +1,57 @@
+ @font-face {
+        font-family: 'minecraft-rus';
+        src: url('../fonts/9303.ttf') format('truetype');
+    }
+
 * {
-    padding: 0;
     margin: 0;
-    font-family: 'Play', sans-serif;
+    padding: 0;
+    font-family: 'minecraft-rus';
     -webkit-user-select: none;
 }
+
+
+body {
+    overflow: hidden;
+}
+
+.up-layer {
+    margin-top: 5px;
+}
+
+.up-layer p {
+    -webkit-app-region: no-drag;
+    display: inline-block;
+    margin-left: 12px;
+    font-size: 13px;
+    color: #979797;
+    cursor: pointer;
+}
+
+.up-layer h1 {
+    margin-top: -6px;
+    display: inline-block;
+    position: absolute;
+    margin-left: -60.7px;
+    color: #efbc38;
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+    z-index: -1;
+}
+
+.hr {
+    height: 3px;
+    width: 100%;
+    background-color: #efbc38;
+    margin-top: 5px;
+}
+
 li {
     -webkit-app-region: no-drag;
     cursor: pointer;
 }
+
 .loading {
     width: 500px;
     height: 220px;
@@ -15,6 +59,8 @@ li {
 }
 
 .container {
+    position: absolute;
+    z-index: -2;
     width: 500px;
     height: 220px;
     -webkit-app-region: drag;
@@ -26,7 +72,7 @@ li {
 }
 
 .titleBar {
-    font-size: 16px;
+    font-size: 10px;
     width: 100%;
     height: 22px;
     text-align: center;
@@ -34,23 +80,25 @@ li {
     color: #dbdbdb;
 }
 
-.settings {
-    display: flex;
-    justify-content: center;
+.menu-bar {
+    margin-left: 35px;
+    font-size: 20px;
 }
 
-.settings ul {
-    text-align: center;
+.menu-bar ul {
     list-style: none;
+    color: #979797;
 }
 
-.settings ul li {
-    margin-top: 25px;
-    font-size: 24px;
-    color: #858585;
+.menu-bar ul div{
+    height: 19px;
+    margin-top: 23px;
 }
 
-.settings ul li:hover {
-    color: #efbc38;
-    cursor: pointer;
+.menu-bar ul div:first-child {
+    margin-top: 15px;
+}
+
+.menu-bar ul li:hover {
+    color:#efbc38;
 }

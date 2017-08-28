@@ -1,9 +1,15 @@
+ @font-face {
+        font-family: 'minecraft-rus';
+        src: url('../fonts/9303.ttf') format('truetype');
+    }
+
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Play', sans-serif;
+    font-family: 'minecraft-rus';
     -webkit-user-select: none;
 }
+
 
 li {
     -webkit-app-region: no-drag;
@@ -24,7 +30,7 @@ li {
 }
 
 .titleBar {
-    font-size: 16px;
+    font-size: 12px;
     width: 100%;
     height: 22px;
     text-align: center;
@@ -47,6 +53,7 @@ li {
 
 
 .text-house {
+    cursor: default;
     color: #f3c647;
     display: flex;
     flex-direction: column;
@@ -77,6 +84,7 @@ li {
 }
 
 .menu-bar ul li {
+    font-size: 20px;
     margin-top: 25px;
     display: inline-block;
 }

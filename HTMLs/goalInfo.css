@@ -3,6 +3,11 @@
     padding: 0;
     font-family: 'Play', sans-serif;
     -webkit-user-select: none;
+    cursor: default;
+}
+
+body {
+    overflow: hidden;
 }
 
 .loading {
@@ -17,13 +22,13 @@ p.return {
 
 .container {
     width: 660px;
-    height: 375px;
+    height: 390px;
     -webkit-app-region: drag;
     background-color: #29292c;
 }
 
 .header-text {
-    padding-top: 20px;
+    padding-top: 15px;
     display: flex;
     justify-content: space-between;
 }
@@ -60,7 +65,7 @@ p.return {
 }
 
 .info h1 {
-    margin-top: 31px;
+    margin-top: 15px;
 }
 
 .info h2 {
@@ -79,6 +84,7 @@ p.return {
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
+    margin-left: 5px;
 }
 
 p {
@@ -96,17 +102,56 @@ p:last-child {
     margin-right: 80px;
 }
 
+.return {
+    cursor: pointer;
+}
+
+.return:focus {
+    color: #f3c647;
+}
+
 .layout {
     margin-top: 10px;
-    width: 300px;
+    width: 400px;
     height: 20px;
     display: inline-flex;
     align-items: center;
-    outline: 3px solid #979797;
+    outline: 2px solid #979797;
+    background-color: #979797;
 }
 
 .layin {
-    width: 100px;
     height: 23px;
-    background-color: #f3c647
+    background-color: #f3c647;
+}
+
+.in-text {
+    position: absolute;
+    width: inherit;
+    font-size: 16px;
+    margin-top: 0 !important;
+    text-align: center;
+    margin-left: 0 !important;
+    color: white;
+    line-height: 10px;
+    color: #29292C;
+}
+
+.button {
+    width: 219px;
+    height: 35px;
+    background-color: #f3c647;
+    color: #29292C;  
+    border-radius: 8px;
+    margin: 30px auto;  
+}
+
+.button p {
+    width: 219px;
+    margin-top: 0 !important;
+    text-align: center;
+    margin-left: 0 !important;
+    line-height: 35px;
+    color: #29292C;
+    font-size: 16px !important;
 }

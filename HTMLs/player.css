@@ -220,6 +220,7 @@
 
 .buttonsPerDonat ul li {
     display: inline-block;
+    cursor: pointer;
 }
 
 .buttonsPerDonat ul li:first-child {

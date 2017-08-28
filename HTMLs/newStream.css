@@ -5,6 +5,15 @@
     -webkit-user-select: none;
 }
 
+@font-face {
+    font-family: 'minecraft-rus';
+    src: url('../fonts/9303.ttf') format('truetype');
+}
+
+body {
+    overflow: hidden;
+}
+
 li {
     -webkit-app-region: no-drag;
     cursor: pointer;
@@ -27,7 +36,7 @@ li {
 input,
 .range,
 .range2,
-.getQR {
+.getQR .getLink {
     -webkit-app-region: no-drag;
     cursor: pointer;
 }
@@ -66,6 +75,16 @@ input,
     border: none;
 }
 
+.upLayer input:focus {
+    color: #f3c647;
+}
+
+.upLayer input:focus,
+.upLayer input:hover {
+    outline: none;
+    border-bottom: 3px solid #f3c647;
+}
+
 .upLayer h1 {
     margin-left: 28px;
     margin-top: 17px;
@@ -85,9 +104,7 @@ input,
     margin-top: 24px;
 }
 
-.ul-left li:first-child {
-    margin-top: 12px;
-}
+.ul-left li:first-child {}
 
 .ul-left input {
     background: none;
@@ -98,30 +115,76 @@ input,
     width: 247px;
 }
 
-input:focus {
-    outline-width: 0;
+.mainButtons {
+    float: right;
+    display: inline-flex;
+    justify-content: space-between;
+    width: 247px;
+    height: 40px;
+    margin-right: 10px;
+    margin-top: 0px;
+    list-style: none;
+}
+
+.mainButtons li {
+    margin: 1px;
+    display: inline-block;
 }
 
 .getQR {
-    width: 247px;
+    cursor: pointer;
+    width: 120px;
     height: 35px;
-    border-radius: 8px;
     background-color: #f3c647;
-    margin-top: 30px;
-    text-align: center;
-    line-height: 35px;
-    font-size: 16px;
+    border-radius: 4px;
+    line-height: 25px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-top: 0px;
+    -webkit-app-region: no-drag;
+}
+
+.getQR p {
+    padding-top: 5px;
+    color: black;
+    font-size: 20px;
+}
+
+.getLink {
+    cursor: pointer;
+    width: 120px;
+    height: 35px;
+    background-color: #f3c647;
+    border-radius: 4px;
+    line-height: 25px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-top: 0px;
+    -webkit-app-region: no-drag;
+}
+
+.getLink p {
+    padding-top: 5px;
+    color: black;
+    font-size: 20px;
 }
 
 .ul-right {
     float: right;
     display: inline-flex;
     justify-content: space-between;
-    width: 250px;
     height: 116px;
-    margin-right: 28px;
-    margin-top: 13px;
+    margin-right: 10px;
+    margin-top: 23px;
     list-style: none;
+}
+
+.ul-right li label:first-child {
+    margin-right: 10px;
+}
+
+.ul-right li:last-child {
+    margin-left: 25px;
 }
 
 .ul-right li {
@@ -129,7 +192,7 @@ input:focus {
 }
 
 .bottomLayer {
-    margin-top: 220px;
+    margin-top: 210px;
     margin-left: 28px;
 }
 
@@ -173,6 +236,7 @@ input:focus {
 input[type="range"] {
     margin-left: 10px;
     -webkit-appearance: none;
+    outline: none;
     height: 5px;
     width: 410px;
     cursor: pointer;
@@ -284,6 +348,7 @@ input:checked+.slider:before {
     font-size: 15px;
     margin-left: 0;
 }
+
 p.return {
     -webkit-app-region: no-drag;
 }
@@ -341,4 +406,27 @@ li {
 .update p {
     color: black;
     font-size: 15px;
+}
+
+.image-upload {
+    display: inline-block;
+}
+
+.image-upload img {
+    cursor: pointer;
+}
+
+.image-upload > input {
+    display: none;
+}
+
+.pop-up {
+    margin-top: -44px;
+    position: absolute;
+    z-index: 20;
+    width: 659px;
+    height: 44px;
+    background-color: #f3c647;
+    line-height: 44px;
+    text-align: center;
 }

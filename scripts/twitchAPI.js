@@ -7,6 +7,7 @@
         var redirect_url = 'https://bkjjipopfjknbeabnlelfhplklgjfcaf.chromiumapp.org';
 
         let alertWindow = null
+        
         const { ipcRenderer } = require('electron')
         const remote = require('electron').remote
         const BrowserWindow = remote.BrowserWindow
@@ -39,13 +40,13 @@
 
             authWindow.on('closed', function() {
                 authWindow = null;
+                callback();
             });
             authWindow.webContents.on('will-navigate', function(event, url) {
                 if (url.indexOf(redirect_url) !== -1) {
                     var url = new URL(url);
                     var code = url.searchParams.get("code");
-                    console.log(code)
-                    exchangeCodeForToken(code, callback)
+                    exchangeCodeForToken(code)
                 }
 
             });
@@ -54,8 +55,7 @@
                 if (newUrl.indexOf(redirect_url) !== -1) {
                     var url = new URL(newUrl);
                     var code = url.searchParams.get("code");
-                    console.log(code)
-                    exchangeCodeForToken(code, callback)
+                    exchangeCodeForToken(code)
                 }
             });
 
@@ -64,9 +64,9 @@
 
 
 
-        api.apiRequests.prototype.getChannelInfo = function(callback) {
+        api.apiRequests.prototype.getChannelInfo = function() {
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'https://api.twitch.tv/kraken/channel')
+            xhr.open('GET', 'https://api.twitch.tv/kraken/channel', false)
             xhr.setRequestHeader('Client-ID', clientId);
             xhr.setRequestHeader('Authorization', 'OAuth ' + localStorage.twitch_access_token);
 
@@ -74,32 +74,49 @@
                 if (this.status === 200) {
                     var response = JSON.parse(this.responseText);
                     console.log(response);
-                    localStorage.liveStream_name = response.status
-                    localStorage.liveStream_channel = response.name
-                    localStorage.liveStream_url = response.url
-                    localStorage.liveStream_preview = response.vieo_banner
-                    localStorage.liveStream_logo = response.logo
+                    storage.set('liveStream_data', {
+                            name: response.status,
+                            channel: response.name,
+                            link: response.url,
+                            preview: response.video_banner,
+                            logo: response.logo
+                        },
+                        function(error) {
+                            if (error) throw error;
+                        });
+
                 } else {
                     console.log('code exchange status:', this.status);
                 }
             }
             xhr.send()
-
         };
+
+        api.apiRequests.prototype.revokeToken = function() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://api.twitch.tv/kraken/oauth2/revoke?client_id=' + clientId + '&token=' + localStorage.twitch_access_token, false)
+            xhr.onload = function() {
+                if (this.status === 200) {
+                    console.log('revoke success')
+                } else {
+                    console.log('code exchange status:', this.status);
+                }
+            }
+            xhr.send()
+        }
 
         return api;
 
-        function exchangeCodeForToken(code, callback) {
+        function exchangeCodeForToken(code) {
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'https://yastream.win/api/oauth')
+            xhr.open('POST', 'https://yastream.win/api/oauth', false)
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.onload = function() {
                 if (this.status === 200) {
                     var response = JSON.parse(this.responseText);
                     if (response.hasOwnProperty('access_token')) {
                         localStorage.setItem('twitch_access_token', data.access_token)
-                        authWindow.destroy()
-                        callback();
+                        authWindow.close()
                     } else {}
                 } else {
                     console.log('code exchange status:', this.status);

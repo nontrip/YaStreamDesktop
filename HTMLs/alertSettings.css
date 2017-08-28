@@ -3,11 +3,16 @@
     padding: 0;
     font-family: 'Play', sans-serif;
     -webkit-user-select: none;
+    cursor: default;
+}
+
+body {
+    overflow: hidden;
 }
 
 .container {
     width: 659px;
-    height: 675px;
+    height: 598px;
     -webkit-app-region: drag;
     background-color: #29292c;
 }
@@ -18,6 +23,299 @@
     background-color: #29292c;
 }
 
+input:focus {
+    outline: none;
+}
+
+.up-layer h1{
+    color: #f3c647;
+    font-size: 20px;
+    padding-top: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.return {
+    position: fixed;
+    margin-top: -18px;
+    margin-left: 10px;
+    z-index: 2;
+    font-size: 16px;
+    color: #979797;
+}
+
+.return:hover {
+    cursor: pointer;
+    color: #f3c647;
+}
+
+.hr {
+    height: 2px;
+    width: 100%;
+    background-color: #f3c647;
+}
+
+.main {
+    margin-top: 21px;
+    margin-left: 28px;
+}
+
+h1, h2, p {
+    color: #858585;
+}
+
+.main h1 {
+    font-size: 21px;
+}
+
+.main h2 {
+    font-size: 16px;
+}
+
+ul {
+    margin-top: 7px;
+}
+
+.left-ul {
+    margin-left: 38px;
+}
+
+ul h2 {
+    line-height: 24px;
+}
+
+ul li {
+    margin-top: 5px;
+}
+
+.left-ul {
+    display: inline-block;
+    list-style: none;
+}
+
+.left-ul h2 {
+    display: inline-block;
+    float: left;
+}
+
+.color {
+    cursor: pointer;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-left: 17px;
+    border: 2px solid #979797;
+    border-radius: 50%;
+}
+
+#indi-color {
+    background-color: #f3c647;
+}
+
+ul li h2 {
+    margin-top: 3px;
+}
+
+#indiBack-color {
+    color: #29292c;
+}
+
+#font-color {
+    color: black;
+}
+
+#back-color {
+    color: rgba(0,0,0,0);
+}
+.right-ul {
+    margin-left: 100px;
+    display: inline-block;
+    list-style: none;
+}
+
+.right-ul h2 {
+    display: inline-block;
+    float: left;
+}
+
+.height-house {
+    margin-top: 22px;
+}
+
+.range {
+    -webkit-app-region: no-drag;
+    margin-top: 15px;
+    width: 495px;
+}
+
+.range p{
+    display: inline-block;
+    font-size: 18px;
+}
+
+.range p:first-child {
+    float: left;
+}
+
+.range p:last-child {
+    float: right;
+}
+
+input[type="range"]{
+    margin-left: 10px;
+    -webkit-app-region: no-drag;
+    -webkit-appearance: none;
+    height: 5px;
+    width: 410px;
+    cursor: pointer;
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        color-stop(0.5, #f3c647),
+        color-stop(0.5, #979797)
+    );
+}
+
+input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #f3c647;
+    border: 2px solid #979797;
+    height: 15px;
+    width: 15px;
+}
+
+.params {
+    margin-top: 14px;
+}
+
+.param {
+    margin-top: 14px;
+    width: 370px;
+    height: 34px;
+    font-size: 18px;
+}
+
+.param h2 {
+    line-height: 34px;
+}
+
+.param2 h2{
+    line-height: 17px;
+}
+
+.param h2 {
+    width: 286px;
+    display: inline-block;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    float: right;
+    -webkit-app-region: no-drag;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #979797;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .2s;
+}
+
+input:checked+.slider {
+    background-color: #f3c647;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #f3c647;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.fonts {
+    opacity: 0.2;
+    margin-top: 17px;
+    width: 398px;
+}
+
+.font {
+    height: 28px;
+    line-height: 28px;
+}
+
+.font:last-child {
+    margin-top: 12px;
+}
+
+.font h2{
+    float: left;
+    line-height: 28px;
+    display: inline-block;
+}
+
+.font img {
+    width: 28px;
+    height: 28px;
+    float: right;
+}
+
+.buttons {
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 28px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.button {
+    cursor: pointer;
+    width: 175px;
+    height: 35px;
+    background-color: #f3c647;
+    line-height: 35px;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 8px;
+}
+/*
 .titleBar {
     font-size: 16px;
     width: 100%;
@@ -232,4 +530,4 @@ a:link {
 .input-height {
     display: inline-block;
     color: #858585;
-}
+}*/

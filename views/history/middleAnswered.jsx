@@ -11,7 +11,7 @@ export default class MiddleAnswered extends React.Component {
             </div>
             <div className="img-house-uns">
               <div className={this.props.id}>
-                <img className="to-rotate" src="../images/showreply.png" width="14" height="22"/>
+                <img className="arrow to-rotate" src="../images/showreply.png" width="14" height="22"/>
               </div>
             </div>
             <div className="answered">

@@ -5,7 +5,7 @@ import React from 'react';
 export default class Stream extends React.Component {
   render() {
       let date = this.props.streamInfo.end_date
-      date = date.split(' ')[0]
+      date = date.replace('T', ' ')
     return (
         <div>
     <div className="stream">
@@ -20,7 +20,7 @@ export default class Stream extends React.Component {
             </div>
         </div>
     </div>
-     <hr className="hr-stream"/>
+    <hr className="hr-stream"/>
     </div>)
   }
 }

@@ -33,6 +33,7 @@ li {
 }
 
 .text-house {
+    cursor: default;
     width: 376px;
     height: 49px;
     color: #979797;
@@ -59,10 +60,6 @@ li {
     display: inline-block;
 }
 
-.sources li:first-child {
-    margin-left: 31px;
-}
-
 .sources li img:hover {
     border: 3px solid #f3c647; 
 }
@@ -83,10 +80,21 @@ li {
 .buttons {
     color: #979797;
     list-style: none;
+    display: flex;
+    font-size: 21px;
+    justify-content: space-around;
     margin-left: 8px;
     margin-top: 115px;
 }
 
 .buttons li {
     display: inline-block;
+}
+
+.buttons li:hover {
+    color: #f3c647;
+}
+
+.another {
+    margin-top: 3x;
 }

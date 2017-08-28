@@ -44,7 +44,7 @@ ul li{
     width: 50%;
     font-size: 13px;
     color: #f3c647;
-    cursor: pointer;
+    cursor: pointer !important;
 }
 
 ul li p {
@@ -80,6 +80,7 @@ hr {
 }
 
 .donat-house {
+    cursor: default;
     margin-top: 19px;
     width: 320px;
     min-height: 124px;
@@ -113,7 +114,6 @@ hr {
     float: right;
     height: 29px;
     width: 82px;
-    margin-right: 20px;
 }
 
 .sum {
@@ -139,6 +139,10 @@ hr {
     justify-content: flex-end;
 }
 
+.canAnswer {
+    cursor: pointer;
+}
+
 .text-uns {
     float: left;
     width: 267px;
@@ -151,6 +155,7 @@ hr {
 .img-house-uns {
     display: inline-block;
     float: right;
+    margin-right: 15px;
     height: 100%;
     margin-top: 20px;
 }
@@ -159,7 +164,7 @@ hr {
     cursor: pointer;
 }
 
-.rotate {
+.rotated {
     transform: rotate(90deg);
 }
 
@@ -179,7 +184,6 @@ hr {
     color: #979797;
     padding-top: 53px;
     width: 100%;
-    height: 588px;
     background-color: #29292c;
 }
 
@@ -206,7 +210,10 @@ hr {
 }
 
 .text-house-stream {
-    display: inline-block;
+    cursor: default;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 166px;
     height: 100%;
     margin-left: 14px;
@@ -241,6 +248,10 @@ hr {
     min-height: 100px;
     color: #858585;
     background-color: #29292c;
+}
+
+.to-answer h1 {
+    color: #f3c647;
 }
 
 textarea {
@@ -287,4 +298,8 @@ textarea:focus {
     background-color: #f3c647;
     text-align: center;
     margin-right: 10px;
+}
+
+.btns {
+    cursor: pointer;
 }

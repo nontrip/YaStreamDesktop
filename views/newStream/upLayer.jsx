@@ -12,11 +12,36 @@ export default class UpLayer extends React.Component {
                 <li><input className="valid" id="name" type="text" placeholder="Название трансляции"/></li>
                 <li><input className="valid" id="channel" type="text" placeholder="Ваш никнейм"/></li>
                 <li><input className="valid" id="link" type="text" placeholder="Ссылка на трансляцию"/></li>
-                <li className="getQR">Получить QR код</li>
+                <li>
+                    <ul className="mainButtons">
+                        <li>
+                            <div className="getQR">
+                                <p>Геймкод</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div className="getLink">
+                                <p>Форма</p>
+                            </div>
+                        </li>
+                    </ul>   
+                </li>
             </ul>
             <ul className="ul-right">
-                <li><img draggable='false' src="../images//addLogo.png" width="116" height="116"/></li>
-                <li><img draggable='false' src="../images/addPreview.png" width="116" height="116"/></li>
+                <li>
+                    <div className="image-upload">
+                        <label htmlFor="logo-upload">
+                            <img draggable='false' src="../images/addLogo.png" width="116" height="116"/>
+                        </label>
+                        <input id="logo-upload" className="hidden-input" type="file" accept="image/png"/>
+                    </div>
+                    <div className="image-upload">
+                        <label htmlFor="preview-upload">
+                            <img draggable='false' src="../images/addPreview.png" width="185.3" height="116"/>
+                        </label>
+                        <input id="preview-upload" className="hidden-input" type="file" accept="image/png"/>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>)

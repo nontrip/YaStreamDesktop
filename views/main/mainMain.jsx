@@ -7,11 +7,12 @@ import MenuBar from '../common/menuBar.jsx'
 
 export default class MainMain extends React.Component {
   render() {
+    let menubar = this.props.stream == 'true' ? ['Текущий стрим', 'История', 'Цели по сборам', 'Настройки аккаунта','Выход'] : ['Новый стрим', 'История', 'Цели по сборам', 'Настройки аккаунта','Выход']
     return (
     <div>
-        <TitleBar windowName='Яндекс.Стрим'/>
+        <TitleBar windowName='ЯСтрим'/>
         <MiddleField balance={this.props.balance} number={this.props.number}/>
-        <MenuBar points={['Новый стрим', 'История', 'Цели по сборам', 'Настройки аккаунта','Выход']}/>
+        <MenuBar points={menubar}/>
     </div>)
   }
 }

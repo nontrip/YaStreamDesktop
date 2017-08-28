@@ -94,7 +94,7 @@ window.onload = function() {
     })
     $('input[type="range"]').on("change", function() {
         if (localStorage.liveStream == 'true') {
-            $("div.update").show();
+            $("div.update").show()
         }
     })
     document.getElementsByClassName('getQR')[0].onclick = () => {
@@ -139,8 +139,14 @@ window.onload = function() {
     document.getElementById('donatAuto').onclick = () => {
         if (autoAlert == 'no') {
             autoAlert = 'yes'
+            if (localStorage.liveStream == 'true') {
+                $("div.update").show()
+            }
         } else {
             autoAlert = 'no'
+            if (localStorage.liveStream == 'true') {
+                $("div.update").show()
+            }
         }
     }
 
@@ -149,7 +155,6 @@ window.onload = function() {
     }
     console.log(localStorage.liveStream)
     if (localStorage.liveStream == 'true') {
-        ipcRenderer.send('start-stream', 'to-stream')
         $("div.start").html("<p>Завершить</p>")
         document.getElementsByClassName('start')[0].onclick = endstream
         document.getElementsByClassName('start')[1].onclick = endstream
@@ -177,6 +182,12 @@ let validation = () => {
         return false
     }
 }
+
+$(document).on('change', '#goal', () => {
+    if (localStorage.liveStream == 'true') {
+        $("div.update").show()
+    }
+})
 
 function startstream() {
 
@@ -380,9 +391,8 @@ function setDefaultData() {
             $('#channel').val(data.channel)
             $('#name').val(data.name)
             $('#link').val(data.link)
-            document.getElementById('logo-upload').parentElement.childNodes[0].childNodes[0].src =data.logo;
-           document.getElementById('preview-upload').parentElement.childNodes[0].childNodes[0].src =data.preview;
-            
+            $('img')[0].attr("src", data.logo);
+            document.getElementsByClassName('ul-right')[0].childNodes[1].childNodes[0].src = data.preview
         });
     } else {
         $('#name').val(localStorage.liveStream_name)

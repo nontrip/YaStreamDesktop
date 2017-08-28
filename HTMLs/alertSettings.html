@@ -6,22 +6,16 @@
     <link rel="stylesheet" type="text/css" href="alertSettings.css" />
     <link href="https://fonts.googleapis.com/css?family=Play&amp;subset=cyrillic,cyrillic-ext" rel="stylesheet">
     <link rel='stylesheet' href='spectrum.css' />
-     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-
-<!-- normal script imports etc  -->
-<script src="../scripts/jquery.js"></script>     
-
-<!-- Insert this line after script imports -->
-<script>if (window.module) module = window.module;</script>
-<script src='../scripts/spectrum.js'></script>
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script src="../scripts/jquery.js"></script>     
+    <script>if (window.module) module = window.module;</script>
+    <script src='../scripts/spectrum.js'></script>
     <script>
         require('babel-register');
         require('../scripts/alertSettings');
-    </script>
-<!-- width: 659,
-      height: 535, 
--->
+</script>
 </head>
+
 <body>
     <div class="container">
         <div class="loading">
@@ -58,6 +52,17 @@
                 showInput: true,
                 showAlpha: true
             });
+
+            $('.sp-dd').css('display', 'none')
+            $('.sp-preview').css('border', 'none')
+            $('.sp-preview').css('width', '24px')
+            $('.sp-preview').css('height', '24px')
+            $('.sp-preview').css('background-image', 'none')
+            $('.sp-replacer').css('background', '#29292c')
+            $('.sp-replacer').css('border', 'none')
+            $('.sp-preview-inner').css('border-radius', '50%')
+            $('.sp-preview-inner').css('border', '2px solid #858585')
+            $('.sp-replacer sp-light').css('border-radius', '50%')
         })
     </script>
 

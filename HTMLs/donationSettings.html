@@ -7,21 +7,14 @@
     <link href="https://fonts.googleapis.com/css?family=Play&amp;subset=cyrillic,cyrillic-ext" rel="stylesheet">
    
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-
-<!-- normal script imports etc  -->
-<script src="../scripts/jquery.js"></script>     
-
-<!-- Insert this line after script imports -->
-<script>if (window.module) module = window.module;</script>
-<script src='../scripts/spectrum.js'></script>
-<link rel='stylesheet' href='spectrum.css' />
+    <script src="../scripts/jquery.js"></script>
+    <script>if (window.module) module = window.module;</script>
+    <script src='../scripts/spectrum.js'></script>
+    <link rel='stylesheet' href='spectrum.css' />
 <script>
-        require('babel-register');
-        require('../scripts/donationSettings');
-    </script>
-<!-- width: 659,
-      height: 535, 
--->
+    require('babel-register');
+    require('../scripts/donationSettings');
+</script>
 </head>
 <body>
     <div class="container">
@@ -31,11 +24,22 @@
     </div>
     <script>
         $(document).ready(function(){
-            $('#color-picker').spectrum({
+            $('#color').spectrum({
                 preferredFormat: "rgb",
                 showInput: true,
                 showAlpha: true
-            });
+            })
+
+            $('.sp-dd').css('display', 'none')
+            $('.sp-preview').css('border', 'none')
+            $('.sp-preview').css('width', '24px')
+            $('.sp-preview').css('height', '24px')
+            $('.sp-preview').css('background-image', 'none')
+            $('.sp-replacer').css('background', '#29292c')
+            $('.sp-replacer').css('border', 'none')
+            $('.sp-preview-inner').css('border-radius', '50%')
+            $('.sp-preview-inner').css('border', '2px solid #858585')
+            $('.sp-replacer sp-light').css('border-radius', '50%')
         })
          
 </script>

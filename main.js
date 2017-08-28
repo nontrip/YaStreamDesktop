@@ -21,11 +21,15 @@ let newGoalWindow = null
 let newStreamWindow = null
 let playerWindow = null
 let settingsWindow = null
+let inStreamSettings = null
+
+let inStream = false
+let mainToSend
+
+let player_set_icon
 
 app.on('window-all-closed', () => {
-    if (process.platform != 'darwin') {
-        app.quit();
-    }
+    app.quit();
 });
 
 app.on('ready', () => {
@@ -100,7 +104,7 @@ ipcMain.on('show-settings', (event) => {
     event.returnValue = false
     settingsWindow = new BrowserWindow({
         width: 500,
-        height: 220,
+        height: 210,
         titleBarStyle: 'hidden',
         fullscreenable: false,
         show: false,
@@ -113,6 +117,7 @@ ipcMain.on('show-settings', (event) => {
         if (mainWindow) {
             event.sender.send('settings-closed', true)
             mainWindow.show()
+            mainWindow.focus()
         }
     });
     settingsWindow.once('ready-to-show', () => {
@@ -126,14 +131,17 @@ ipcMain.on('show-history', () => {
         width: 360,
         height: 640,
         titleBarStyle: 'hidden',
-        resizable: false,
+        resizable: true,
         fullscreenable: false,
-        show: false
+        show: false,
+        frame: true,
+        useContentSize: true
     })
     historyWindow.loadURL('file://' + __dirname + '/HTMLs/history.html')
     historyWindow.on('closed', () => {
         historyWindow = null;
         mainWindow.show()
+        mainWindow.focus()
     })
     historyWindow.once('ready-to-show', () => {
         historyWindow.show()
@@ -155,6 +163,7 @@ ipcMain.on('show-goals', () => {
     donationGoalsWindow.on('closed', () => {
         donationGoalsWindow = null;
         mainWindow.show()
+        mainWindow.focus()
     })
     donationGoalsWindow.once('ready-to-show', () => {
         donationGoalsWindow.show()
@@ -175,7 +184,10 @@ ipcMain.on('show-chooseSrc', () => {
     chooseSrcWindow.loadURL('file://' + __dirname + '/HTMLs/chooseSrc.html');
     chooseSrcWindow.on('closed', () => {
         chooseSrcWindow = null;
-        mainWindow.show()
+        if (!newStreamWindow) {
+            mainWindow.show()
+            mainWindow.focus()
+        }
     })
     chooseSrcWindow.once('ready-to-show', () => {
         chooseSrcWindow.show()
@@ -183,7 +195,6 @@ ipcMain.on('show-chooseSrc', () => {
 })
 
 ipcMain.on('show-newStream', () => {
-    chooseSrcWindow.hide()
     newStreamWindow = new BrowserWindow({
         width: 659,
         height: 675,
@@ -193,20 +204,15 @@ ipcMain.on('show-newStream', () => {
         show: false,
         frame: false
     })
+    chooseSrcWindow.close()
     newStreamWindow.loadURL('file://' + __dirname + '/HTMLs/newStream.html');
 
     newStreamWindow.on('closed', () => {
         newStreamWindow = null
-        if (playerWindow) {
-            playerWindow.close();
+        if (!inStream){
+            mainWindow.show()
+            mainWindow.focus()
         }
-        if (donationGoalWindow) {
-            donationGoalWindow.close()
-        }
-        if (alertWindow) {
-            alertWindow.close()
-        }
-        mainWindow.show()
     })
     newStreamWindow.once('ready-to-show', () => {
         newStreamWindow.show()
@@ -217,16 +223,17 @@ ipcMain.on('show-donationSettings', () => {
     settingsWindow.hide()
     donationSettingsWindow = new BrowserWindow({
         width: 659,
-        height: 570,
-        titleBarStyle: 'hidden',
+        height: 633,
+        frame: false,
         resizable: false,
         fullscreenable: false,
         show: false
     })
-    donationSettingsWindow.loadURL('file://' + __dirname + '/HTMLs/donationSettings.html');
+    donationSettingsWindow.loadURL('file://' + __dirname + '/HTMLs/donationSettings.html')
     donationSettingsWindow.on('closed', () => {
-        donationSettingsWindow = null;
+        donationSettingsWindow = null
         settingsWindow.show()
+        settingsWindow.focus()
     })
     donationSettingsWindow.once('ready-to-show', () => {
         donationSettingsWindow.show()
@@ -237,9 +244,8 @@ ipcMain.on('show-alertSettings', () => {
     settingsWindow.hide()
     alertSettingsWindow = new BrowserWindow({
         width: 659,
-        height: 580,
-
-        titleBarStyle: 'hidden',
+        height: 598,
+        frame: false,
         resizable: false,
         fullscreenable: false,
         show: false
@@ -248,6 +254,7 @@ ipcMain.on('show-alertSettings', () => {
     alertSettingsWindow.on('closed', () => {
         alertSettingsWindow = null;
         settingsWindow.show()
+        settingsWindow.focus()
     })
     alertSettingsWindow.once('ready-to-show', () => {
         alertSettingsWindow.show()
@@ -289,7 +296,9 @@ ipcMain.on('donationSettings-closed', () => {
 })
 
 ipcMain.on('start-stream', (event, arg) => {
-
+    if (mainWindow){
+        mainWindow.hide()
+    }
     if (chooseAuthWindow) {
         chooseSrcWindow.close()
     }
@@ -308,10 +317,18 @@ ipcMain.on('start-stream', (event, arg) => {
     })
     playerWindow.loadURL('file://' + __dirname + '/HTMLs/player.html');
     playerWindow.on('closed', () => {
-        if (newStreamWindow) {
-            newStreamWindow.show()
+        playerWindow = null
+        inStream = false
+        if (inStreamSettings){
+            inStreamSettings.close()
         }
-        playerWindow = null;
+        if (donationGoalWindow){
+            donationGoalWindow.close()
+        }
+        if (alertWindow){
+            alertWindow.close()
+        }
+        mainWindow.show()
     })
     playerWindow.once('ready-to-show', () => {
         playerWindow.show()
@@ -337,10 +354,13 @@ ipcMain.on('start-stream', (event, arg) => {
                 donationGoalWindow.show()
             })
         }
-    });
+    })
 
     const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize
+storage.has('autoAlert', function(error, hasKey) {
+        if (error) throw error;
 
+        if (hasKey) {
     alertWindow = new BrowserWindow({
         width: 400,
         height: 130,
@@ -362,6 +382,8 @@ ipcMain.on('start-stream', (event, arg) => {
     alertWindow.once('ready-to-show', () => {
         alertWindow.show()
     })
+        }
+    })
 })
 
 ipcMain.on('update-goal', (event, arg) => {
@@ -378,46 +400,27 @@ ipcMain.on('settings-window', (event, arg) => {
     if (arg) {
         newStreamWindow.show()
     } else {
-        newStreamWindow.hide()
+        if (newStreamWindow){
+            newStreamWindow.hide()
+        }
     }
 })
-/*
 
-ipcMain.on('show-newStreamSettings', () => {
-    chooseWindow = new BrowserWindow({
-      width: 659,
-      height: 675, 
-      titleBarStyle: 'hidden', 
-      resizable: false,
-      fullscreenable: false,
-      show: false
-    })
-    chooseWindow.loadURL('file://' + __dirname + '/HTMLs/newStream.html');
-    chooseWindow.on('closed', () => {
-      chooseWindow = null;
-    })
-    chooseWindow.once('ready-to-show', () => {
-      chooseWindow.show()
-    })
+ipcMain.on('end-stream', (event) => {
+    if (newStreamWindow) {
+        newStreamWindow.send('end-stream');
+    }
+    if (playerWindow) {
+        playerWindow.close()
+    }
+    inStream = false
 })
 
-ipcMain.on('show-newStreamSettings', () => {
-    alertWindow = new BrowserWindow({
-      width: 659,
-      height: 675, 
-      titleBarStyle: 'hidden', 
-      resizable: false,
-      fullscreenable: false,
-      show: false
-    })
-    alertWindow.loadURL('file://' + __dirname + '/HTMLs/newStream.html');
-    alertWindow.on('closed', () => {
-      alertWindow = null;
-    })
-    alertWindow.once('ready-to-show', () => {
-      alertWindow.show()
-    })
-})*/
+ipcMain.on('inStream', () => {
+    inStream = true
+})
+
+
 
 let openMain = () => {
     mainWindow = new BrowserWindow({
@@ -466,4 +469,36 @@ ipcMain.on('show-newStreamFromMain', () => {
     newStreamWindow.once('ready-to-show', () => {
         newStreamWindow.show()
     })
+})
+
+ipcMain.on('show-inStream-settings', (event) => {
+    player_set_icon = event.sender
+    inStreamSettings = new BrowserWindow({
+        width: 659,
+        height: 675,
+        titleBarStyle: 'hidden',
+        resizable: false,
+        fullscreenable: false,
+        show: false,
+        frame: false
+    })
+            
+    inStreamSettings.loadURL('file://' + __dirname + '/HTMLs/newStreamAdd.html');
+
+    inStreamSettings.on('closed', () => {
+        inStreamSettings = null
+        if (playerWindow){
+            player_set_icon.send('settingsClosed')
+            playerWindow.focus()
+        }
+    })
+    inStreamSettings.once('ready-to-show', () => {
+        inStreamSettings.show()
+    }) 
+})
+
+ipcMain.on('close-inStream-settings', () => {
+    if (inStreamSettings){
+        inStreamSettings.close()
+    }
 })

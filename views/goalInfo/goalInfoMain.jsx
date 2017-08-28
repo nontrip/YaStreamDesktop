@@ -20,8 +20,9 @@ export default class NewGoalMain extends React.Component {
                 <h1>Текущее состояние цели: </h1>
                 <h2>Статус цели: <span className="gold">{this.props.goalInfo.status}</span></h2>
             </div>
-            <ProgressBar progress={0} amount={this.props.goalInfo.amount}/>
+            <ProgressBar progress={this.props.goalInfo.progress} amount={this.props.goalInfo.amount}/>
         </div>
     )
   }
 }
+//<div className="button start"><p>Возобновить сбор</p></div>

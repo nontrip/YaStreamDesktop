@@ -9,7 +9,7 @@ export default class MiddleField extends React.Component {
     <div className="middleField">
         <ImgHouse path='../images/logo.png' />
         <div className="text-house">
-                <h1>Яндекс.Стрим</h1>
+                <h1>ЯСтрим</h1>
         </div>
         <div className="hr-div">
 
