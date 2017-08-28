@@ -34,6 +34,7 @@ window.onload = function() {
         remote.getCurrentWindow().close()
     }
      document.getElementsByClassName('another')[0].onclick = () => {
+        localStorage.setItem('source', 'another')
         ipcRenderer.send('show-newStream');
     }
     

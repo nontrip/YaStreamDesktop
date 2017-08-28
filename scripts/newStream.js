@@ -5,6 +5,7 @@ import NewStreamMain from '../views/newStream/newStreamMain.jsx'
 const $ = require('./jquery.js')
 const { ipcRenderer } = require('electron')
 const remote = require('electron').remote
+const app = remote.app;
 const storage = require('electron-json-storage');
 const moment = require('moment');
 const { clipboard } = require('electron')
@@ -42,6 +43,7 @@ require('electron').ipcRenderer.on('end-stream', (event) => {
 
 window.onload = function() {
     ReactDOM.render( < NewStreamMain / > , document.getElementsByClassName('container')[0])
+
     $("div.update").on('click', update)
     $("div.update").hide();
     setDefaultData();
@@ -389,10 +391,12 @@ function setDefaultData() {
             $('#name').val(data.name)
             $('#link').val(data.link)
             if (data.logo != null)
-                document.getElementsByClassName('ul-right')[0].childNodes[0].childNodes[0].src = data.logo
+                $('#logo').attr('src', data.logo)
             if (data.preview != null)
-                document.getElementsByClassName('ul-right')[0].childNodes[1].childNodes[0].src = data.preview
+                $('#preview').attr('src', data.preview)
         });
+
+
     } else {
         $('#name').val(localStorage.liveStream_name)
         $('#channel').val(localStorage.liveStream_channel)
@@ -416,8 +420,16 @@ function upload_images() {
     console.log($('#logo').attr('src'))
 
     if ($('#logo').attr('src') != "../images/addLogo.png") {
-        var formData = {
-            file: fs.createReadStream($('#logo').attr('src'))
+        var formData;
+        if ($('#logo').attr('src').indexOf('http') >= 0) {
+            var r = request($('#logo').attr('src'))
+            formData = {
+                file: r
+            }
+        } else {
+            formData = {
+                file: fs.createReadStream($('#logo').attr('src'))
+            }
         }
 
         var options = {
@@ -427,18 +439,28 @@ function upload_images() {
             },
             formData: formData
         };
-
+        console.log(options);
         request.post(options, function(err, httpResponse, body) {
             if (err) {
                 return console.error('upload failed:', err);
             }
             console.log('Upload successful!  Server responded with:', body);
+            $('#logo').attr('src', 'https://yastream.win/api/images?id=' + localStorage.liveStream_id + '&type=logo');
+            storage.set('liveStream_logo', { logo: $('#logo').attr('src') });
         });
-        storage.set('liveStream_logo', { logo: $('#logo').attr('src')});
     }
     if ($('#preview').attr('src') != "../images/addPreview.png") {
-        var formData = {
-            file: fs.createReadStream($('#preview').attr('src'))
+        var formData;
+        if ($('#preview').attr('src').indexOf('http') >= 0) {
+            var file;
+            var r = request($('#preview').attr('src'))
+            formData = {
+                file: r
+            }
+        } else {
+            formData = {
+                file: fs.createReadStream($('#preview').attr('src'))
+            }
         }
 
         var options = {
@@ -453,9 +475,11 @@ function upload_images() {
             if (err) {
                 return console.error('upload failed:', err);
             }
+            $('#preview').attr('src', 'https://yastream.win/api/images?id=' + localStorage.liveStream_id + '&type=preview');
+            storage.set('liveStream_preview', { preview: $('#preview').attr('src') });
             console.log('Upload successful!  Server responded with:', body);
-        });
-        storage.set('liveStream_preview', { preview: $('#preview').attr('src')});
+        })
+
     }
 }
 
