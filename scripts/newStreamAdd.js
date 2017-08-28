@@ -391,13 +391,27 @@ function setDefaultData() {
             $('#channel').val(data.channel)
             $('#name').val(data.name)
             $('#link').val(data.link)
-            $('img')[0].attr("src", data.logo);
-            document.getElementsByClassName('ul-right')[0].childNodes[1].childNodes[0].src = data.preview
+            if (data.logo != null)
+                document.getElementsByClassName('ul-right')[0].childNodes[0].childNodes[0].src = data.logo
+            if (data.preview != null)
+                document.getElementsByClassName('ul-right')[0].childNodes[1].childNodes[0].src = data.preview
         });
     } else {
         $('#name').val(localStorage.liveStream_name)
         $('#channel').val(localStorage.liveStream_channel)
         $('#link').val(localStorage.liveStream_url)
+
+        console.log('1')
+
+        storage.get('liveStream_logo', function(error, data) {
+            if (error) console.log(error);
+            console.log(data)
+            $('#logo').attr('src', data.logo);
+        });
+        storage.get('liveStream_preview', function(error, data) {
+            if (error) console.log(error);
+            $('#preview').attr('src', data.preview);
+        });
     }
 }
 

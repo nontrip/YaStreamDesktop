@@ -36,8 +36,8 @@ window.onload = function() {
                         success: function(data) {
                             if (data){
                                 data.start_date=data.start_date.replace('T', ' ')
-                                localStorage.setItem('liveStream_id', data.stream_id)
                                 localStorage.setItem('liveStream_name', data.name)
+                                localStorage.setItem('liveStream_id', data.stream_id)
                                 localStorage.setItem('liveStream_url', data.url)
                                 localStorage.setItem('liveStream_channel', data.channel)
                                 localStorage.setItem('liveStream_startdate', data.start_date)

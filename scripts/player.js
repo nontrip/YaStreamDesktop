@@ -50,7 +50,12 @@ window.onload = function() {
     })
     ipcRenderer.send('inStream')
     ReactDOM.render(<Header total={total} name={localStorage.streamName} />, document.getElementsByClassName('header')[0])
-    ReactDOM.render(<PlayerMain full={full} donats={donats} />, document.getElementsByClassName('main')[0])
+    ReactDOM.render( <PlayerMain full={full} donats={donats} />, document.getElementsByClassName('main')[0])
+    let tray = new Tray(__dirname + '/../images/turn-off.png')
+    tray.on('click', () => {
+        tray.destroy()
+        ipcRenderer.send('end-stream')
+    })
 
     document.getElementsByClassName('header-right')[0].childNodes[0].onclick = () => {
         if (full) {

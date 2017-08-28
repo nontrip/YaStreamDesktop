@@ -33,7 +33,10 @@ window.onload = function() {
     document.getElementsByClassName('return')[0].onclick = () => {
         remote.getCurrentWindow().close()
     }
-
+     document.getElementsByClassName('another')[0].onclick = () => {
+        ipcRenderer.send('show-newStream');
+    }
+    
     document.getElementsByClassName('buttons')[0].childNodes[0].onmouseover = function(){
         this.childNodes[0].childNodes[0].src = '../images/arrowActive.png'
     }

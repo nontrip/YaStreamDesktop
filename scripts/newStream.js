@@ -7,7 +7,13 @@ const { ipcRenderer } = require('electron')
 const remote = require('electron').remote
 const storage = require('electron-json-storage');
 const moment = require('moment');
-const {clipboard} = require('electron')
+const { clipboard } = require('electron')
+
+var FormData = require('form-data');
+var fs = require('fs');
+var request = require('request')
+
+const { dialog } = require('electron').remote
 
 let autoAlert = 'no'
 let goals
@@ -35,13 +41,14 @@ require('electron').ipcRenderer.on('end-stream', (event) => {
 })
 
 window.onload = function() {
-    ReactDOM.render(<NewStreamMain /> , document.getElementsByClassName('container')[0])
+    ReactDOM.render( < NewStreamMain / > , document.getElementsByClassName('container')[0])
     $("div.update").on('click', update)
     $("div.update").hide();
     setDefaultData();
 
-    $('input[type=file]').on('change', function(){
+    $('input[type=file]').on('change', function() {
         this.parentElement.childNodes[0].childNodes[0].src = this.files[0].path
+        console.log(this.parentElement.childNodes[0].childNodes[0].src)
     })
 
     $('#name').on('change', function() {
@@ -62,7 +69,7 @@ window.onload = function() {
             getTwitchData($('#link').val().replace('https://www.twitch.tv/', ''))
         }
     })
-    if (goals){
+    if (goals) {
         for (let i = 0; i < goals.length; i++) {
             $('#goal').append(new Option(goals[i].name, goals[i].name))
         }
@@ -125,14 +132,14 @@ window.onload = function() {
     document.getElementsByClassName('getLink')[0].onclick = () => {
 
         if ($('#link').val().length > 0) {
-           clipboard.writeText("https://yastream.win/home/donation?url=" + $('#link').val())
-           if (!animate){
-               animate = true
-                $('.pop-up').animate({'margin-top': 0}, 500)
-                setTimeout(()=>{
-                    $('.pop-up').animate({'margin-top': -44}, 500, () => animate = false) 
+            clipboard.writeText("https://yastream.win/home/donation?url=" + $('#link').val())
+            if (!animate) {
+                animate = true
+                $('.pop-up').animate({ 'margin-top': 0 }, 500)
+                setTimeout(() => {
+                    $('.pop-up').animate({ 'margin-top': -44 }, 500, () => animate = false)
                 }, 1300)
-           }
+            }
         }
     }
 
@@ -242,7 +249,7 @@ function startstream() {
                     stream_id: parseInt(localStorage.liveStream_id),
                     text_l: parseInt(map[0]),
                     voice_l: parseInt(map[1]),
-                    min_sum: parseInt(map[2])*100
+                    min_sum: parseInt(map[2]) * 100
                 }
                 localStorage.setItem('liveStream_settings', settings);
                 console.log(settings);
@@ -258,6 +265,7 @@ function startstream() {
                     },
                     success: function(response) {
                         console.log(response)
+                        upload_images();
                         ipcRenderer.send('start-stream', 'to-stream')
                     },
                     error: function(error) {
@@ -380,14 +388,74 @@ function setDefaultData() {
             $('#channel').val(data.channel)
             $('#name').val(data.name)
             $('#link').val(data.link)
-            document.getElementById('logo-upload').parentElement.childNodes[0].childNodes[0].src =data.logo;
-           document.getElementById('preview-upload').parentElement.childNodes[0].childNodes[0].src =data.preview;
-            
+            if (data.logo != null)
+                document.getElementsByClassName('ul-right')[0].childNodes[0].childNodes[0].src = data.logo
+            if (data.preview != null)
+                document.getElementsByClassName('ul-right')[0].childNodes[1].childNodes[0].src = data.preview
         });
     } else {
         $('#name').val(localStorage.liveStream_name)
         $('#channel').val(localStorage.liveStream_channel)
         $('#link').val(localStorage.liveStream_url)
+
+        console.log('1')
+
+        storage.get('liveStream_logo', function(error, data) {
+            if (error) console.log(error);
+            console.log(data)
+            $('#logo').attr('src', data.logo);
+        });
+        storage.get('liveStream_preview', function(error, data) {
+            if (error) console.log(error);
+            $('#preview').attr('src', data.preview);
+        });
+    }
+}
+
+function upload_images() {
+    console.log($('#logo').attr('src'))
+
+    if ($('#logo').attr('src') != "../images/addLogo.png") {
+        var formData = {
+            file: fs.createReadStream($('#logo').attr('src'))
+        }
+
+        var options = {
+            url: 'https://yastream.win/api/images?stream_id=' + localStorage.liveStream_id + '&streamer_id=' + localStorage.ya_account + '&type=logo',
+            headers: {
+                "Token": localStorage.Token
+            },
+            formData: formData
+        };
+
+        request.post(options, function(err, httpResponse, body) {
+            if (err) {
+                return console.error('upload failed:', err);
+            }
+            console.log('Upload successful!  Server responded with:', body);
+        });
+        storage.set('liveStream_logo', { logo: $('#logo').attr('src')});
+    }
+    if ($('#preview').attr('src') != "../images/addPreview.png") {
+        var formData = {
+            file: fs.createReadStream($('#preview').attr('src'))
+        }
+
+        var options = {
+            url: 'https://yastream.win/api/images?stream_id=' + localStorage.liveStream_id + '&streamer_id=' + localStorage.ya_account + '&type=preview',
+            headers: {
+                "Token": localStorage.Token
+            },
+            formData: formData
+        };
+
+        request.post(options, function(err, httpResponse, body) {
+            if (err) {
+                return console.error('upload failed:', err);
+            }
+            console.log('Upload successful!  Server responded with:', body);
+        });
+        storage.set('liveStream_preview', { preview: $('#preview').attr('src')});
     }
 }
 
@@ -400,12 +468,14 @@ function getTwitchData(link) {
             xhr.setRequestHeader('Client-ID', 'kfst7tyjg0jf3qx8hvc1y29ccf89kp');
         },
         success: function(response) {
-            console.log(response.streams[0].preview.medium)
+            console.log(response)
             if (response.streams.length != 0 && response.channel.url == $('#link').val()) {
                 $('#channel').val(response.channel.display_name)
                 $('#name').val(response.channel.status)
-                document.getElementsByClassName('ul-right')[0].childNodes[0].childNodes[0].src = response.streams[0].channel.logo
-                document.getElementsByClassName('ul-right')[0].childNodes[1].childNodes[0].src = response.streams[0].channel.video_banner
+                if (data.logo != null)
+                    document.getElementsByClassName('ul-right')[0].childNodes[0].childNodes[0].src = response.streams[0].channel.logo
+                if (data.preview != null)
+                    document.getElementsByClassName('ul-right')[0].childNodes[1].childNodes[0].src = response.streams[0].channel.video_banner
             }
         },
         error: function(error) {
