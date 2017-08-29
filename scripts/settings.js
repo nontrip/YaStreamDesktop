@@ -52,7 +52,7 @@ window.onload = function() {
                 localStorage.clear()
                 storage.clear(function(error) {
                     if (error) throw error;
+                    ipcRenderer.send('show-auto-from-settings')
                 })
-                ipcRenderer.send('show-auto-from-settings')
             }
         }
