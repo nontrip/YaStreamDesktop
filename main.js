@@ -1,11 +1,10 @@
 const electron = require('electron')
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
-
-
-const { ipcMain } = require('electron')
+const {
+    ipcMain
+} = require('electron')
 const storage = require('electron-json-storage');
-
 let alertWindow = null
 let alertSettingsWindow = null
 let autorizationWindow = null
@@ -22,18 +21,13 @@ let newStreamWindow = null
 let playerWindow = null
 let settingsWindow = null
 let inStreamSettings = null
-
 let inStream = false
 let mainToSend
-
 let player_set_icon
-
 app.on('window-all-closed', () => {
     app.quit();
 });
-
 app.on('ready', () => {
-
     storage.has('auth', function(error, hasKey) {
         if (error) throw console.log(error);
         if (hasKey) {
@@ -73,10 +67,7 @@ app.on('ready', () => {
         }
     });
 });
-
 ipcMain.on('show-auto-from-settings', () => {
-    mainWindow.close()
-    settingsWindow.close()
     autorizationWindow = new BrowserWindow({
         width: 360,
         height: 380,
@@ -91,15 +82,19 @@ ipcMain.on('show-auto-from-settings', () => {
         autorizationWindow = null;
     })
     autorizationWindow.once('ready-to-show', () => {
+        if (mainWindow) {
+            mainWindow.close()
+        }
+        if (settingsWindow) {
+            settingsWindow.close()
+        }
         autorizationWindow.show()
     })
 })
-
 ipcMain.on('show-main-from-auto', () => {
     autorizationWindow.close()
     openMain()
 })
-
 ipcMain.on('show-settings', (event) => {
     event.returnValue = false
     settingsWindow = new BrowserWindow({
@@ -124,7 +119,6 @@ ipcMain.on('show-settings', (event) => {
         settingsWindow.show()
     })
 })
-
 ipcMain.on('show-history', () => {
     mainWindow.hide()
     historyWindow = new BrowserWindow({
@@ -147,7 +141,6 @@ ipcMain.on('show-history', () => {
         historyWindow.show()
     })
 })
-
 ipcMain.on('show-goals', () => {
     mainWindow.hide()
     donationGoalsWindow = new BrowserWindow({
@@ -169,7 +162,6 @@ ipcMain.on('show-goals', () => {
         donationGoalsWindow.show()
     })
 })
-
 ipcMain.on('show-chooseSrc', () => {
     mainWindow.hide()
     chooseSrcWindow = new BrowserWindow({
@@ -193,7 +185,6 @@ ipcMain.on('show-chooseSrc', () => {
         chooseSrcWindow.show()
     })
 })
-
 ipcMain.on('show-newStream', () => {
     newStreamWindow = new BrowserWindow({
         width: 659,
@@ -206,10 +197,9 @@ ipcMain.on('show-newStream', () => {
     })
     chooseSrcWindow.close()
     newStreamWindow.loadURL('file://' + __dirname + '/HTMLs/newStream.html');
-
     newStreamWindow.on('closed', () => {
         newStreamWindow = null
-        if (!inStream){
+        if (!inStream) {
             mainWindow.show()
             mainWindow.focus()
         }
@@ -218,7 +208,6 @@ ipcMain.on('show-newStream', () => {
         newStreamWindow.show()
     })
 })
-
 ipcMain.on('show-donationSettings', () => {
     settingsWindow.hide()
     donationSettingsWindow = new BrowserWindow({
@@ -239,7 +228,6 @@ ipcMain.on('show-donationSettings', () => {
         donationSettingsWindow.show()
     })
 })
-
 ipcMain.on('show-alertSettings', () => {
     settingsWindow.hide()
     alertSettingsWindow = new BrowserWindow({
@@ -260,7 +248,6 @@ ipcMain.on('show-alertSettings', () => {
         alertSettingsWindow.show()
     })
 })
-
 ipcMain.on('show-newGoal', () => {
     donationGoalsWindow.hide()
     newGoalWindow = new BrowserWindow({
@@ -282,21 +269,17 @@ ipcMain.on('show-newGoal', () => {
         newGoalWindow.show()
     })
 })
-
 ipcMain.on('return-to-goals', () => {
     newGoalWindow.close()
 })
-
 ipcMain.on('listen-for-goals', (event, arg) => {
     listenerForGoals = event.sender
 })
-
 ipcMain.on('donationSettings-closed', () => {
     donationSettingsWindow.close()
 })
-
 ipcMain.on('start-stream', (event, arg) => {
-    if (mainWindow){
+    if (mainWindow) {
         mainWindow.hide()
     }
     if (chooseAuthWindow) {
@@ -319,13 +302,13 @@ ipcMain.on('start-stream', (event, arg) => {
     playerWindow.on('closed', () => {
         playerWindow = null
         inStream = false
-        if (inStreamSettings){
+        if (inStreamSettings) {
             inStreamSettings.close()
         }
-        if (donationGoalWindow){
+        if (donationGoalWindow) {
             donationGoalWindow.close()
         }
-        if (alertWindow){
+        if (alertWindow) {
             alertWindow.close()
         }
         mainWindow.show()
@@ -335,7 +318,6 @@ ipcMain.on('start-stream', (event, arg) => {
     })
     storage.has('goalToOpen', function(error, hasKey) {
         if (error) throw error;
-
         if (hasKey) {
             donationGoalWindow = new BrowserWindow({
                 width: 560,
@@ -355,37 +337,35 @@ ipcMain.on('start-stream', (event, arg) => {
             })
         }
     })
-
-    const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize
-storage.has('autoAlert', function(error, hasKey) {
+    const {
+        width,
+        height
+    } = electron.screen.getPrimaryDisplay().workAreaSize
+    storage.has('autoAlert', function(error, hasKey) {
         if (error) throw error;
-
         if (hasKey) {
-    alertWindow = new BrowserWindow({
-        width: 400,
-        height: 130,
-        x: Math.round(width / 2) - 200,
-        y: 10,
-        frame: false,
-        resizable: false,
-        fullscreenable: false,
-        transparent: true,
-        show: true,
-        alwaysOnTop: true
-    })
-
-    alertWindow.loadURL('file://' + __dirname + '/HTMLs/alert.html');
-
-    alertWindow.on('closed', () => {
-        alertWindow = null;
-    })
-    alertWindow.once('ready-to-show', () => {
-        alertWindow.show()
-    })
+            alertWindow = new BrowserWindow({
+                width: 400,
+                height: 130,
+                x: Math.round(width / 2) - 200,
+                y: 10,
+                frame: false,
+                resizable: false,
+                fullscreenable: false,
+                transparent: true,
+                show: true,
+                alwaysOnTop: true
+            })
+            alertWindow.loadURL('file://' + __dirname + '/HTMLs/alert.html');
+            alertWindow.on('closed', () => {
+                alertWindow = null;
+            })
+            alertWindow.once('ready-to-show', () => {
+                alertWindow.show()
+            })
         }
     })
 })
-
 ipcMain.on('update-goal', (event, arg) => {
     if (donationGoalWindow) {
         donationGoalWindow.webContents.send('update-goal', arg);
@@ -400,12 +380,11 @@ ipcMain.on('settings-window', (event, arg) => {
     if (arg) {
         newStreamWindow.show()
     } else {
-        if (newStreamWindow){
+        if (newStreamWindow) {
             newStreamWindow.hide()
         }
     }
 })
-
 ipcMain.on('end-stream', (event) => {
     if (newStreamWindow) {
         newStreamWindow.send('end-stream');
@@ -415,13 +394,9 @@ ipcMain.on('end-stream', (event) => {
     }
     inStream = false
 })
-
 ipcMain.on('inStream', () => {
     inStream = true
 })
-
-
-
 let openMain = () => {
     mainWindow = new BrowserWindow({
         width: 360,
@@ -440,7 +415,6 @@ let openMain = () => {
         mainWindow.show()
     })
 }
-
 ipcMain.on('show-newStreamFromMain', () => {
     mainWindow.hide()
     newStreamWindow = new BrowserWindow({
@@ -470,7 +444,6 @@ ipcMain.on('show-newStreamFromMain', () => {
         newStreamWindow.show()
     })
 })
-
 ipcMain.on('show-inStream-settings', (event) => {
     player_set_icon = event.sender
     inStreamSettings = new BrowserWindow({
@@ -482,23 +455,20 @@ ipcMain.on('show-inStream-settings', (event) => {
         show: false,
         frame: false
     })
-            
     inStreamSettings.loadURL('file://' + __dirname + '/HTMLs/newStreamAdd.html');
-
     inStreamSettings.on('closed', () => {
         inStreamSettings = null
-        if (playerWindow){
+        if (playerWindow) {
             player_set_icon.send('settingsClosed')
             playerWindow.focus()
         }
     })
     inStreamSettings.once('ready-to-show', () => {
         inStreamSettings.show()
-    }) 
+    })
 })
-
 ipcMain.on('close-inStream-settings', () => {
-    if (inStreamSettings){
+    if (inStreamSettings) {
         inStreamSettings.close()
     }
 })

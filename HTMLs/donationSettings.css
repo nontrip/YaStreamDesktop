@@ -53,6 +53,7 @@ input:focus {
 }
 
 .return {
+     -webkit-app-region: no-drag;
     cursor: pointer;
     position: fixed;
     margin-top: -18px;
@@ -73,6 +74,7 @@ input:focus {
 }
 
 .main {
+     -webkit-app-region: no-drag;
     margin-top: 17px;
     margin-left: 28px;
     color: #979797;
@@ -88,6 +90,7 @@ input:focus {
 }
 
 .color-house {
+     -webkit-app-region: no-drag;
     margin-top: 10px;
     height: 24px;
 }
@@ -177,6 +180,7 @@ input[type='text'] {
 }
 
 .pics {
+     -webkit-app-region: no-drag;
     margin-top: 15px;
     width: 267px;
     display: flex;
@@ -271,6 +275,7 @@ input:checked+.slider:before {
 }
 
 .buttons {
+     -webkit-app-region: no-drag;
     width: 500px;
     margin-left: auto;
     margin-right: auto;

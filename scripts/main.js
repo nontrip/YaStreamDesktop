@@ -4,8 +4,13 @@ import MainMain from '../views/main/mainMain.jsx';
 
 const { ipcRenderer } = require('electron')
 const remote = require('electron').remote
+const storage = require('electron-json-storage');
 const fs = require('fs')
 const $ = require('./jquery.js')
+
+var yandex = new yandexAPI.apiRequests()
+var yastream = new yastreamAPI.apiRequests()
+var twitch = new twitchAPI.apiRequests()
 
 window.onload = function() {
         $.ajax({
@@ -21,14 +26,20 @@ window.onload = function() {
               
             },
             error: function(error) {
-                console.log(JSON.parse(error.responseText));
+                console.log(error);
+                relogin();
             }
         })
-        
+        yastream.getUserInfo(false, function(data, error){
+            if(data===null){
+               relogin();
+            }
+        })
+
         $.ajax({
                         url: 'https://yastream.win/api/Streams_online?streamer_id=' + localStorage.ya_account,
                         type: 'GET',
-                        async: false,
+                        async: true,
                         beforeSend: function(xhr) {
                             xhr.setRequestHeader('Content-Type', 'application/json')
                             xhr.setRequestHeader('Token', localStorage.Token)
@@ -108,3 +119,11 @@ window.onload = function() {
                 active = arg
             })
         }
+
+function relogin() {
+                localStorage.clear()
+                storage.clear(function(error) {
+                    if (error) throw error;
+                    ipcRenderer.send('show-auto-from-settings')
+                })
+}

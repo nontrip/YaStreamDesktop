@@ -41,7 +41,36 @@ require('electron').ipcRenderer.on('end-stream', (event) => {
 })
 
 window.onload = function() {
-    ReactDOM.render( < NewStreamMain / > , document.getElementsByClassName('container')[0])
+    ReactDOM.render(<NewStreamMain /> , document.getElementsByClassName('container')[0])
+    if (localStorage.liveStream_settings_text_l){
+        $('.text_inp').val(localStorage.liveStream_settings_text_l)
+        $('.voice_inp').val(localStorage.liveStream_settings_voice_l)
+        $('.money_inp').val(localStorage.liveStream_settings_min_sum/100)
+        $('.text_inp').css('background-image',
+            '-webkit-gradient(linear, left top, right top, ' +
+            'color-stop(' + localStorage.liveStream_settings_text_l/300 + ', #f3c647), ' +
+            'color-stop(' + localStorage.liveStream_settings_text_l/300 + ', #979797)' +
+            ')'
+        );
+        $('.voice_inp').css('background-image',
+            '-webkit-gradient(linear, left top, right top, ' +
+            'color-stop(' + localStorage.liveStream_settings_voice_l/60 + ', #f3c647), ' +
+            'color-stop(' + localStorage.liveStream_settings_voice_l/60 + ', #979797)' +
+            ')'
+        );
+        $('.money_inp').css('background-image',
+            '-webkit-gradient(linear, left top, right top, ' +
+            'color-stop(' + localStorage.liveStream_settings_min_sum/50000 + ', #f3c647), ' +
+            'color-stop(' + localStorage.liveStream_settings_min_sum/50000 + ', #979797)' +
+            ')'
+        );
+        let resText = document.getElementsByClassName('text_inp')[0].max * ($('.text_inp').val()/document.getElementsByClassName('text_inp')[0].max) + ' симв.'
+        $('.text_inp').next().text(resText)
+        let resVoice = document.getElementsByClassName('voice_inp')[0].max * ($('.voice_inp').val()/document.getElementsByClassName('voice_inp')[0].max) + ' сек.'
+        $('.voice_inp').next().text(resVoice)
+        let resMoney = document.getElementsByClassName('money_inp')[0].max * ($('.money_inp').val()/document.getElementsByClassName('money_inp')[0].max) + ' руб.'
+        $('.money_inp').next().text(resMoney)
+    }
     $("div.update").on('click', update)
     $("div.update").hide();
     setDefaultData();
