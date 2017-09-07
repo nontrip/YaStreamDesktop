@@ -12,6 +12,7 @@ const { clipboard } = require('electron')
 var FormData = require('form-data');
 var fs = require('fs');
 var request = require('request')
+var yastream = new yastreamAPI.apiRequests();
 
 const { dialog } = require('electron').remote
 

@@ -12,12 +12,13 @@ const { clipboard } = require('electron')
 var FormData = require('form-data');
 var fs = require('fs');
 var request = require('request')
-
 const { dialog } = require('electron').remote
 
 let autoAlert = 'yes'
 let goals
 let animate = false
+
+var yastream = new yastreamAPI.apiRequests();
 
 $.ajax({
     url: 'https://yastream.win/api/Goals?streamer_id=' + localStorage.ya_account + '&status=all',
