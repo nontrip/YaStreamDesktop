@@ -15,7 +15,7 @@ var request = require('request')
 
 const { dialog } = require('electron').remote
 
-let autoAlert = 'no'
+let autoAlert = 'yes'
 let goals
 let animate = false
 
@@ -41,40 +41,24 @@ require('electron').ipcRenderer.on('end-stream', (event) => {
 })
 
 window.onload = function() {
-    ReactDOM.render(<NewStreamMain /> , document.getElementsByClassName('container')[0])
-    if (localStorage.liveStream_settings_text_l){
-        $('.text_inp').val(localStorage.liveStream_settings_text_l)
-        $('.voice_inp').val(localStorage.liveStream_settings_voice_l)
-        $('.money_inp').val(localStorage.liveStream_settings_min_sum/100)
-        $('.text_inp').css('background-image',
-            '-webkit-gradient(linear, left top, right top, ' +
-            'color-stop(' + localStorage.liveStream_settings_text_l/300 + ', #f3c647), ' +
-            'color-stop(' + localStorage.liveStream_settings_text_l/300 + ', #979797)' +
-            ')'
-        );
-        $('.voice_inp').css('background-image',
-            '-webkit-gradient(linear, left top, right top, ' +
-            'color-stop(' + localStorage.liveStream_settings_voice_l/60 + ', #f3c647), ' +
-            'color-stop(' + localStorage.liveStream_settings_voice_l/60 + ', #979797)' +
-            ')'
-        );
-        $('.money_inp').css('background-image',
-            '-webkit-gradient(linear, left top, right top, ' +
-            'color-stop(' + localStorage.liveStream_settings_min_sum/50000 + ', #f3c647), ' +
-            'color-stop(' + localStorage.liveStream_settings_min_sum/50000 + ', #979797)' +
-            ')'
-        );
-        let resText = document.getElementsByClassName('text_inp')[0].max * ($('.text_inp').val()/document.getElementsByClassName('text_inp')[0].max) + ' симв.'
-        $('.text_inp').next().text(resText)
-        let resVoice = document.getElementsByClassName('voice_inp')[0].max * ($('.voice_inp').val()/document.getElementsByClassName('voice_inp')[0].max) + ' сек.'
-        $('.voice_inp').next().text(resVoice)
-        let resMoney = document.getElementsByClassName('money_inp')[0].max * ($('.money_inp').val()/document.getElementsByClassName('money_inp')[0].max) + ' руб.'
-        $('.money_inp').next().text(resMoney)
-    }
+    ReactDOM.render( < NewStreamMain / > , document.getElementsByClassName('container')[0])
     $("div.update").on('click', update)
     $("div.update").hide();
     setDefaultData();
-
+    if (localStorage.liveStream_settings_text_l) {
+        $('.text_inp').val(localStorage.liveStream_settings_text_l)
+        $('.voice_inp').val(localStorage.liveStream_settings_voice_l)
+        $('.money_inp').val(localStorage.liveStream_settings_min_sum / 100)
+        $('.text_inp').css('background-image', '-webkit-gradient(linear, left top, right top, ' + 'color-stop(' + localStorage.liveStream_settings_text_l / 300 + ', #f3c647), ' + 'color-stop(' + localStorage.liveStream_settings_text_l / 300 + ', #979797)' + ')');
+        $('.voice_inp').css('background-image', '-webkit-gradient(linear, left top, right top, ' + 'color-stop(' + localStorage.liveStream_settings_voice_l / 60 + ', #f3c647), ' + 'color-stop(' + localStorage.liveStream_settings_voice_l / 60 + ', #979797)' + ')');
+        $('.money_inp').css('background-image', '-webkit-gradient(linear, left top, right top, ' + 'color-stop(' + localStorage.liveStream_settings_min_sum / 50000 + ', #f3c647), ' + 'color-stop(' + localStorage.liveStream_settings_min_sum / 50000 + ', #979797)' + ')');
+        let resText = document.getElementsByClassName('text_inp')[0].max * ($('.text_inp').val() / document.getElementsByClassName('text_inp')[0].max) + ' симв.'
+        $('.text_inp').next().text(resText)
+        let resVoice = document.getElementsByClassName('voice_inp')[0].max * ($('.voice_inp').val() / document.getElementsByClassName('voice_inp')[0].max) + ' сек.'
+        $('.voice_inp').next().text(resVoice)
+        let resMoney = document.getElementsByClassName('money_inp')[0].max * ($('.money_inp').val() / document.getElementsByClassName('money_inp')[0].max) + ' руб.'
+        $('.money_inp').next().text(resMoney)
+    }
     $('input[type=file]').on('change', function() {
         this.parentElement.childNodes[0].childNodes[0].src = this.files[0].path
         console.log(this.parentElement.childNodes[0].childNodes[0].src)
@@ -94,6 +78,14 @@ window.onload = function() {
         if (localStorage.liveStream == 'true') {
             $("div.update").show();
         }
+        yastream.SearchOnlineStream_url($('#link').val(), true, function(data, error) {
+            if (data !== null) {
+                checkurl();
+            }
+            if ($('#link').val().indexOf("https://www.twitch.tv/") !== -1) {
+                getTwitchData($('#link').val().replace('https://www.twitch.tv/', ''))
+            }
+        });
         if ($('#link').val().indexOf("https://www.twitch.tv/") !== -1) {
             getTwitchData($('#link').val().replace('https://www.twitch.tv/', ''))
         }
@@ -164,7 +156,10 @@ window.onload = function() {
             clipboard.writeText("https://yastream.win/home/donation?url=" + $('#link').val())
             if (!animate) {
                 animate = true
-                $('.pop-up').animate({ 'margin-top': 0 }, 500)
+                $('.pop-up').html('<p>Ссылка скопироана в буфер обмена</p>');
+                $('.pop-up').animate({
+                    'margin-top': 0
+                }, 500)
                 setTimeout(() => {
                     $('.pop-up').animate({ 'margin-top': -44 }, 500, () => animate = false)
                 }, 1300)
@@ -185,6 +180,7 @@ window.onload = function() {
     }
     console.log(localStorage.liveStream)
     if (localStorage.liveStream == 'true') {
+        ipcRenderer.send('start-stream', 'to-stream')
         $("div.start").html("<p>Завершить</p>")
         document.getElementsByClassName('start')[0].onclick = endstream
         document.getElementsByClassName('start')[1].onclick = endstream
@@ -207,12 +203,36 @@ let validation = () => {
     let url = document.getElementById('link').value
     let channel = document.getElementById('channel').value
     if (name && url && channel) {
-        return true
+        var fl = yastream.SearchOnlineStream_url($('#link').val(), false, function(data, error) {
+            if (data !== null) {
+                checkurl();
+                return false
+            }
+            else {
+                return true
+            }
+        });
+        return false
     } else {
         return false
     }
 }
-
+function checkurl()
+{
+    if (!animate) {
+        animate = true
+        $('.pop-up').html('<p>По данной ссылке уже запущен прием донатов</p>');
+        $('.pop-up').animate({
+            'margin-top': 0
+        }, 500)
+        setTimeout(() => {
+            $('.pop-up').animate({
+                'margin-top': -44
+            }, 500, () => animate = false)
+        }, 1300)
+    }
+    $('#link').val('')
+}
 function startstream() {
 
     if (!validation()) {
@@ -279,6 +299,9 @@ function startstream() {
                     voice_l: parseInt(map[1]),
                     min_sum: parseInt(map[2]) * 100
                 }
+                localStorage.setItem('liveStream_settings_text_l', settings.text_l);
+                localStorage.setItem('liveStream_settings_voice_l', settings.voice_l);
+                localStorage.setItem('liveStream_settings_min_sum', settings.min_sum);
                 localStorage.setItem('liveStream_settings', settings);
                 console.log(settings);
                 $.ajax({
@@ -416,10 +439,8 @@ function setDefaultData() {
             $('#channel').val(data.channel)
             $('#name').val(data.name)
             $('#link').val(data.link)
-            if (data.logo != null)
-                $('#logo').attr('src', data.logo)
-            if (data.preview != null)
-                $('#preview').attr('src', data.preview)
+            if (data.logo != null) $('#logo').attr('src', data.logo)
+            if (data.preview != null) $('#preview').attr('src', data.preview)
         });
     } else {
         $('#name').val(localStorage.liveStream_name)
@@ -444,8 +465,16 @@ function upload_images() {
     console.log($('#logo').attr('src'))
 
     if ($('#logo').attr('src') != "../images/addLogo.png") {
-        var formData = {
-            file: fs.createReadStream($('#logo').attr('src'))
+        var formData;
+        if ($('#logo').attr('src').indexOf('http') >= 0) {
+            var r = request($('#logo').attr('src'))
+            formData = {
+                file: r
+            }
+        } else {
+            formData = {
+                file: fs.createReadStream($('#logo').attr('src'))
+            }
         }
 
         var options = {
@@ -460,14 +489,25 @@ function upload_images() {
             if (err) {
                 return console.error('upload failed:', err);
             }
+            $('#logo').attr('src', 'https://yastream.win/api/images?id=' + localStorage.liveStream_id + '&type=logo');
+            storage.set('liveStream_logo', {
+                logo: $('#logo').attr('src')
+            });
             console.log('Upload successful!  Server responded with:', body);
-            $('#logo').attr('src', 'https://yastream.win/api/images?stream_id='+localStorage.liveStream_id+ '&type=logo');
-            storage.set('liveStream_logo', { logo: $('#logo').attr('src')});
         });
     }
     if ($('#preview').attr('src') != "../images/addPreview.png") {
-        var formData = {
-            file: fs.createReadStream($('#preview').attr('src'))
+        var formData;
+        if ($('#preview').attr('src').indexOf('http') >= 0) {
+            var file;
+            var r = request($('#preview').attr('src'))
+            formData = {
+                file: r
+            }
+        } else {
+            formData = {
+                file: fs.createReadStream($('#preview').attr('src'))
+            }
         }
 
         var options = {
@@ -482,11 +522,13 @@ function upload_images() {
             if (err) {
                 return console.error('upload failed:', err);
             }
-            $('#logo').attr('preview', 'https://yastream.win/api/images?stream_id='+localStorage.liveStream_id+ '&type=preview');
-            storage.set('liveStream_preview', { preview: $('#preview').attr('src')});
+            
+            $('#preview').attr('src', 'https://yastream.win/api/images?id=' + localStorage.liveStream_id + '&type=preview');
+            storage.set('liveStream_preview', {
+                preview: $('#preview').attr('src')
+            });
             console.log('Upload successful!  Server responded with:', body);
-        })
-
+        });
     }
 }
 
@@ -503,10 +545,8 @@ function getTwitchData(link) {
             if (response.streams.length != 0 && response.channel.url == $('#link').val()) {
                 $('#channel').val(response.channel.display_name)
                 $('#name').val(response.channel.status)
-                if (data.logo != null)
-                    document.getElementsByClassName('ul-right')[0].childNodes[0].childNodes[0].src = response.streams[0].channel.logo
-                if (data.preview != null)
-                    document.getElementsByClassName('ul-right')[0].childNodes[1].childNodes[0].src = response.streams[0].channel.video_banner
+                if (data.logo != null) document.getElementsByClassName('ul-right')[0].childNodes[0].childNodes[0].src = response.streams[0].channel.logo
+                if (data.preview != null) document.getElementsByClassName('ul-right')[0].childNodes[1].childNodes[0].src = response.streams[0].channel.video_banner
             }
         },
         error: function(error) {

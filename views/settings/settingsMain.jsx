@@ -2,7 +2,7 @@
 
 import React from 'react';
 import TitleBar from '../common/titleBar.jsx'
-import MenuBar from '../common/menubar.jsx'
+import MenuBar from '../common/menuBar.jsx'
 
 export default class SettingsMain extends React.Component {
   render() {
